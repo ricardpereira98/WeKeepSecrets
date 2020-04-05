@@ -14,7 +14,7 @@ public abstract class AbstractUserClass implements User {
 	/**
 	 * @return the user's identifier
 	 */
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
@@ -29,5 +29,5 @@ public abstract class AbstractUserClass implements User {
 		return clearanceLevel;
 	}
 
-	public abstract void addDoc(User manager, String docName, String securityLevel, String description);
+	public abstract void addDoc(String docName, String manager, String securityLevel, String description);
 }

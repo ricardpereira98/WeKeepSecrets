@@ -112,25 +112,25 @@ public class Main {
 	}
 
 	private static void regist(Scanner in, KeepingSecrets kSecrets) {
-		String kind, userId, clearanceLevel;
+		String kind, userID, clearanceLevel;
 
 		kind = in.next().trim();
-		userId = in.next().trim();
+		userID = in.next().trim();
 		clearanceLevel = in.nextLine().trim();
 
-		if (kSecrets.hasId(userId)) {
-			System.out.printf(USER_INVALID, userId);
+		if (kSecrets.hasUserID(userID)) {
+			System.out.printf(USER_INVALID, userID);
 		}
 
 		else {
 			if (clearanceLevel.equals("OFFICIAL")) {
 
-				kSecrets.addClerk(kind, userId, clearanceLevel);
-				System.out.printf(USER_REGISTERED, userId);
+				kSecrets.addClerk(kind, userID, clearanceLevel);
+				System.out.printf(USER_REGISTERED, userID);
 			} else {
 
-				kSecrets.addOfficer(kind, userId, clearanceLevel);
-				System.out.printf(USER_REGISTERED, userId);
+				kSecrets.addOfficer(kind, userID, clearanceLevel);
+				System.out.printf(USER_REGISTERED, userID);
 			}
 		}
 
@@ -146,18 +146,27 @@ public class Main {
 			Iterator it = kSecrets.listUsers();
 			while (it.hasNext()) {
 				User user = it.next();
-				System.out.println(user.getKind() + " " + user.getId() + " " + user.getClearanceLevel());
+				System.out.println(user.getKind() + " " + user.getID() + " " + user.getClearanceLevel());
 			}
 		}
 	}
 
 	private static void upload(Scanner in, KeepingSecrets kSecrets) {
-		String documentName, userId, securityLevel, description;
+		String documentName, userID, secLvl, description;
 
-		documentName = in.next();
-		userId = in.next();
-		securityLevel = in.nextLine();
-		description = in.nextLine();
+		documentName = in.next().trim();
+		userID = in.next().trim();
+		secLvl = in.nextLine().trim(); // official, confidential, secret, topsecret
+		description = in.nextLine().trim();
+
+		if (kSecrets.hasUserID(userID)) {
+			if (!kSecrets.hasDocumentUploaded(documentName)) {
+				if (!(kSecrets.getUserClearanceLvl(userID) < kSecrets.getDocsSecurityValue(secLvl))) {
+					kSecrets.uploadDoc(documentName, userID, secLvl, description);
+				}
+			}
+		}
+
 	}
 
 	private static void write(Scanner in, KeepingSecrets kSecrets) {

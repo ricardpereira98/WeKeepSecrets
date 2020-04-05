@@ -12,12 +12,11 @@ public class Clerk extends AbstractUserClass {
 	}
 
 	@Override
-	public void addDoc(User manager, String docName, String securityLevel, String description) {
+	public void addDoc(String docName, String manager, String securityLevel, String description) {
 		if (isFull()) {
 			resize();
 		}
-
-		docs[counter] = new OfficialDocuments(manager, docName, securityLevel, description);
+		docs[counter] = new OfficialDocuments(docName, manager, securityLevel, description);
 		counter++;
 
 	}

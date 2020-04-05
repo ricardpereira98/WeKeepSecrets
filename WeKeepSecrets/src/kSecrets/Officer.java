@@ -13,12 +13,11 @@ public class Officer extends AbstractUserClass {
 	}
 
 	@Override
-	public void addDoc(User manager, String docName, String securityLevel, String description) {
+	public void addDoc(String docName, String manager, String securityLevel, String description) {
 		if (isFull()) {
 			resize();
 		}
-
-		documents[counter] = new ClassifiedDocuments(manager, docName, securityLevel, description);
+		documents[counter] = new ClassifiedDocuments(docName, manager, securityLevel, description);
 		counter++;
 
 	}

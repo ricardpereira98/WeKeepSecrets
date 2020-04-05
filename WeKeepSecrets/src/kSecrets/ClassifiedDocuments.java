@@ -3,8 +3,8 @@ package kSecrets;
 public class ClassifiedDocuments extends AbstractDocumentClass{
 	private int counter;
 
-	public ClassifiedDocuments(User manager, String docName, String securityLevel, String description) {
-		super(manager, docName, securityLevel, description);
+	public ClassifiedDocuments(String docName, String manager, String securityLevel, String description) {
+		super(docName, manager, securityLevel, description);
 		counter = 0;
 	}
 

@@ -2,7 +2,7 @@ package kSecrets;
 
 public interface KeepingSecrets {
 
-	boolean hasId(String userId);
+	boolean hasUserID(String userId);
 
 	void addClerk(String kind, String userId, String clearanceLevel);
 
@@ -11,4 +11,12 @@ public interface KeepingSecrets {
 	boolean isEmpty();
 
 	Iterator listUsers();
+
+	boolean hasDocumentUploaded(String documentName);
+
+	int getUserClearanceLvl(String userID);
+
+	int getDocsSecurityValue(String secLvl);
+
+	void uploadDoc(String documentName, String userID, String secLvl, String description);
 }

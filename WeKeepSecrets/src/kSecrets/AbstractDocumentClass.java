@@ -1,12 +1,12 @@
-package users;
+package kSecrets;
 
 public abstract class AbstractDocumentClass implements Document {
 	private String docName;
-	private User manager;
+	private String manager;
 	private String securityLevel;
 	private String description;
 
-	protected AbstractDocumentClass(User manager, String docName, String securityLevel, String description) {
+	protected AbstractDocumentClass(String manager, String docName, String securityLevel, String description) {
 		this.docName = docName;
 		this.manager = manager;
 		this.securityLevel = securityLevel;
@@ -30,7 +30,7 @@ public abstract class AbstractDocumentClass implements Document {
 	}
 
 	@Override
-	public User getManager() {
+	public String getManager() {
 		return manager;
 	}
 
