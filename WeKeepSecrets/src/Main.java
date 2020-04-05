@@ -160,11 +160,17 @@ public class Main {
 		description = in.nextLine().trim();
 
 		if (kSecrets.hasUserID(userID)) {
-			if (!kSecrets.hasDocumentUploaded(documentName)) {
+			if (!kSecrets.hasDocumentUploaded(userID, documentName)) {
 				if (!(kSecrets.getUserClearanceLvl(userID) < kSecrets.getDocsSecurityValue(secLvl))) {
 					kSecrets.uploadDoc(documentName, userID, secLvl, description);
+				} else {
+					System.out.println("Insufficient security clearance.");
 				}
+			} else {
+				System.out.println("Document " + documentName + " already exists in the user account.");
 			}
+		} else {
+			System.out.println("Not a registered user.");
 		}
 
 	}

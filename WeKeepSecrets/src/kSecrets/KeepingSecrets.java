@@ -12,7 +12,7 @@ public interface KeepingSecrets {
 
 	Iterator listUsers();
 
-	boolean hasDocumentUploaded(String documentName);
+	boolean hasDocumentUploaded(String userID, String document);
 
 	int getUserClearanceLvl(String userID);
 

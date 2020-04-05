@@ -74,9 +74,8 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	public boolean hasDocumentUploaded(String documentName) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasDocumentUploaded(String userID, String docName) {
+		return users[searchIndexUserID(userID)].hasThisDoc(docName);
 	}
 
 	@Override

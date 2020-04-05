@@ -30,4 +30,6 @@ public abstract class AbstractUserClass implements User {
 	}
 
 	public abstract void addDoc(String docName, String manager, String securityLevel, String description);
+
+	public abstract boolean hasThisDoc(String docName);
 }

@@ -10,4 +10,6 @@ public interface User {
 
 	void addDoc(String docName, String userID, String securityLevel, String description);
 
+	boolean hasThisDoc(String docName);
+
 }

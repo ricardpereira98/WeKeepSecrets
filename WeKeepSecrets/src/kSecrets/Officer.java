@@ -42,4 +42,24 @@ public class Officer extends AbstractUserClass {
 		documents = tmp;
 	}
 
+	@Override
+	public boolean hasThisDoc(String docName) {
+		return searchIndexDocs(docName) >= 0;
+	}
+
+	private int searchIndexDocs(String docName) {
+		boolean found = false;
+		int result = -1;
+
+		for (int i = 0; i < counter && !found; i++) {
+			if (documents[i].getDocName().toUpperCase().equals(docName.toUpperCase()))
+				found = true;
+			else
+				i++;
+			if (found)
+				result = i;
+		}
+		return result;
+	}
+
 }
