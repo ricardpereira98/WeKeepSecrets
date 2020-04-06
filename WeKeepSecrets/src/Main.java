@@ -132,7 +132,7 @@ public class Main {
 		}
 
 		else {
-			if (clearanceLevel.equalsIgnoreCase("OFFICIAL")) { // fazer verificacao classe topo
+			if (kSecrets.isClearanceOfficial(clearanceLevel)) { // fazer verificacao classe topo
 
 				kSecrets.addClerk(kind, userID, clearanceLevel);
 				System.out.printf(USER_REGISTERED, userID);
@@ -197,7 +197,7 @@ public class Main {
 
 		if (kSecrets.hasUserID(managerID) && kSecrets.hasUserID(updaterID)) {
 			if (kSecrets.hasDocumentUploaded(managerID, documentName)) {
-				if (!kSecrets.isOfficial(documentName, managerID)) {
+				if (!kSecrets.isDocOfficial(documentName, managerID)) {
 					if (kSecrets.isClearanceHighEnough(updaterID, docSecLvl)) {
 						kSecrets.updateDescription(documentName, managerID, newDescription);
 						System.out.printf(DOC_UPDATED, documentName);
@@ -256,7 +256,7 @@ public class Main {
 			System.out.printf(NOT_REGISTERED);
 		}
 
-		else if (kSecrets.getUserKind(grantedID).toUpperCase().equals("CLERK")) {
+		else if (kSecrets.isClerkUser(grantedID)) {
 			System.out.printf(CLERK_ERROR);
 		}
 
@@ -285,7 +285,7 @@ public class Main {
 			System.out.printf(NOT_REGISTERED);
 		}
 
-		else if (kSecrets.getUserKind(grantedID).toUpperCase().equals("CLERK")) {
+		else if (kSecrets.isClerkUser(grantedID)) {
 			System.out.printf(CLERK_ERROR);
 		}
 

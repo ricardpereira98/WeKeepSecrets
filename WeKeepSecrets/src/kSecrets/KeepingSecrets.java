@@ -18,7 +18,7 @@ public interface KeepingSecrets {
 
 	void uploadDoc(String documentName, String userID, String secLvl, String description);
 
-	boolean isOfficial(String documentName, String managerID);
+	boolean isDocOfficial(String documentName, String managerID);
 
 	String getDocSecurityLevel(String documentName, String managerID);
 
@@ -26,9 +26,11 @@ public interface KeepingSecrets {
 
 	String getDescription(String documentName, String managerID);
 
-	String getUserKind(String userID);
-
 	void getAcess(String documentName, String managerID, String grantedID);
 
 	boolean hasAcess(String documentName, String managerID, String grantedID);
+
+	boolean isClearanceOfficial(String clearanceLevel);
+
+	boolean isClerkUser(String userID);
 }

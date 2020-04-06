@@ -5,6 +5,8 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private static final String SECRET = "SECRET";
 	private static final String CONFIDENTIAL = "CONFIDENTIAL";
 	private static final String OFFICIAL = "OFFICIAL";
+	private static final String OFFICER = "OFFICER";
+	private static final String CLERK = "CLERK";
 	private static final int TOPSECRET_VALUE = 3;
 	private static final int SECRET_VALUE = 2;
 	private static final int CONFIDENTIAL_VALUE = 1;
@@ -22,31 +24,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	public boolean hasUserID(String id) {
 		return searchIndexUserID(id) >= 0;
-	}
-
-	private int searchIndexUserID(String id) {
-		int i = 0;
-		int result = -1;
-		boolean found = false;
-		while (i < counter && !found)
-			if (users[i].getID().toUpperCase().equals(id.toUpperCase()))
-				found = true;
-			else
-				i++;
-		if (found)
-			result = i;
-		return result;
-	}
-
-	private boolean isFull() {
-		return counter == users.length;
-	}
-
-	private void resize() {
-		User tmp[] = new User[2 * users.length];
-		for (int i = 0; i < counter; i++)
-			tmp[i] = users[i];
-		users = tmp;
 	}
 
 	public void addClerk(String kind, String userId, String clearanceLevel) {
@@ -78,32 +55,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		return users[searchIndexUserID(userID)].hasThisDoc(docName);
 	}
 
-	private int getUserClearanceValue(String userID) {
-		return Clearance.valueOf(users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase()).getValue();
-	}
-
-	private int getDocsSecurityValue(String secLvl) {
-		int value = OFFICIAL_VALUE;
-
-		if (secLvl.toUpperCase().equals(OFFICIAL)) {
-			return value;
-		}
-
-		else if (secLvl.toUpperCase().equals(CONFIDENTIAL)) {
-			value = CONFIDENTIAL_VALUE;
-		}
-
-		else if (secLvl.toUpperCase().equals(SECRET)) {
-			value = SECRET_VALUE;
-		}
-
-		else if (secLvl.toUpperCase().equals(TOPSECRET)) {
-			value = TOPSECRET_VALUE;
-		}
-
-		return value;
-	}
-
 	@Override
 	public boolean isClearanceHighEnough(String userID, String secLvl) {
 		return getUserClearanceValue(userID) >= getDocsSecurityValue(secLvl);
@@ -116,13 +67,63 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	public boolean isOfficial(String documentName, String userID) {
+	public boolean isDocOfficial(String documentName, String userID) {
 		return docs[searchIndexDoc(documentName, userID)].getSecurityLevel().toUpperCase().equals(OFFICIAL);
 	}
 
 	@Override
 	public String getDocSecurityLevel(String documentName, String userID) {
 		return docs[searchIndexDoc(documentName, userID)].getSecurityLevel();
+	}
+
+	@Override
+	public void updateDescription(String documentName, String managerID, String newDescription) {
+		docs[searchIndexDoc(documentName, managerID)].newDescription(newDescription);
+	}
+
+	@Override
+	public String getDescription(String documentName, String managerID) {
+		return docs[searchIndexDoc(documentName, managerID)].getDescription();
+	}
+
+	@Override
+	public void getAcess(String documentName, String managerID, String grantedID) {
+
+	}
+
+	@Override
+	public boolean hasAcess(String documentName, String managerID, String grantedID) {
+		return false;
+	}
+
+	@Override
+	public boolean isClearanceOfficial(String clearanceLevel) {
+		return OFFICIAL.equalsIgnoreCase(clearanceLevel);
+	}
+
+	@Override
+	public boolean isClerkUser(String userID) {
+		return getUserKind(userID).equalsIgnoreCase(CLERK);
+	}
+
+	// PRIVATE METHODS BELOW
+
+	private String getUserKind(String userID) {
+		return users[searchIndexUserID(userID)].getKind();
+	}
+	
+	private int searchIndexUserID(String id) {
+		int i = 0;
+		int result = -1;
+		boolean found = false;
+		while (i < counter && !found)
+			if (users[i].getID().toUpperCase().equals(id.toUpperCase()))
+				found = true;
+			else
+				i++;
+		if (found)
+			result = i;
+		return result;
 	}
 
 	/**
@@ -152,29 +153,41 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		return result;
 	}
 
-	@Override
-	public void updateDescription(String documentName, String managerID, String newDescription) {
-		docs[searchIndexDoc(documentName, managerID)].newDescription(newDescription);
+	private boolean isFull() {
+		return counter == users.length;
 	}
 
-	@Override
-	public String getDescription(String documentName, String managerID) {
-		return docs[searchIndexDoc(documentName, managerID)].getDescription();
+	private void resize() {
+		User tmp[] = new User[2 * users.length];
+		for (int i = 0; i < counter; i++)
+			tmp[i] = users[i];
+		users = tmp;
 	}
 
-	@Override
-	public String getUserKind(String userID) {
-		return users[searchIndexUserID(userID)].getKind();
+	private int getUserClearanceValue(String userID) {
+		return Clearance.valueOf(users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase()).getValue();
 	}
 
-	@Override
-	public void getAcess(String documentName, String managerID, String grantedID) {
+	private int getDocsSecurityValue(String secLvl) {
+		int value = OFFICIAL_VALUE;
 
-	}
+		if (secLvl.toUpperCase().equals(OFFICIAL)) {
+			return value;
+		}
 
-	@Override
-	public boolean hasAcess(String documentName, String managerID, String grantedID) {
-		return false;
+		else if (secLvl.toUpperCase().equals(CONFIDENTIAL)) {
+			value = CONFIDENTIAL_VALUE;
+		}
+
+		else if (secLvl.toUpperCase().equals(SECRET)) {
+			value = SECRET_VALUE;
+		}
+
+		else if (secLvl.toUpperCase().equals(TOPSECRET)) {
+			value = TOPSECRET_VALUE;
+		}
+
+		return value;
 	}
 
 }
