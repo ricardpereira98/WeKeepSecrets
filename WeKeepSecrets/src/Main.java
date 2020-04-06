@@ -163,6 +163,7 @@ public class Main {
 			if (!kSecrets.hasDocumentUploaded(userID, documentName)) {
 				if (!(kSecrets.getUserClearanceLvl(userID) < kSecrets.getDocsSecurityValue(secLvl))) {
 					kSecrets.uploadDoc(documentName, userID, secLvl, description);
+					System.out.println("Document " + documentName + " was uploaded.");
 				} else {
 					System.out.println("Insufficient security clearance.");
 				}

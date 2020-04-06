@@ -80,7 +80,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public int getUserClearanceLvl(String userID) {
-		return Clearance.valueOf(users[searchIndexUserID(userID)].getClearanceLevel()).getValue();
+		return Clearance.valueOf(users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase()).getValue();
 	}
 
 	@Override

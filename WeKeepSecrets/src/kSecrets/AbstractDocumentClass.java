@@ -10,6 +10,7 @@ public abstract class AbstractDocumentClass implements Document {
 		this.docName = docName;
 		this.manager = manager;
 		this.securityLevel = securityLevel;
+		this.description = description;
 	}
 
 	@Override
