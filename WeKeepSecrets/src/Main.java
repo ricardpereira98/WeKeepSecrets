@@ -100,7 +100,7 @@ public class Main {
 
 	private static String getCommand(Scanner in) {
 		String input;
-		//System.out.print("> ");
+		// System.out.print("> ");
 		input = in.nextLine().toUpperCase();
 		return input;
 	}
@@ -134,8 +134,7 @@ public class Main {
 		else {
 			if (kSecrets.isClearanceOfficial(clearanceLevel)) { // fazer verificacao classe topo
 				kSecrets.addClerk(kind, userID, clearanceLevel);
-			} 
-			else {
+			} else {
 				kSecrets.addOfficer(kind, userID, clearanceLevel);
 			}
 			System.out.printf(USER_REGISTERED, userID);
@@ -254,7 +253,7 @@ public class Main {
 			System.out.printf(NOT_REGISTERED);
 		}
 
-		else if (kSecrets.isClerkUser(grantedID)) {
+		else if (kSecrets.isClerkUser(managerID) || kSecrets.isClerkUser(grantedID)) {
 			System.out.printf(CLERK_ERROR);
 		}
 
@@ -262,12 +261,14 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl) || kSecrets.hasAcess(documentName, managerID, grantedID)) {
+		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl)
+				|| kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(ALREADY_ACCESS, documentName);
 		}
 
 		else {
 			kSecrets.getAcess(documentName, managerID, grantedID);
+			System.out.println("Access to document " + documentName + " has been granted.");
 		}
 	}
 
