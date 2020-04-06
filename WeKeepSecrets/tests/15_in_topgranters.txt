@@ -1,0 +1,245 @@
+topgranters
+register
+officer knowsSomeStuff1 confidential
+register
+officer knowsSomeStuff2 confidential
+register
+officer knowsSomeStuff3 confidential
+register
+officer knowsSomeStuff4 confidential
+register
+officer knowsSomeStuff5 confidential
+register
+officer knowsSecrets10 secret
+register
+officer knowsSecrets2 secret
+register
+officer knowsSecrets3 secret
+register
+officer knowsSecrets4 secret
+register
+officer knowsSecrets5 secret
+register
+officer knowsSecrets6 secret
+register
+officer knowsSecrets7 secret
+register
+officer knowsSecrets8 secret
+register
+officer knowsSecrets9 secret
+register
+officer knowsSecrets1 secret
+register
+officer knowsTopSecrets1 topsecret
+register
+officer knowsTopSecrets2 topsecret
+register
+officer knowsTopSecrets3 topsecret
+register
+officer knowsTopSecrets4 topsecret
+register
+officer knowsTopSecrets5 topsecret
+register
+officer knowsTopSecrets6 topsecret
+register
+officer knowsTopSecrets7 topsecret
+register
+officer knowsTopSecrets8 topsecret
+register
+officer knowsTopSecrets9 topsecret
+register
+officer knowsTopSecrets10 topsecret
+upload
+secretDoc1a knowsSecrets1 secret
+This document is an secret document of user knowsSecrets1!
+upload
+secretDoc1b knowsSecrets1 secret
+This document is an secret document of user knowsSecrets1!
+upload
+secretDoc2a knowsSecrets2 secret
+This document is an secret document of user knowsSecrets2!
+upload
+secretDoc2b knowsSecrets2 secret
+This document is an secret document of user knowsSecrets2!
+upload
+secretDoc3a knowsSecrets3 secret
+This document is an secret document of user knowsSecrets3!
+upload
+secretDoc3b knowsSecrets3 secret
+This document is an secret document of user knowsSecrets3!
+upload
+secretDoc4a knowsSecrets4 secret
+This document is an secret document of user knowsSecrets4!
+upload
+secretDoc4b knowsSecrets4 secret
+This document is an secret document of user knowsSecrets4!
+upload
+secretDoc5a knowsSecrets5 secret
+This document is an secret document of user knowsSecrets5!
+upload
+secretDoc5b knowsSecrets5 secret
+This document is an secret document of user knowsSecrets5!
+upload
+secretDoc6a knowsSecrets6 secret
+This document is an secret document of user knowsSecrets6!
+upload
+secretDoc6b knowsSecrets6 secret
+This document is an secret document of user knowsSecrets6!
+upload
+secretDoc7a knowsSecrets7 secret
+This document is an secret document of user knowsSecrets7!
+upload
+secretDoc7b knowsSecrets7 secret
+This document is an secret document of user knowsSecrets7!
+upload
+secretDoc8a knowsSecrets8 secret
+This document is an secret document of user knowsSecrets8!
+upload
+secretDoc8b knowsSecrets8 secret
+This document is an secret document of user knowsSecrets8!
+upload
+secretDoc9a knowsSecrets9 secret
+This document is an secret document of user knowsSecrets9!
+upload
+secretDoc9b knowsSecrets9 secret
+This document is an secret document of user knowsSecrets9!
+upload
+secretDoc10a knowsSecrets10 secret
+This document is an secret document of user knowsSecrets10!
+upload
+secretDoc10b knowsSecrets10 secret
+This document is an secret document of user knowsSecrets10!
+upload
+topSecretDoc1a knowsTopSecrets1 topsecret
+This document is an secret document of user knowsTopSecrets1!
+upload
+topSecretDoc1b knowsTopSecrets1 topsecret
+This document is an secret document of user knowsTopSecrets1!
+upload
+topSecretDoc2a knowsTopSecrets2 topsecret
+This document is an secret document of user knowsTopSecrets2!
+upload
+topSecretDoc2b knowsTopSecrets2 topsecret
+This document is an secret document of user knowsTopSecrets2!
+upload
+topSecretDoc3a knowsTopSecrets3 topsecret
+This document is an secret document of user knowsTopSecrets3!
+upload
+topSecretDoc3b knowsTopSecrets3 topsecret
+This document is an secret document of user knowsTopSecrets3!
+upload
+topSecretDoc4a knowsTopSecrets4 topsecret
+This document is an secret document of user knowsTopSecrets4!
+upload
+topSecretDoc4b knowsTopSecrets4 topsecret
+This document is an secret document of user knowsTopSecrets4!
+upload
+topSecretDoc5a knowsTopSecrets5 topsecret
+This document is an secret document of user knowsTopSecrets5!
+upload
+topSecretDoc5b knowsTopSecrets5 topsecret
+This document is an secret document of user knowsTopSecrets5!
+upload
+topSecretDoc6a knowsTopSecrets6 topsecret
+This document is an secret document of user knowsTopSecrets6!
+upload
+topSecretDoc6b knowsTopSecrets6 topsecret
+This document is an secret document of user knowsTopSecrets6!
+upload
+topSecretDoc7a knowsTopSecrets7 topsecret
+This document is an secret document of user knowsTopSecrets7!
+upload
+topSecretDoc7b knowsTopSecrets7 topsecret
+This document is an secret document of user knowsTopSecrets7!
+upload
+topSecretDoc8a knowsTopSecrets8 topsecret
+This document is an secret document of user knowsTopSecrets8!
+upload
+topSecretDoc8b knowsTopSecrets8 topsecret
+This document is an secret document of user knowsTopSecrets8!
+upload
+topSecretDoc9a knowsTopSecrets9 topsecret
+This document is an secret document of user knowsTopSecrets9!
+upload
+topSecretDoc9b knowsTopSecrets9 topsecret
+This document is an secret document of user knowsTopSecrets9!
+upload
+topSecretDoc10a knowsTopSecrets10 topsecret
+This document is an secret document of user knowsTopSecrets10!
+upload
+topSecretDoc10b knowsTopSecrets10 topsecret
+This document is an secret document of user knowsTopSecrets10!
+grant
+secretDoc10a knowsSecrets10 knowsSomeStuff1
+grant
+secretDoc1a knowsSecrets1 knowsSomeStuff1
+topgranters
+grant
+secretDoc9a knowsSecrets9 knowsSomeStuff1
+grant
+secretDoc9b knowsSecrets9 knowsSomeStuff2
+grant
+secretDoc9a knowsSecrets9 knowsSomeStuff3
+grant
+secretDoc9b knowsSecrets9 knowsSomeStuff3
+grant
+topSecretDoc1a knowsTopSecrets1 knowsSecrets1
+grant
+topSecretDoc1b knowsTopSecrets1 knowsSecrets1
+grant
+topSecretDoc1a knowsTopSecrets1 knowsSecrets2
+grant
+topSecretDoc1b knowsTopSecrets1 knowsSecrets2
+grant
+topSecretDoc1a knowsTopSecrets1 knowsSecrets3
+grant
+topSecretDoc1b knowsTopSecrets1 knowsSecrets3
+grant
+topSecretDoc1a knowsTopSecrets1 knowsSecrets4
+topgranters
+grant
+topSecretDoc2b knowsTopSecrets2 knowsSecrets10
+grant
+topSecretDoc2a knowsTopSecrets2 knowsSecrets9
+grant
+topSecretDoc2b knowsTopSecrets2 knowsSecrets8
+grant
+topSecretDoc2a knowsTopSecrets2 knowsSecrets7
+grant
+secretDoc9b knowsSecrets9 knowsSomeStuff2
+grant
+secretDoc9a knowsSecrets9 knowsSomeStuff3
+grant
+secretDoc9b knowsSecrets9 knowsSomeStuff2
+topgranters
+grant
+topSecretDoc3b knowsTopSecrets3 knowsSecrets7
+grant
+topSecretDoc4b knowsTopSecrets4 knowsSecrets7
+grant
+topSecretDoc5b knowsTopSecrets5 knowsSecrets7
+grant
+topSecretDoc6b knowsTopSecrets6 knowsSecrets7
+grant
+topSecretDoc7b knowsTopSecrets7 knowsSecrets7
+grant
+topSecretDoc8b knowsTopSecrets8 knowsSecrets7
+grant
+topSecretDoc9b knowsTopSecrets9 knowsSecrets7
+grant
+topSecretDoc9b knowsTopSecrets9 knowsSecrets6
+grant
+topSecretDoc9b knowsTopSecrets9 knowsSecrets5
+topgranters
+revoke
+topSecretDoc9b knowsTopSecrets9 knowsSecrets7
+revoke
+topSecretDoc4b knowsTopSecrets4 knowsSecrets7
+revoke
+topSecretDoc1b knowsTopSecrets1 knowsSecrets2
+revoke
+topSecretDoc1a knowsTopSecrets1 knowsSecrets2
+revoke
+topSecretDoc1b knowsTopSecrets1 knowsSecrets2
+topgranters
+exit

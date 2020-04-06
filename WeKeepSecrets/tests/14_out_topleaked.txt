@@ -1,0 +1,132 @@
+There are no leaked documents.
+User knowsSomeStuff1 was registered.
+User knowsSomeStuff2 was registered.
+User knowsSomeStuff3 was registered.
+User knowsSomeStuff4 was registered.
+User knowsSomeStuff5 was registered.
+User knowsSomeStuff6 was registered.
+User knowsSomeStuff7 was registered.
+User knowsSomeStuff8 was registered.
+User knowsSomeStuff9 was registered.
+User knowsSomeStuff10 was registered.
+User knowsSecrets1 was registered.
+User knowsSecrets2 was registered.
+User knowsSecrets3 was registered.
+User knowsSecrets4 was registered.
+User knowsSecrets5 was registered.
+User knowsTopSecrets1 was registered.
+User knowsTopSecrets2 was registered.
+User knowsTopSecrets3 was registered.
+User knowsTopSecrets4 was registered.
+User knowsTopSecrets5 was registered.
+Document secretDoc1a was uploaded.
+Document secretDoc1b was uploaded.
+Document secretDoc2a was uploaded.
+Document secretDoc2b was uploaded.
+Document secretDoc3a was uploaded.
+Document secretDoc3b was uploaded.
+Document secretDoc4a was uploaded.
+Document secretDoc4b was uploaded.
+Document secretDoc5a was uploaded.
+Document secretDoc5b was uploaded.
+Document topSecretDoc1a was uploaded.
+Document topSecretDoc1b was uploaded.
+Document topSecretDoc2a was uploaded.
+Document topSecretDoc2b was uploaded.
+Document topSecretDoc3a was uploaded.
+Document topSecretDoc3b was uploaded.
+Document topSecretDoc4a was uploaded.
+Document topSecretDoc4b was uploaded.
+Document topSecretDoc5a was uploaded.
+Document topSecretDoc5b was uploaded.
+There are no leaked documents.
+Access to document topSecretDoc5b has been granted.
+Document: This document is an secret document of user knowsTopSecrets5!
+Access to document topSecretDoc5b has been granted.
+Document: This document is an secret document of user knowsTopSecrets5!
+Access to document topSecretDoc4b has been granted.
+Document: This document is an secret document of user knowsTopSecrets4!
+Access to document topSecretDoc4b has been granted.
+Document: This document is an secret document of user knowsTopSecrets4!
+topSecretDoc4b knowsTopSecrets4 topsecret 2 2 0
+topSecretDoc5b knowsTopSecrets5 topsecret 2 2 0
+Document topSecretDoc4a does not exist in the user account.
+Document topSecretDoc4a does not exist in the user account.
+Document topSecretDoc4a does not exist in the user account.
+Access to document secretDoc1a has been granted.
+Access to document secretDoc1a has been granted.
+Access to document secretDoc1a has been granted.
+Access to document secretDoc1a has been granted.
+Access to document secretDoc1a has been granted.
+Access to document secretDoc1a has been granted.
+Document: This document is an secret document of user knowsSecrets1!
+Document: This document is an secret document of user knowsSecrets1!
+Document: This document is an secret document of user knowsSecrets1!
+Document secretDoc1a was updated.
+Document secretDoc1a was updated.
+Document: This document is an secret document of user knowsTopSecrets1 and was updated!
+Access to document secretDoc1a has been revoked.
+Document: This document is an secret document of user knowsTopSecrets1 and was updated!
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Access to document secretDoc1b has been granted.
+Document: This document is an secret document of user knowsSecrets1!
+Document: This document is an secret document of user knowsSecrets1!
+Document: This document is an secret document of user knowsSecrets1!
+Document: This document is an secret document of user knowsSecrets1!
+Access to document secretDoc1b has been revoked.
+Access to document secretDoc1b has been revoked.
+secretDoc1b knowsSecrets1 secret 4 7 2
+secretDoc1a knowsSecrets1 secret 7 6 1
+topSecretDoc4b knowsTopSecrets4 topsecret 2 2 0
+topSecretDoc5b knowsTopSecrets5 topsecret 2 2 0
+Access to document secretDoc2b has been granted.
+Document: This document is an secret document of user knowsSecrets2!
+Access to document secretDoc2b has been revoked.
+Access to document secretDoc2a has been granted.
+Access to document secretDoc3a has been granted.
+Access to document secretDoc3a has been granted.
+Access to document secretDoc3a has been granted.
+Document: This document is an secret document of user knowsSecrets3!
+Access to document secretDoc3a has been revoked.
+Access to document topSecretDoc3a has been granted.
+Access to document topSecretDoc3a has been granted.
+Access to document topSecretDoc3a has been granted.
+Access to document topSecretDoc3a has been granted.
+Document: This document is an secret document of user knowsTopSecrets3!
+Access to document topSecretDoc3a has been revoked.
+Access to document topSecretDoc2a has been granted.
+Document: This document is an secret document of user knowsTopSecrets2!
+Access to document topSecretDoc2a has been revoked.
+Access to document topSecretDoc2b has been granted.
+Document: This document is an secret document of user knowsTopSecrets2!
+Grant for officer knowsTopSecrets2 was already revoked.
+Access to document secretDoc5b has been granted.
+Document: This document is an secret document of user knowsSecrets5!
+Access to document secretDoc5a has been granted.
+Access to document secretDoc5a has been revoked.
+Access to document topSecretDoc4a has been granted.
+Document: This document is an secret document of user knowsTopSecrets4!
+Access to document topSecretDoc4a has been revoked.
+Access to document topSecretDoc1a has been granted.
+Document: This document is an secret document of user knowsTopSecrets1!
+Access to document topSecretDoc1a has been revoked.
+Access to document secretDoc2b has been granted.
+Access to document secretDoc2b has been granted.
+Access to document secretDoc2b has been granted.
+Access to document secretDoc2b has been granted.
+secretDoc1b knowsSecrets1 secret 4 7 2
+secretDoc1a knowsSecrets1 secret 7 6 1
+secretDoc2b knowsSecrets2 secret 1 5 1
+topSecretDoc3a knowsTopSecrets3 topsecret 1 4 1
+secretDoc3a knowsSecrets3 secret 1 3 1
+topSecretDoc4b knowsTopSecrets4 topsecret 2 2 0
+topSecretDoc5b knowsTopSecrets5 topsecret 2 2 0
+secretDoc2a knowsSecrets2 secret 0 1 0
+secretDoc5a knowsSecrets5 secret 0 1 1
+secretDoc5b knowsSecrets5 secret 1 1 0
+Bye!

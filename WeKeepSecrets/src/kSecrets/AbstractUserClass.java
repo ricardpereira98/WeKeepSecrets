@@ -22,7 +22,7 @@ public abstract class AbstractUserClass implements User {
 	 * @return
 	 */
 	public String getKind() {
-		return kind;
+		return kind.toLowerCase();
 	}
 
 	public String getClearanceLevel() {

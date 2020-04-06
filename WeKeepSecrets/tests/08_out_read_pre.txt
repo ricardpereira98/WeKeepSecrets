@@ -1,0 +1,22 @@
+User knowsNothing was registered.
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+clerk knowsNothing official
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+Document confidentialDoc was uploaded.
+Not a registered user.
+Document confidentialDoc was updated.
+Not a registered user.
+Not a registered user.
+Insufficient security clearance.
+Document topSecretDoc was uploaded.
+Insufficient security clearance.
+Insufficient security clearance.
+Insufficient security clearance.
+Document secretDoc was uploaded.
+Insufficient security clearance.
+Insufficient security clearance.
+Bye!

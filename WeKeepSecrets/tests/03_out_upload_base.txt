@@ -1,0 +1,28 @@
+User knowsNothing was registered.
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+clerk knowsNothing official
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Document anotherOfficialDoc was uploaded.
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Document topSecretDoc1 was uploaded.
+Document topSecretDoc2 was uploaded.
+Document topSecretDoc3 was uploaded.
+Document secretDoc1 was uploaded.
+Document secretDoc2 was uploaded.
+Document secretDoc3 was uploaded.
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Bye!

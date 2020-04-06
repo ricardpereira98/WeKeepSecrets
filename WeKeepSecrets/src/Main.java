@@ -26,17 +26,19 @@ public class Main {
 	// Constantes que definem as mensagens para o utilizador
 
 	public static final String UNKNOWN_COMMAND = "Unknown command. Type help to see available commands.";
-	public static final String USER_REGISTERED = "User %s was registered.";
-	public static final String USER_INVALID = "Identifier %s is already assigned to another user.";
-	public static final String NOT_REGISTERED = "Not a registered user.";
+	public static final String USER_REGISTERED = "User %s was registered.\n";
+	public static final String USER_INVALID = "Identifier %s is already assigned to another user.\n";
+	public static final String NOT_REGISTERED = "Not a registered user.\n";
 	public static final String NO_USERS = "There are no registered users.";
-	public static final String NO_DOCUMENT = "Document %s does not exist in the user account.";
+	public static final String NO_DOCUMENT = "Document %s does not exist in the user account.\n";
+	public static final String DOC_EXISTS = "Document %s already exists in the user account.\n";
 	public static final String INSUFFICIENT_CLEARANCE = "Insufficient security clearance.";
-	public static final String CANNOT_UPDATE = "Document %s cannot be updated.";
-	public static final String DOC_UPDATED = "Document %s was updated.";
+	public static final String CANNOT_UPDATE = "Document %s cannot be updated.\n";
+	public static final String DOC_UPLOADED = "Document %s was uploaded.\n";
+	public static final String DOC_UPDATED = "Document %s was updated.\n";
 	public static final String CLERK_ERROR = "Grants can only be issued between officers.";
-	public static final String ALREADY_ACCESS = "Already has access to document %s.";
-	public static final String GRANT_DOESNT_EXIST = "Grant for officer %s does not exist.";
+	public static final String ALREADY_ACCESS = "Already has access to document %s.\n";
+	public static final String GRANT_DOESNT_EXIST = "Grant for officer %s does not exist.\n";
 	public static final String QUIT_MSG = "Bye!";
 
 	public static void main(String[] args) {
@@ -90,17 +92,15 @@ public class Main {
 				System.out.println(UNKNOWN_COMMAND);
 			}
 
-			System.out.println();
 			comm = getCommand(in);
 		}
 		System.out.println(QUIT_MSG);
-		System.out.println();
 		in.close();
 	}
 
 	private static String getCommand(Scanner in) {
 		String input;
-		System.out.print("> ");
+		//System.out.print("> ");
 		input = in.nextLine().toUpperCase();
 		return input;
 	}
@@ -111,7 +111,7 @@ public class Main {
 		System.out.println("upload - upload a document");
 		System.out.println("read - read a document");
 		System.out.println("write - write a document");
-		System.out.println("grant - grant access a document");
+		System.out.println("grant - grant access to a document");
 		System.out.println("revoke - revoke a grant to access a document");
 		System.out.println("userdocs - list the official or classified documents of an user");
 		System.out.println("topleaked - list the top 10 documents with more grants");
@@ -133,14 +133,12 @@ public class Main {
 
 		else {
 			if (kSecrets.isClearanceOfficial(clearanceLevel)) { // fazer verificacao classe topo
-
 				kSecrets.addClerk(kind, userID, clearanceLevel);
-				System.out.printf(USER_REGISTERED, userID);
-			} else {
-
+			} 
+			else {
 				kSecrets.addOfficer(kind, userID, clearanceLevel);
-				System.out.printf(USER_REGISTERED, userID);
 			}
+			System.out.printf(USER_REGISTERED, userID);
 		}
 
 	}
@@ -172,15 +170,15 @@ public class Main {
 			if (!kSecrets.hasDocumentUploaded(userID, documentName)) {
 				if (kSecrets.isClearanceHighEnough(userID, secLvl)) {
 					kSecrets.uploadDoc(documentName, userID, secLvl, description);
-					System.out.println("Document " + documentName + " was uploaded.");
+					System.out.printf(DOC_UPLOADED, documentName);
 				} else {
-					System.out.println("Insufficient security clearance.");
+					System.out.println(INSUFFICIENT_CLEARANCE);
 				}
 			} else {
-				System.out.println("Document " + documentName + " already exists in the user account.");
+				System.out.printf(DOC_EXISTS, documentName);
 			}
 		} else {
-			System.out.println("Not a registered user.");
+			System.out.printf(NOT_REGISTERED);
 		}
 
 	}
@@ -264,8 +262,7 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl)
-				|| kSecrets.hasAcess(documentName, managerID, grantedID)) {
+		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl) || kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(ALREADY_ACCESS, documentName);
 		}
 

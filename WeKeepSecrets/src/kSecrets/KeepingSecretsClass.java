@@ -88,7 +88,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public void getAcess(String documentName, String managerID, String grantedID) {
-
+		
 	}
 
 	@Override

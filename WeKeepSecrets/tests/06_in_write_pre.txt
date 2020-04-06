@@ -1,0 +1,90 @@
+register
+clerk knowsNothing official
+register
+officer knowsSomeStuff confidential
+register
+officer knowsSecrets secret
+register
+officer knowsTopSecrets topsecret
+register
+officer Q topsecret
+listusers
+upload
+confidentialDoc1 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+upload
+confidentialDoc2 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+upload
+confidentialDoc3 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+write
+confidentialDoc1 knowsSecrets alice
+There is something wrong with this command...
+write
+confidentialDoc1 bob knowsSecrets
+There is something wrong with this command...
+write
+confidentialDoc1 knowsTopSecrets knowsSecrets
+There is something wrong with this command...
+upload
+officialDoc knowsNothing official
+This document is an official document from clerk knowsNothing!
+write
+officialDoc knowsNothing knowsTopSecrets
+There is something wrong with this command...
+upload
+officialDoc knowsTopSecrets official
+This document is an official document from officer knowsTopSecrets!
+write
+officialDoc knowsTopSecrets knowsTopSecrets
+There is something wrong with this command...
+write
+confidentialDoc2 knowsSecrets knowsNothing
+There is something wrong with this command...
+upload
+topSecretDoc1 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+topSecretDoc2 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+topSecretDoc3 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+write
+topSecretDoc2 knowsTopSecrets knowsSecrets
+There is something wrong with this command...
+write
+topSecretDoc1 knowsTopSecrets knowsSomeStuff
+There is something wrong with this command...
+write
+topSecretDoc3 knowsTopSecrets knowsNothing
+There is something wrong with this command...
+upload
+secretDoc1 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+secretDoc2 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+secretDoc3 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+write
+secretDoc2 knowsSecrets knowsNothing
+There is something wrong with this command...
+write
+secretDoc1 knowsSecrets knowsSomeStuff
+There is something wrong with this command...
+upload
+confidentialDoc1 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc2 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc3 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+write
+confidentialDoc3 knowsSomeStuff knowsNothing
+There is something wrong with this command...
+exit

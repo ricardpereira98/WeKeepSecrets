@@ -1,0 +1,147 @@
+userdocs
+alice official
+userdocs
+alice classified
+register
+clerk knowsNothing official
+register
+officer knowsSomeStuff confidential
+register
+officer knowsSecrets secret
+register
+officer knowsTopSecrets topsecret
+userdocs
+knowsNothing classified
+userdocs
+knowsNothing official
+userdocs
+knowsSecrets classified
+upload
+officialDoc1 knowsNothing official
+This document is an official document of user knowsNothing!
+upload
+officialDoc2 knowsNothing official
+This document is an official document of user knowsNothing!
+upload
+officialDoc3 knowsNothing official
+This document is an official document of user knowsNothing!
+upload
+officialDoc1 knowsTopSecrets official
+This document is an official document of user knowsTopSecrets!
+upload
+officialDoc2 knowsTopSecrets official
+This document is an official document of user knowsTopSecrets!
+upload
+officialDoc3 knowsTopSecrets official
+This document is an official document of user knowsTopSecrets!
+upload
+confidentialDoc knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+upload
+topSecretDoc1 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+topSecretDoc2 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+topSecretDoc3 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+secretDoc knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+confidentialDoc1 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc2 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc3 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+userdocs
+knowsNothing official
+userdocs
+knowsTopSecrets classified
+read
+confidentialDoc3 knowsSomeStuff knowsSecrets
+write
+confidentialDoc3 knowsSomeStuff knowsTopSecrets
+This document is a confidential document of user knowsSomeStuff was updated!
+read
+confidentialDoc3 knowsSomeStuff knowsSomeStuff
+userdocs
+knowsSomeStuff classified
+grant
+topSecretDoc2 knowsTopSecrets knowsSomeStuff
+read
+topSecretDoc2 knowsTopSecrets knowsSomeStuff
+grant
+topSecretDoc2 knowsTopSecrets knowsSecrets
+read
+topSecretDoc2 knowsTopSecrets knowsSecrets
+write
+topSecretDoc2 knowsTopSecrets knowsTopSecrets
+This document is a topsecret document of user knowsTopSecrets was updated!
+revoke
+topSecretDoc2 knowsTopSecrets knowsSecrets
+revoke
+topSecretDoc2 knowsTopSecrets knowsSecrets
+grant
+topSecretDoc2 knowsTopSecrets knowsSecrets
+read
+topSecretDoc1 knowsTopSecrets knowsTopSecrets
+grant
+topSecretDoc3 knowsTopSecrets knowsSomeStuff
+grant
+topSecretDoc3 knowsTopSecrets knowsSecrets
+userdocs
+knowsTopSecrets classified
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsTopSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc1 knowsNothing knowsTopSecrets
+read
+officialDoc1 knowsNothing knowsSomeStuff
+read
+officialDoc2 knowsNothing knowsSomeStuff
+read
+officialDoc2 knowsNothing knowsTopSecrets
+read
+officialDoc2 knowsNothing knowsSecrets
+userdocs
+knowsNothing official
+write
+secretDoc knowsSecrets knowsTopSecrets
+This document is a secret document of user knowsSecrets and was updated!
+read
+secretDoc knowsSecrets knowsTopSecrets
+grant
+secretDoc knowsSecrets knowsSomeStuff
+read
+secretDoc knowsSecrets knowsSomeStuff
+write
+confidentialDoc knowsSecrets knowsSomeStuff
+This document is a confidential document of user knowsSecrets and was updated!
+read
+confidentialDoc knowsSecrets knowsTopSecrets
+userdocs
+knowsSecrets classified
+exit

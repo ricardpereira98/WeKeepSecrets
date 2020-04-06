@@ -1,0 +1,20 @@
+listusers
+register
+clerk knowsNothing official
+register
+officer knowsSomeStuff confidential
+register
+officer knowsSecrets secret
+register
+officer knowsTopSecrets topsecret
+register
+CLERK bob official
+register
+Officer alice topsecret
+listusers
+register
+clerk knowsNothing official
+register
+officer knowsNothing secret
+listusers
+exit

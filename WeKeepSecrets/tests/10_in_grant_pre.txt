@@ -1,0 +1,47 @@
+register
+clerk knowsNothing official
+register
+officer knowsSomeStuff1 confidential
+register
+officer knowsSomeStuff2 confidential
+register
+officer knowsSomeStuff3 confidential
+register
+officer knowsSecrets secret
+register
+officer knowsTopSecrets topsecret
+listusers
+upload
+secretDoc1 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+secretDoc2 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+secretDoc3 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+grant
+secretDoc3 knowsSecrets alice
+grant
+secretDoc2 bob knowsSecrets
+grant
+secretDoc1 knowsSecrets knowsNothing
+grant
+anotherSecretDoc knowsSecrets knowsSomeStuff1
+grant
+secretDoc1 knowsSecrets knowsTopSecrets
+grant
+secretDoc1 knowsSecrets knowsSomeStuff1
+grant
+secretDoc1 knowsSecrets knowsSomeStuff2
+grant
+secretDoc1 knowsSecrets knowsSomeStuff3
+grant
+secretDoc2 knowsSecrets knowsSomeStuff3
+grant
+secretDoc2 knowsSecrets knowsSomeStuff1
+grant
+secretDoc1 knowsSecrets knowsSomeStuff2
+grant
+secretDoc2 knowsSecrets knowsSomeStuff3
+exit
