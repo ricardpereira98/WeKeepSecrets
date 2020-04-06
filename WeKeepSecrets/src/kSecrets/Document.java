@@ -7,6 +7,7 @@ public interface Document {
 	String getDescription();
 	User getAccesses();
 	String getManager();
+	void newDescription(String newDescription);
 	
 	
 }

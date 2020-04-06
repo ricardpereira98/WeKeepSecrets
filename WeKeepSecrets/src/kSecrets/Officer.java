@@ -1,7 +1,7 @@
 package kSecrets;
 
 public class Officer extends AbstractUserClass {
-	private static final int DEFAULT_SIZE = 500;
+	private static final int DEFAULT_SIZE = 50;
 	private Document[] documents;
 	private int counter;
 
@@ -52,12 +52,10 @@ public class Officer extends AbstractUserClass {
 		int result = -1;
 
 		for (int i = 0; i < counter && !found; i++) {
-			if (documents[i].getDocName().toUpperCase().equals(docName.toUpperCase()))
+			if (documents[i].getDocName().toUpperCase().equals(docName.toUpperCase())) {
 				found = true;
-			else
-				i++;
-			if (found)
 				result = i;
+			}
 		}
 		return result;
 	}

@@ -1,7 +1,7 @@
 package kSecrets;
 
 public class Clerk extends AbstractUserClass {
-	private static final int DEFAULT_SIZE = 500;
+	private static final int DEFAULT_SIZE = 50;
 	private Document[] docs;
 	private int counter;
 
@@ -51,12 +51,10 @@ public class Clerk extends AbstractUserClass {
 		int result = -1;
 
 		for (int i = 0; i < counter && !found; i++) {
-			if (docs[i].getDocName().toUpperCase().equals(docName.toUpperCase()))
+			if (docs[i].getDocName().toUpperCase().equals(docName.toUpperCase())) {
 				found = true;
-			else
-				i++;
-			if (found)
 				result = i;
+			}
 		}
 		return result;
 	}

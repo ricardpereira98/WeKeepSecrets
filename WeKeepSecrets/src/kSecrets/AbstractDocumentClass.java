@@ -6,7 +6,7 @@ public abstract class AbstractDocumentClass implements Document {
 	private String securityLevel;
 	private String description;
 
-	protected AbstractDocumentClass(String manager, String docName, String securityLevel, String description) {
+	protected AbstractDocumentClass(String docName, String manager, String securityLevel, String description) {
 		this.docName = docName;
 		this.manager = manager;
 		this.securityLevel = securityLevel;
@@ -37,5 +37,9 @@ public abstract class AbstractDocumentClass implements Document {
 
 	@Override
 	public abstract User getAccesses();
+
+	public void newDescription(String description) {
+		this.description = description;
+	}
 
 }
