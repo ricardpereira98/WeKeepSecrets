@@ -22,10 +22,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		docs = new Document[DEFAULT_SIZE];
 	}
 
+	@Override
 	public boolean hasUserID(String id) {
 		return searchIndexUserID(id) >= 0;
 	}
 
+	@Override
 	public void addClerk(String kind, String userId, String clearanceLevel) {
 		if (isFull()) {
 			resize();
@@ -34,6 +36,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		counter++;
 	}
 
+	@Override
 	public void addOfficer(String kind, String userId, String clearanceLevel) {
 		if (isFull()) {
 			resize();
@@ -42,10 +45,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		counter++;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return counter == 0;
 	}
 
+	@Override
 	public Iterator listUsers() {
 		return new IteratorClass(users, counter);
 	}
@@ -63,7 +68,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	@Override
 	public void uploadDoc(String documentName, String userID, String secLvl, String description) {
 		users[searchIndexUserID(userID)].addDoc(documentName, userID, secLvl, description);
-
 	}
 
 	@Override
@@ -84,16 +88,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	@Override
 	public String getDescription(String documentName, String managerID) {
 		return docs[searchIndexDoc(documentName, managerID)].getDescription();
-	}
-
-	@Override
-	public void getAcess(String documentName, String managerID, String grantedID) {
-		
-	}
-
-	@Override
-	public boolean hasAcess(String documentName, String managerID, String grantedID) {
-		return false;
 	}
 
 	@Override
@@ -189,5 +183,44 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		return value;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//ACESSOS
+	
+	@Override
+	public boolean hasAcess(String documentName, String managerID, String grantedID) {
+		return docs[searchIndexDoc(documentName, managerID)].hasAcess(grantedID);
+	}
+
+	@Override
+	public boolean isRevoked(String documentName, String managerID, String grantedID) {
+		return docs[searchIndexDoc(documentName, managerID)].isRevoked(grantedID);
+	}
+	
+	@Override
+	public void getAcess(String documentName, String managerID, String grantedID) {
+		User user1 = users[searchIndexUserID(grantedID)];
+		docs[searchIndexDoc(documentName, managerID)].getAccess(user1);
+		users[searchIndexUserID(managerID)].grant();
+	}
+
+	@Override
+	public void getRevoked(String documentName, String managerID, String grantedID) {
+		User user1 = users[searchIndexUserID(grantedID)];
+		docs[searchIndexDoc(documentName, managerID)].removeAcess(user1);
+	}
+	
 
 }

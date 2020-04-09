@@ -11,9 +11,9 @@ public class OfficialDocuments extends AbstractDocumentClass {
 	}
 
 	@Override
-	public User getAccesses() {
-		// TODO Auto-generated method stub
-		return null;
+	public void getAccess(User user1) {
+		
+		
 	}
 
 }

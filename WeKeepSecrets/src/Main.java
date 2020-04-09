@@ -17,6 +17,7 @@ public class Main {
 	private static final String LIST_USERS = "LISTUSERS";
 	private static final String UPLOAD = "UPLOAD";
 	private static final String TOP_LEAKED = "TOPLEAKED";
+	private static final String TOP_GRANTED = "TOPGRANTED";
 	private static final String USER_DOCS = "USERDOCS";
 	private static final String REVOKE = "REVOKE";
 	private static final String GRANT = "GRANT";
@@ -39,6 +40,9 @@ public class Main {
 	public static final String CLERK_ERROR = "Grants can only be issued between officers.";
 	public static final String ALREADY_ACCESS = "Already has access to document %s.\n";
 	public static final String GRANT_DOESNT_EXIST = "Grant for officer %s does not exist.\n";
+	public static final String GRANT_REVOKED = "Grant for officer %s was already revoked.\n";
+	public static final String GRANT_GRANTED = "Access to document %s has been granted.\n";
+	public static final String GRANT_BEEN_REVOKED =  "Access to document %s has been revoked.\n";
 	public static final String QUIT_MSG = "Bye!";
 
 	public static void main(String[] args) {
@@ -87,7 +91,11 @@ public class Main {
 			case TOP_LEAKED:
 				listLeakedDocs(kSecrets);
 				break;
-
+				
+			case TOP_GRANTED:
+				listGrantedUserss(kSecrets);
+				break;
+				
 			default:
 				System.out.println(UNKNOWN_COMMAND);
 			}
@@ -98,9 +106,10 @@ public class Main {
 		in.close();
 	}
 
+
 	private static String getCommand(Scanner in) {
 		String input;
-		// System.out.print("> ");
+		//System.out.print("> ");
 		input = in.nextLine().toUpperCase();
 		return input;
 	}
@@ -132,9 +141,10 @@ public class Main {
 		}
 
 		else {
-			if (kSecrets.isClearanceOfficial(clearanceLevel)) { // fazer verificacao classe topo
+			if (kSecrets.isClearanceOfficial(clearanceLevel)) {
 				kSecrets.addClerk(kind, userID, clearanceLevel);
-			} else {
+			} 
+			else {
 				kSecrets.addOfficer(kind, userID, clearanceLevel);
 			}
 			System.out.printf(USER_REGISTERED, userID);
@@ -253,7 +263,7 @@ public class Main {
 			System.out.printf(NOT_REGISTERED);
 		}
 
-		else if (kSecrets.isClerkUser(managerID) || kSecrets.isClerkUser(grantedID)) {
+		else if ((kSecrets.isClerkUser(grantedID)) || kSecrets.isClerkUser(managerID)) {
 			System.out.printf(CLERK_ERROR);
 		}
 
@@ -261,14 +271,13 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl)
-				|| kSecrets.hasAcess(documentName, managerID, grantedID)) {
+		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl) || kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(ALREADY_ACCESS, documentName);
 		}
 
 		else {
 			kSecrets.getAcess(documentName, managerID, grantedID);
-			System.out.println("Access to document " + documentName + " has been granted.");
+			System.out.printf(GRANT_GRANTED, documentName);
 		}
 	}
 
@@ -294,7 +303,15 @@ public class Main {
 		else if (!kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(GRANT_DOESNT_EXIST, documentName);
 		}
+		
+		else if(kSecrets.isRevoked(documentName, managerID, grantedID)) {
+			System.out.printf(GRANT_REVOKED, grantedID);
+		}
 
+		else {
+			kSecrets.getRevoked(documentName, managerID, grantedID);
+			System.out.printf(GRANT_BEEN_REVOKED, documentName);
+		}
 	}
 
 	private static void listUserDocs(Scanner in, KeepingSecrets kSecrets) {
@@ -306,10 +323,69 @@ public class Main {
 		if (!kSecrets.hasUserID(userId)) {
 			System.out.printf(NOT_REGISTERED);
 		}
+		
+		
+		/**
+		 * if (only read){
+		 * print( doc name: user id, security level) 
+		 * }
+		 * 
+		 * else {
+		 * 		line 1: doc name, security level, number of accesses
+		 *		line 2: user id, security level, type of access (read or write), more recent accesses shown last.
+		 *		line 3: grants given and revoked - user id, security level, more recent actions shown last.
+		 * }
+		 */
+	
+		
 	}
 
 	private static void listLeakedDocs(KeepingSecrets kSecrets) {
 
+		/**
+		 * - percorrer todas os docs
+		 * - percorrer todos os acessos
+		 * 
+		 * ordenar vetor
+		 * 
+		 * int i = 0
+		 * (while has next && i<10 && grantpositive(doc)) {
+		 * 		print; i++
+		 *  }
+		 * 
+		 * boolean grantpositive(){
+		 * return grantedTimes()>0;
+		 * }
+		 */
+		
+		
+		
+		
 	}
 
+	private static void listGrantedUserss(KeepingSecrets kSecrets) {
+		
+		/**
+		 * 
+		 * not sure
+		 * 
+		 * - percorrer todas os users
+		 * - get granted times
+		 * 
+		 * ordenar vetor
+		 * 
+		 * int i = 0
+		 * (while has next && i<10 && grantpositive(doc)) {
+		 * 		print; i++
+		 *  }
+		 * 
+		 * boolean grantpositive(){
+		 * return grantedTimes()>0;
+		 * }
+		 */
+		
+		
+		
+	}
+	
 }

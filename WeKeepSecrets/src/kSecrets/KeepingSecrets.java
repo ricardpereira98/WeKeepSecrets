@@ -29,8 +29,12 @@ public interface KeepingSecrets {
 	void getAcess(String documentName, String managerID, String grantedID);
 
 	boolean hasAcess(String documentName, String managerID, String grantedID);
+	
+	boolean isRevoked(String documentName, String managerID, String grantedID);
 
 	boolean isClearanceOfficial(String clearanceLevel);
 
 	boolean isClerkUser(String userID);
+
+	void getRevoked(String documentName, String managerID, String grantedID);
 }

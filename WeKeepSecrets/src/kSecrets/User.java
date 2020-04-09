@@ -12,4 +12,6 @@ public interface User {
 
 	boolean hasThisDoc(String docName);
 
+	void grant();
+
 }

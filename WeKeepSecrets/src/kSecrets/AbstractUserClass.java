@@ -4,11 +4,13 @@ public abstract class AbstractUserClass implements User {
 	private String id;
 	private String kind;
 	private String clearanceLevel;
+	private int grantingTimes;
 
 	public AbstractUserClass(String kind, String id, String clearanceLevel) {
 		this.kind = kind;
 		this.id = id;
 		this.clearanceLevel = clearanceLevel;
+		grantingTimes = 0;
 	}
 
 	/**
@@ -19,7 +21,7 @@ public abstract class AbstractUserClass implements User {
 	}
 
 	/**
-	 * @return
+	 * @return the user's kind
 	 */
 	public String getKind() {
 		return kind.toLowerCase();
@@ -32,4 +34,17 @@ public abstract class AbstractUserClass implements User {
 	public abstract void addDoc(String docName, String manager, String securityLevel, String description);
 
 	public abstract boolean hasThisDoc(String docName);
+	
+	
+	public void grant() {
+		grantingTimes++;
+	}
+	
+	
+	public int grantingTimes() {
+		return this.grantingTimes;
+		
+	}
+	
+	
 }
