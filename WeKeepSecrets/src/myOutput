@@ -1,0 +1,13 @@
+User knowsNothing was registered.
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+User Q was registered.
+clerk knowsNothing official
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+officer Q topsecret
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.

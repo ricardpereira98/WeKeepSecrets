@@ -42,7 +42,7 @@ public class Main {
 	public static final String GRANT_DOESNT_EXIST = "Grant for officer %s does not exist.\n";
 	public static final String GRANT_REVOKED = "Grant for officer %s was already revoked.\n";
 	public static final String GRANT_GRANTED = "Access to document %s has been granted.\n";
-	public static final String GRANT_BEEN_REVOKED =  "Access to document %s has been revoked.\n";
+	public static final String GRANT_BEEN_REVOKED = "Access to document %s has been revoked.\n";
 	public static final String QUIT_MSG = "Bye!";
 
 	public static void main(String[] args) {
@@ -91,11 +91,11 @@ public class Main {
 			case TOP_LEAKED:
 				listLeakedDocs(kSecrets);
 				break;
-				
+
 			case TOP_GRANTED:
 				listGrantedUserss(kSecrets);
 				break;
-				
+
 			default:
 				System.out.println(UNKNOWN_COMMAND);
 			}
@@ -106,10 +106,9 @@ public class Main {
 		in.close();
 	}
 
-
 	private static String getCommand(Scanner in) {
 		String input;
-		//System.out.print("> ");
+		// System.out.print("> ");
 		input = in.nextLine().toUpperCase();
 		return input;
 	}
@@ -141,12 +140,7 @@ public class Main {
 		}
 
 		else {
-			if (kSecrets.isClearanceOfficial(clearanceLevel)) {
-				kSecrets.addClerk(kind, userID, clearanceLevel);
-			} 
-			else {
-				kSecrets.addOfficer(kind, userID, clearanceLevel);
-			}
+			kSecrets.addUser(kind, userID, clearanceLevel);
 			System.out.printf(USER_REGISTERED, userID);
 		}
 
@@ -271,7 +265,8 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl) || kSecrets.hasAcess(documentName, managerID, grantedID)) {
+		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl)
+				|| kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(ALREADY_ACCESS, documentName);
 		}
 
@@ -303,8 +298,8 @@ public class Main {
 		else if (!kSecrets.hasAcess(documentName, managerID, grantedID)) {
 			System.out.printf(GRANT_DOESNT_EXIST, documentName);
 		}
-		
-		else if(kSecrets.isRevoked(documentName, managerID, grantedID)) {
+
+		else if (kSecrets.isRevoked(documentName, managerID, grantedID)) {
 			System.out.printf(GRANT_REVOKED, grantedID);
 		}
 
@@ -323,69 +318,47 @@ public class Main {
 		if (!kSecrets.hasUserID(userId)) {
 			System.out.printf(NOT_REGISTERED);
 		}
-		
-		
+
 		/**
-		 * if (only read){
-		 * print( doc name: user id, security level) 
-		 * }
+		 * if (only read){ print( doc name: user id, security level) }
 		 * 
-		 * else {
-		 * 		line 1: doc name, security level, number of accesses
-		 *		line 2: user id, security level, type of access (read or write), more recent accesses shown last.
-		 *		line 3: grants given and revoked - user id, security level, more recent actions shown last.
-		 * }
+		 * else { line 1: doc name, security level, number of accesses line 2: user id,
+		 * security level, type of access (read or write), more recent accesses shown
+		 * last. line 3: grants given and revoked - user id, security level, more recent
+		 * actions shown last. }
 		 */
-	
-		
+
 	}
 
 	private static void listLeakedDocs(KeepingSecrets kSecrets) {
 
 		/**
-		 * - percorrer todas os docs
-		 * - percorrer todos os acessos
+		 * - percorrer todas os docs - percorrer todos os acessos
 		 * 
 		 * ordenar vetor
 		 * 
-		 * int i = 0
-		 * (while has next && i<10 && grantpositive(doc)) {
-		 * 		print; i++
-		 *  }
+		 * int i = 0 (while has next && i<10 && grantpositive(doc)) { print; i++ }
 		 * 
-		 * boolean grantpositive(){
-		 * return grantedTimes()>0;
-		 * }
+		 * boolean grantpositive(){ return grantedTimes()>0; }
 		 */
-		
-		
-		
-		
+
 	}
 
 	private static void listGrantedUserss(KeepingSecrets kSecrets) {
-		
+
 		/**
 		 * 
 		 * not sure
 		 * 
-		 * - percorrer todas os users
-		 * - get granted times
+		 * - percorrer todas os users - get granted times
 		 * 
 		 * ordenar vetor
 		 * 
-		 * int i = 0
-		 * (while has next && i<10 && grantpositive(doc)) {
-		 * 		print; i++
-		 *  }
+		 * int i = 0 (while has next && i<10 && grantpositive(doc)) { print; i++ }
 		 * 
-		 * boolean grantpositive(){
-		 * return grantedTimes()>0;
-		 * }
+		 * boolean grantpositive(){ return grantedTimes()>0; }
 		 */
-		
-		
-		
+
 	}
-	
+
 }

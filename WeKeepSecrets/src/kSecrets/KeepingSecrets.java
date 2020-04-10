@@ -4,9 +4,7 @@ public interface KeepingSecrets {
 
 	boolean hasUserID(String userId);
 
-	void addClerk(String kind, String userId, String clearanceLevel);
-
-	void addOfficer(String kind, String userId, String clearanceLevel);
+	void addUser(String kind, String userId, String clearanceLevel);
 
 	boolean isEmpty();
 
@@ -26,17 +24,15 @@ public interface KeepingSecrets {
 
 	String getDescription(String documentName, String managerID);
 
-	void getAcess(String documentName, String managerID, String grantedID);
+	// void getAcess(String documentName, String managerID, String grantedID);
 
-	boolean hasAcess(String documentName, String managerID, String grantedID);
-	
-	boolean isRevoked(String documentName, String managerID, String grantedID);
+	// boolean hasAcess(String documentName, String managerID, String grantedID);
 
+	// boolean isRevoked(String documentName, String managerID, String grantedID);
+
+	// void getRevoked(String documentName, String managerID, String grantedID);
 	boolean isClearanceOfficial(String clearanceLevel);
 
 	boolean isClerkUser(String userID);
 
-	void getRevoked(String documentName, String managerID, String grantedID);
-	
-	void addDocument(String docName, String manager, String secLevel, String description);
 }
