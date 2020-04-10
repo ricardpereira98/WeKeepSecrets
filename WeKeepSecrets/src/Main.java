@@ -197,7 +197,7 @@ public class Main {
 
 		documentName = in.next().trim();
 		managerID = in.next().trim();
-		updaterID = in.nextLine();
+		updaterID = in.nextLine().trim();
 		newDescription = in.nextLine().trim();
 
 		String docSecLvl = kSecrets.getDocSecurityLevel(documentName, updaterID);

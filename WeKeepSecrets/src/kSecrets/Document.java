@@ -6,7 +6,7 @@ public interface Document {
 	String getSecurityLevel();
 	String getDescription();
 	String getManager();
-	void newDescription(String newDescription);
+	void setNewDescription(String newDescription);
 	void getAccess(User user1);
 	boolean hasAcess(String userID);
 	void getAcess(User userID);

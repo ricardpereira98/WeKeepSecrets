@@ -12,14 +12,20 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private static final int CONFIDENTIAL_VALUE = 1;
 	private static final int OFFICIAL_VALUE = 0;
 	private User[] users;
-	private Document[] docs;
 	static final int DEFAULT_SIZE = 50;
-	private int counter;
+	private int counterUsers;
+	private int counterDocs;
 
+	//test
+	
+	private Document[] docs;
+	
+	
 	public KeepingSecretsClass() {
-		counter = 0;
+		counterUsers = 0;
+		counterDocs = 0;
 		users = new User[DEFAULT_SIZE];
-		docs = new Document[DEFAULT_SIZE];
+		docs  = new DocumentClass[DEFAULT_SIZE];
 	}
 
 	@Override
@@ -32,8 +38,8 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		if (isFull()) {
 			resize();
 		}
-		users[counter] = new Clerk(kind, userId, clearanceLevel);
-		counter++;
+		users[counterUsers] = new Clerk(kind, userId, clearanceLevel);
+		counterUsers++;
 	}
 
 	@Override
@@ -41,18 +47,18 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		if (isFull()) {
 			resize();
 		}
-		users[counter] = new Officer(kind, userId, clearanceLevel);
-		counter++;
+		users[counterUsers] = new Officer(kind, userId, clearanceLevel);
+		counterUsers++;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return counter == 0;
+		return counterUsers == 0;
 	}
 
 	@Override
 	public Iterator listUsers() {
-		return new IteratorClass(users, counter);
+		return new IteratorClass(users, counterUsers);
 	}
 
 	@Override
@@ -72,22 +78,23 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public boolean isDocOfficial(String documentName, String userID) {
-		return docs[searchIndexDoc(documentName, userID)].getSecurityLevel().toUpperCase().equals(OFFICIAL);
+		return users[searchIndexUserID(userID)].getDocument(documentName).getSecurityLevel().toUpperCase()
+				.equals(OFFICIAL);
 	}
 
 	@Override
 	public String getDocSecurityLevel(String documentName, String userID) {
-		return docs[searchIndexDoc(documentName, userID)].getSecurityLevel();
+		return users[searchIndexUserID(userID)].getDocument(documentName).getSecurityLevel();
 	}
 
 	@Override
 	public void updateDescription(String documentName, String managerID, String newDescription) {
-		docs[searchIndexDoc(documentName, managerID)].newDescription(newDescription);
+		users[searchIndexUserID(managerID)].getDocument(documentName).setNewDescription(newDescription);
 	}
 
 	@Override
 	public String getDescription(String documentName, String managerID) {
-		return docs[searchIndexDoc(documentName, managerID)].getDescription();
+		return users[searchIndexUserID(managerID)].getDocument(documentName).getDescription();
 	}
 
 	@Override
@@ -105,55 +112,26 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private String getUserKind(String userID) {
 		return users[searchIndexUserID(userID)].getKind();
 	}
-	
+
 	private int searchIndexUserID(String id) {
-		int i = 0;
 		int result = -1;
 		boolean found = false;
-		while (i < counter && !found)
-			if (users[i].getID().toUpperCase().equals(id.toUpperCase()))
+		for (int i = 0; i < counterUsers && !found; i++) {
+			if (users[i].getID().toUpperCase().equals(id.toUpperCase())) {
 				found = true;
-			else
-				i++;
-		if (found)
-			result = i;
-		return result;
-	}
-
-	/**
-	 * 
-	 * @param documentName
-	 * @param userID
-	 * @return the documentName of the user userID
-	 */
-
-	private int searchIndexDoc(String documentName, String userID) {
-		int i = 0;
-		int result = -1;
-		boolean found = false;
-
-		String indexDocsName = docs[i].getDocName().toUpperCase();
-		String givenDocsName = documentName.toUpperCase();
-		String indexDocsManager = docs[i].getManager().toUpperCase();
-		String givenManager = userID.toUpperCase();
-
-		while (i < counter && !found)
-			if (indexDocsName.equals(givenDocsName) && indexDocsManager.equals(givenManager))
-				found = true;
-			else
-				i++;
-		if (found)
-			result = i;
+				result = i;
+			}
+		}
 		return result;
 	}
 
 	private boolean isFull() {
-		return counter == users.length;
+		return counterUsers == users.length;
 	}
 
 	private void resize() {
 		User tmp[] = new User[2 * users.length];
-		for (int i = 0; i < counter; i++)
+		for (int i = 0; i < counterUsers; i++)
 			tmp[i] = users[i];
 		users = tmp;
 	}
@@ -183,22 +161,9 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		return value;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//ACESSOS
-	
+
+	// ACESSOS
+
 	@Override
 	public boolean hasAcess(String documentName, String managerID, String grantedID) {
 		return docs[searchIndexDoc(documentName, managerID)].hasAcess(grantedID);
@@ -208,7 +173,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	public boolean isRevoked(String documentName, String managerID, String grantedID) {
 		return docs[searchIndexDoc(documentName, managerID)].isRevoked(grantedID);
 	}
-	
+
 	@Override
 	public void getAcess(String documentName, String managerID, String grantedID) {
 		User user1 = users[searchIndexUserID(grantedID)];
@@ -221,6 +186,5 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User user1 = users[searchIndexUserID(grantedID)];
 		docs[searchIndexDoc(documentName, managerID)].removeAcess(user1);
 	}
-	
 
 }

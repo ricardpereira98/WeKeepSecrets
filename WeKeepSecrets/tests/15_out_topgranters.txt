@@ -118,7 +118,7 @@ Access to document topSecretDoc9b has been revoked.
 Access to document topSecretDoc4b has been revoked.
 Access to document topSecretDoc1b has been revoked.
 Access to document topSecretDoc1a has been revoked.
-Grant for officer knowsTopSecrets1 was already revoked.
+Grant for officer knowsSecrets2 was already revoked.
 knowsTopSecrets1 topsecret 2 7 2
 knowsSecrets9 secret 2 4 0
 knowsTopSecrets2 topsecret 2 4 0

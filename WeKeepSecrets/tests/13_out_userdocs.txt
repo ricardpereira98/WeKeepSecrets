@@ -51,7 +51,7 @@ Access to document topSecretDoc2 has been granted.
 Document: This document is a topsecret document of user knowsTopSecrets!
 Document topSecretDoc2 was updated.
 Access to document topSecretDoc2 has been revoked.
-Grant for officer knowsTopSecrets was already revoked.
+Grant for officer knowsSecrets was already revoked.
 Access to document topSecretDoc2 has been granted.
 Document: This document is a topsecret document of user knowsTopSecrets!
 Access to document topSecretDoc3 has been granted.
@@ -61,7 +61,7 @@ knowsTopSecrets [topsecret, read]
 There are no grants.
 topSecretDoc2 topsecret 3
 knowsSomeStuff [confidential, read], knowsSecrets [secret, read], knowsTopSecrets [topsecret, write]
-knowsSomeStuff [confidential, grant], knowsSecrets [secret, revoked], knowsSecrets [secret, grant]
+knowsSomeStuff [confidential, grant], knowsSecrets [secret, grant], knowsSecrets [secret, revoked], knowsSecrets [secret, grant]
 topSecretDoc3 topsecret 0
 There are no accesses.
 knowsSomeStuff [confidential, grant], knowsSecrets [secret, grant]

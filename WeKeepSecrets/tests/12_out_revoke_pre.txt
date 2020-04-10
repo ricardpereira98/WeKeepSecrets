@@ -21,9 +21,9 @@ Access to document secretDoc3 has been granted.
 Access to document secretDoc3 has been granted.
 Access to document secretDoc3 has been granted.
 Access to document secretDoc1 has been revoked.
-Grant for officer knowsSecrets was already revoked.
+Grant for officer knowsSomeStuff1 was already revoked.
 Access to document secretDoc2 has been revoked.
-Grant for officer knowsSecrets was already revoked.
+Grant for officer knowsSomeStuff3 was already revoked.
 Access to document secretDoc3 has been revoked.
-Grant for officer knowsSecrets was already revoked.
+Grant for officer knowsSomeStuff2 was already revoked.
 Bye!

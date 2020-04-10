@@ -37,4 +37,6 @@ public interface KeepingSecrets {
 	boolean isClerkUser(String userID);
 
 	void getRevoked(String documentName, String managerID, String grantedID);
+	
+	void addDocument(String docName, String manager, String secLevel, String description);
 }

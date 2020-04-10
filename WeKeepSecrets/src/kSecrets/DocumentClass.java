@@ -1,6 +1,6 @@
 package kSecrets;
 
-public abstract class AbstractDocumentClass implements Document {
+public class DocumentClass implements Document {
 	private String docName;
 	private String manager;
 	private String securityLevel;
@@ -16,7 +16,7 @@ public abstract class AbstractDocumentClass implements Document {
 	private int counter_revoked;
 	
 	
-	protected AbstractDocumentClass(String docName, String manager, String securityLevel, String description) {
+	public DocumentClass(String docName, String manager, String securityLevel, String description) {
 		this.docName = docName;
 		this.manager = manager;
 		this.securityLevel = securityLevel;
@@ -52,7 +52,7 @@ public abstract class AbstractDocumentClass implements Document {
 	}
 	
 	@Override
-	public void newDescription(String description) {
+	public void setNewDescription(String description) {
 		this.description = description;
 	}
 	

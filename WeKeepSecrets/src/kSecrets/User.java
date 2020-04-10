@@ -11,6 +11,8 @@ public interface User {
 	void addDoc(String docName, String userID, String securityLevel, String description);
 
 	boolean hasThisDoc(String docName);
+	
+	Document getDocument(String docName);
 
 	void grant();
 

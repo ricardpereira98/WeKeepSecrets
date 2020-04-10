@@ -104,7 +104,7 @@ Document: This document is an secret document of user knowsTopSecrets2!
 Access to document topSecretDoc2a has been revoked.
 Access to document topSecretDoc2b has been granted.
 Document: This document is an secret document of user knowsTopSecrets2!
-Grant for officer knowsTopSecrets2 was already revoked.
+Grant for officer knowsSomeStuff1 was already revoked.
 Access to document secretDoc5b has been granted.
 Document: This document is an secret document of user knowsSecrets5!
 Access to document secretDoc5a has been granted.

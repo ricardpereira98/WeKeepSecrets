@@ -46,9 +46,9 @@ Document confidentialDoc3 was updated.
 Document confidentialDoc1 was updated.
 Document confidentialDoc2 was updated.
 Document confidentialDoc3 was updated.
-Document: This document is a confidential document that was updated twice!
+Document: This document is a confidential document that was twice!
 Document confidentialDoc1 was updated.
 Document confidentialDoc1 was updated.
-Document: This document is a confidential document that was updated thrice!
-Document: This document is a confidential document that was updated thrice!
+Document: This document is a confidential document that was thrice!
+Document: This document is a confidential document that was thrice!
 Bye!

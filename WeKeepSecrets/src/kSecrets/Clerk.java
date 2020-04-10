@@ -2,7 +2,7 @@ package kSecrets;
 
 public class Clerk extends AbstractUserClass {
 	private static final int DEFAULT_SIZE = 50;
-	private Document[] docs;
+
 	private int counter;
 
 	public Clerk(String kind, String id, String clearanceLevel) {
@@ -45,10 +45,11 @@ public class Clerk extends AbstractUserClass {
 	public boolean hasThisDoc(String docName) {
 		return searchIndexDocs(docName) >= 0;
 	}
+	
 
 	private int searchIndexDocs(String docName) {
-		boolean found = false;
 		int result = -1;
+		boolean found = false;
 
 		for (int i = 0; i < counter && !found; i++) {
 			if (docs[i].getDocName().toUpperCase().equals(docName.toUpperCase())) {
@@ -57,6 +58,11 @@ public class Clerk extends AbstractUserClass {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public Document getDocument(String docName) {
+		return docs[searchIndexDocs(docName)];
 	}
 
 }

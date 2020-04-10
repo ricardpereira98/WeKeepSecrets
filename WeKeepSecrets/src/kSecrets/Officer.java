@@ -7,7 +7,7 @@ public class Officer extends AbstractUserClass {
 
 	public Officer(String kind, String id, String clearanceLevel) {
 		super(kind, id, clearanceLevel);
-		documents = new ClassifiedDocuments[500];
+		
 		counter = 0;
 
 	}
@@ -17,7 +17,7 @@ public class Officer extends AbstractUserClass {
 		if (isFull()) {
 			resize();
 		}
-		documents[counter] = new ClassifiedDocuments(docName, manager, securityLevel, description);
+		documents[counter] = new Document(docName, manager, securityLevel, description);
 		counter++;
 
 	}
@@ -60,4 +60,10 @@ public class Officer extends AbstractUserClass {
 		return result;
 	}
 
+	@Override
+	public Document getDocument(String docName) {
+		return documents[searchIndexDocs(docName)];
+	}
+
+	//tentar fazer verificaçao na classe topo, adicionar la maybexd
 }
