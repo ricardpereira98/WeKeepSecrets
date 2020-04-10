@@ -194,11 +194,10 @@ public class Main {
 		updaterID = in.nextLine().trim();
 		newDescription = in.nextLine().trim();
 
-		String docSecLvl = kSecrets.getDocSecurityLevel(documentName, updaterID);
-
 		if (kSecrets.hasUserID(managerID) && kSecrets.hasUserID(updaterID)) {
 			if (kSecrets.hasDocumentUploaded(managerID, documentName)) {
 				if (!kSecrets.isDocOfficial(documentName, managerID)) {
+					String docSecLvl = kSecrets.getDocSecurityLevel(documentName, managerID);
 					if (kSecrets.isClearanceHighEnough(updaterID, docSecLvl)) {
 						kSecrets.updateDescription(documentName, managerID, newDescription);
 						System.out.printf(DOC_UPDATED, documentName);
@@ -224,8 +223,6 @@ public class Main {
 		managerID = in.next().trim();
 		readerID = in.nextLine().trim();
 
-		String documentSecurityLevel = kSecrets.getDocSecurityLevel(documentName, managerID);
-
 		if (!(kSecrets.hasUserID(managerID) && kSecrets.hasUserID(readerID))) {
 			System.out.printf(NOT_REGISTERED);
 		}
@@ -234,7 +231,7 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(readerID, documentSecurityLevel)) {
+		else if (kSecrets.isClearanceHighEnough(readerID, kSecrets.getDocSecurityLevel(documentName, managerID))) {
 			System.out.println(INSUFFICIENT_CLEARANCE);
 		}
 

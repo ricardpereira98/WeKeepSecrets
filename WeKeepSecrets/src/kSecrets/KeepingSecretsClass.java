@@ -45,7 +45,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public boolean hasDocumentUploaded(String userID, String docName) {
-		return users[searchIndexUserID(userID)].hasThisDoc(docName, userID);
+		return users[searchIndexUserID(userID)].hasThisDoc(docName);
 	}
 
 	@Override
@@ -60,23 +60,23 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public boolean isDocOfficial(String documentName, String userID) {
-		return users[searchIndexUserID(userID)].getDocument(documentName, userID).getSecurityLevel().toUpperCase()
+		return users[searchIndexUserID(userID)].getDocument(documentName).getSecurityLevel().toUpperCase()
 				.equals(OFFICIAL);
 	}
 
 	@Override
 	public String getDocSecurityLevel(String documentName, String userID) {
-		return users[searchIndexUserID(userID)].getDocument(documentName, userID).getSecurityLevel();
+		return users[searchIndexUserID(userID)].getDocument(documentName).getSecurityLevel();
 	}
 
 	@Override
 	public void updateDescription(String documentName, String managerID, String newDescription) {
-		users[searchIndexUserID(managerID)].getDocument(documentName, managerID).setNewDescription(newDescription);
+		users[searchIndexUserID(managerID)].getDocument(documentName).setNewDescription(newDescription);
 	}
 
 	@Override
 	public String getDescription(String documentName, String managerID) {
-		return users[searchIndexUserID(managerID)].getDocument(documentName, managerID).getDescription();
+		return users[searchIndexUserID(managerID)].getDocument(documentName).getDescription();
 	}
 
 	@Override

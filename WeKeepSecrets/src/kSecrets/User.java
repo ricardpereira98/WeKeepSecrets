@@ -10,10 +10,12 @@ public interface User {
 
 	void addDoc(String docName, String userID, String securityLevel, String description);
 
-	boolean hasThisDoc(String docName, String userID);
+	boolean hasThisDoc(String docName);
 	
-	Document getDocument(String docName, String userID);
+	Document getDocument(String docName);
 
 	void grant();
+	
+	String getType();
 
 }

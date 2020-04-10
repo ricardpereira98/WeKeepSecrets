@@ -1,6 +1,8 @@
 package kSecrets;
 
-public class UserClass implements User {
+public abstract class AbstractUserClass implements User {
+	
+	//getType
 	private static final int DEFAULT_SIZE = 10;
 	private String id;
 	private String kind;
@@ -9,7 +11,7 @@ public class UserClass implements User {
 	private Document[] docs;
 	private int counterDocs;
 
-	public UserClass(String kind, String id, String clearanceLevel) {
+	protected AbstractUserClass(String kind, String id, String clearanceLevel) {
 		this.kind = kind;
 		this.id = id;
 		this.clearanceLevel = clearanceLevel;
@@ -44,8 +46,8 @@ public class UserClass implements User {
 
 	}
 
-	public boolean hasThisDoc(String docName, String userID) {
-		return searchIndexDoc(docName, userID) >= 0;
+	public boolean hasThisDoc(String docName) {
+		return searchIndexDoc(docName) >= 0;
 
 	}
 
@@ -59,13 +61,13 @@ public class UserClass implements User {
 	}
 
 	@Override
-	public Document getDocument(String docName, String userID) {
-		return docs[searchIndexDoc(docName, userID)];
+	public Document getDocument(String docName) {
+		return docs[searchIndexDoc(docName)];
 	}
 
 	// private shit
 
-	private int searchIndexDoc(String documentName, String userID) {
+	private int searchIndexDoc(String documentName) {
 		int result = -1;
 		boolean found = false;
 
@@ -73,10 +75,8 @@ public class UserClass implements User {
 
 			String indexDocsName = docs[i].getDocName().toUpperCase();
 			String givenDocsName = documentName.toUpperCase();
-			String indexDocsManager = docs[i].getManager().toUpperCase();
-			String givenManager = userID.toUpperCase();
 
-			if (indexDocsName.equals(givenDocsName) && indexDocsManager.equals(givenManager)) {
+			if (indexDocsName.equals(givenDocsName)) {
 				found = true;
 				result = i;
 			}
@@ -94,5 +94,9 @@ public class UserClass implements User {
 			tmp[i] = docs[i];
 		docs = tmp;
 	}
+	
+	//abstract methods
+	
+	public abstract String getType();
 
 }
