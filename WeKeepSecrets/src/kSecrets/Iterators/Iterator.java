@@ -1,4 +1,6 @@
-package kSecrets;
+package kSecrets.Iterators;
+
+import kSecrets.Users.*;
 
 public interface Iterator {
 

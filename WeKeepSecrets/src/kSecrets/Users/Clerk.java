@@ -1,4 +1,5 @@
-package kSecrets;
+package kSecrets.Users;
+
 
 public class Clerk extends AbstractUserClass {
 

@@ -1,4 +1,4 @@
-package kSecrets;
+package kSecrets.Users;
 
 public class Officer extends AbstractUserClass {
 

@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import kSecrets.*;
+import kSecrets.Accesses.*;
+import kSecrets.Documents.*;
+import kSecrets.Iterators.*;
+import kSecrets.Users.*;
 
 /**
  * 
@@ -136,11 +140,20 @@ public class Main {
 		clearanceLevel = in.nextLine().trim();
 
 		if (kSecrets.hasUserID(userID)) {
-			System.out.printf(USER_INVALID, userID);
-		}
 
-		else {
-			kSecrets.addUser(kind, userID, clearanceLevel);
+			System.out.printf(USER_INVALID, userID);
+
+		} else {
+
+			if (kSecrets.isClearanceOfficial(clearanceLevel)) {
+
+				kSecrets.addClerk(kind, userID, clearanceLevel);
+
+			} else {
+
+				kSecrets.addOfficer(kind, userID, clearanceLevel);
+			}
+
 			System.out.printf(USER_REGISTERED, userID);
 		}
 
@@ -231,7 +244,8 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(readerID, kSecrets.getDocSecurityLevel(documentName, managerID))) {
+		else if (kSecrets.isClearanceHighEnough(readerID, kSecrets.getDocSecurityLevel(documentName, managerID))) // && !kSecrets.hasAccess())
+		{
 			System.out.println(INSUFFICIENT_CLEARANCE);
 		}
 

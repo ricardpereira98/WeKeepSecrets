@@ -1,8 +1,10 @@
-package kSecrets;
+package kSecrets.Users;
+
+import kSecrets.Documents.*;
 
 public abstract class AbstractUserClass implements User {
-	
-	//getType
+
+	// getType
 	private static final int DEFAULT_SIZE = 10;
 	private String id;
 	private String kind;
@@ -94,9 +96,5 @@ public abstract class AbstractUserClass implements User {
 			tmp[i] = docs[i];
 		docs = tmp;
 	}
-	
-	//abstract methods
-	
-	public abstract String getType();
 
 }

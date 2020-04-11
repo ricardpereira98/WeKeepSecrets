@@ -2,24 +2,39 @@ User knowsNothing was registered.
 User knowsSomeStuff was registered.
 User knowsSecrets was registered.
 User knowsTopSecrets was registered.
+User MoneyPenny was registered.
 User Q was registered.
 clerk knowsNothing official
 officer knowsSomeStuff confidential
 officer knowsSecrets secret
 officer knowsTopSecrets topsecret
+clerk MoneyPenny official
 officer Q topsecret
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Insufficient security clearance.
+Insufficient security clearance.
+Insufficient security clearance.
 Document confidentialDoc1 was uploaded.
 Document confidentialDoc2 was uploaded.
 Document confidentialDoc3 was uploaded.
+Insufficient security clearance.
 Document confidentialDoc3 was updated.
+Insufficient security clearance.
 Document confidentialDoc3 was updated.
+Insufficient security clearance.
 Document topSecretDoc1 was uploaded.
+Insufficient security clearance.
 Document topSecretDoc1 was updated.
-Document topSecretDoc1 was updated.
+Insufficient security clearance.
 Document topSecretDoc2 was uploaded.
 Document topSecretDoc3 was uploaded.
+Insufficient security clearance.
 Document topSecretDoc2 was updated.
+Insufficient security clearance.
 Document topSecretDoc3 was updated.
+Insufficient security clearance.
 Document secretDoc1 was uploaded.
 Document secretDoc2 was uploaded.
 Document secretDoc3 was uploaded.
@@ -31,6 +46,9 @@ Document confidentialDoc3 was updated.
 Document confidentialDoc1 was updated.
 Document confidentialDoc2 was updated.
 Document confidentialDoc3 was updated.
+Insufficient security clearance.
 Document confidentialDoc1 was updated.
 Document confidentialDoc1 was updated.
+Insufficient security clearance.
+Insufficient security clearance.
 Bye!

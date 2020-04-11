@@ -1,10 +1,10 @@
 package kSecrets;
 
+import kSecrets.Iterators.*;
+
 public interface KeepingSecrets {
 
 	boolean hasUserID(String userId);
-
-	void addUser(String kind, String userId, String clearanceLevel);
 
 	boolean isEmpty();
 
@@ -24,15 +24,20 @@ public interface KeepingSecrets {
 
 	String getDescription(String documentName, String managerID);
 
-	// void getAcess(String documentName, String managerID, String grantedID);
+	boolean isRevoked(String documentName, String managerID, String grantedID);
 
-	// boolean hasAcess(String documentName, String managerID, String grantedID);
+	void getRevoked(String documentName, String managerID, String grantedID);
 
-	// boolean isRevoked(String documentName, String managerID, String grantedID);
-
-	// void getRevoked(String documentName, String managerID, String grantedID);
 	boolean isClearanceOfficial(String clearanceLevel);
 
 	boolean isClerkUser(String userID);
+
+	void addClerk(String kind, String userID, String clearanceLevel);
+
+	void addOfficer(String kind, String userID, String clearanceLevel);
+
+	boolean hasAccess(String documentName, String managerID, String grantedID);
+
+	void grant(String documentName, String managerID, String grantedID);
 
 }
