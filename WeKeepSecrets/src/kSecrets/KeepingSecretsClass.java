@@ -159,32 +159,30 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	//pre esta merda toda existe
+	// pre esta merda toda existe
 	public boolean hasAccess(String documentName, String managerID, String grantedID) {
-		//return docs[searchIndexDoc(documentName, managerID)].hasAcess(grantedID);
-		
 		User grantedUser = users[searchIndexUserID(grantedID)];
 		return users[searchIndexUserID(managerID)].getDocument(documentName).hasAccess(grantedUser);
-		
+
 	}
 
 	@Override
 	public boolean isRevoked(String documentName, String managerID, String grantedID) {
-		return docs[searchIndexDoc(documentName, managerID)].isRevoked(grantedID);
+		User aux = users[searchIndexUserID(grantedID)];
+		return users[searchIndexUserID(managerID)].getDocument(documentName).isRevoked(aux);
 	}
 
 	@Override
 	public void grant(String documentName, String managerID, String grantedID) {
-		User user1 = users[searchIndexUserID(grantedID)];
-		//docs[searchIndexDoc(documentName, managerID)].getAccess(user1);
-		users[searchIndexUserID(managerID)].getDocument(documentName).grant(grantedID);
+		User aux = users[searchIndexUserID(grantedID)];
+		users[searchIndexUserID(managerID)].getDocument(documentName).grant(aux);
 
 	}
 
 	@Override
-	public void getRevoked(String documentName, String managerID, String grantedID) {
-		User user1 = users[searchIndexUserID(grantedID)];
-		docs[searchIndexDoc(documentName, managerID)].removeAcess(user1);
+	public void revoke(String documentName, String managerID, String grantedID) {
+		User aux = users[searchIndexUserID(grantedID)];
+		users[searchIndexUserID(managerID)].getDocument(documentName).removeAccess(aux);
 	}
 
 }

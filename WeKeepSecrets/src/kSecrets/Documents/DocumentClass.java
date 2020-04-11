@@ -10,8 +10,11 @@ public class DocumentClass implements Document {
 	private String securityLevel;
 	private String description;
 	private Accesses[] accesses;
-	private int counter;
-	private int counter_granted;
+	private Accesses[] revokes;
+	private int counter_accesses;
+	private int counter_revokes;
+	private int numGrants;
+	private int numRevokes;
 
 	public DocumentClass(String docName, String manager, String securityLevel, String description) {
 		this.docName = docName;
@@ -19,8 +22,12 @@ public class DocumentClass implements Document {
 		this.securityLevel = securityLevel;
 		this.description = description;
 		accesses = new AccessesClass[DEFAULT_VALUE];
-		counter = 0;
-		counter_granted = 0;
+		revokes = new AccessesClass[DEFAULT_VALUE];
+
+		counter_accesses = 0;
+		counter_revokes = 0;
+		numGrants = 0;
+		numRevokes = 0;
 
 	}
 
@@ -52,26 +59,19 @@ public class DocumentClass implements Document {
 	// ACESSOS
 
 	@Override
-	public void grant(User grantedUser) {
-		
-	accesses[counter++] = new AccessesClass()
-		counter_granted++;
-	}
-
-	@Override
 	public boolean hasAccess(User user) {
 		return searchIndexGrantedUsers(user) >= 0;
 	}
 
 	@Override
-	public boolean isRevoked(String userID) {
-		return searchIndexGrantedUsers(userID) >= 0;
+	public boolean isRevoked(User userID) {
+		return searchIndexRevokedUsers(userID) >= 0;
 	}
 
 	private int searchIndexGrantedUsers(User user) {
 		int result = -1;
 		boolean found = false;
-		for (int i = 0; i < counter && !found; i++){
+		for (int i = 0; i < counter_accesses && !found; i++) {
 			if (accesses[i].getUserID().toUpperCase().equals(user.getID().toUpperCase())) {
 				found = true;
 				result = i;
@@ -80,28 +80,51 @@ public class DocumentClass implements Document {
 		return result;
 	}
 
-	@Override
-	public void removeAcess(User userID) {
-		revoked[counter_revoked] = userID;
-		String user = userID.toString();
-
-		int pos = searchIndexGrantedUsers(user);
-
-		for (int i = pos; i < counter - 1; i++) {
-			acesses[i] = acesses[i + 1];
+	private int searchIndexRevokedUsers(User user) {
+		int result = -1;
+		boolean found = false;
+		for (int i = 0; i < counter_revokes && !found; i++) {
+			if (revokes[i].getUserID().toUpperCase().equals(user.getID().toUpperCase())) {
+				found = true;
+				result = i;
+			}
 		}
-		counter_revoked++;
-		counter--;
+		return result;
+	}
+
+	@Override
+	public void grant(User grantedUser) {
+		if (isRevoked(grantedUser)) {
+			int pos = searchIndexRevokedUsers(grantedUser);
+			for (int i = pos; i < counter_revokes - 1; i++) {
+				revokes[i] = revokes[i + 1];
+			}
+		}
+		accesses[counter_accesses++] = new AccessesClass(grantedUser);
+		numGrants++;
+	}
+
+	@Override
+	public void removeAccess(User userID) {
+		revokes[counter_revokes++] = new AccessesClass(userID);
+
+		int pos = searchIndexGrantedUsers(userID);
+
+		for (int i = pos; i < counter_accesses - 1; i++) {
+			accesses[i] = accesses[i + 1];
+		}
+		counter_accesses--;
+		numRevokes++;
 	}
 
 	@Override
 	public int revokedTimes() {
-		return this.counter_revoked;
+		return numRevokes;
 	}
 
 	@Override
 	public int grantedTimes() {
-		return this.counter_granted;
+		return numGrants;
 	}
 
 }

@@ -41,7 +41,7 @@ public class Main {
 	public static final String CANNOT_UPDATE = "Document %s cannot be updated.\n";
 	public static final String DOC_UPLOADED = "Document %s was uploaded.\n";
 	public static final String DOC_UPDATED = "Document %s was updated.\n";
-	public static final String CLERK_ERROR = "Grants can only be issued between officers.";
+	public static final String CLERK_ERROR = "Grants can only be issued between officers.\n";
 	public static final String ALREADY_ACCESS = "Already has access to document %s.\n";
 	public static final String GRANT_DOESNT_EXIST = "Grant for officer %s does not exist.\n";
 	public static final String GRANT_REVOKED = "Grant for officer %s was already revoked.\n";
@@ -236,7 +236,7 @@ public class Main {
 		managerID = in.next().trim();
 		readerID = in.nextLine().trim();
 
-		if (!(kSecrets.hasUserID(managerID) && kSecrets.hasUserID(readerID))) {
+		if (!kSecrets.hasUserID(managerID) || !kSecrets.hasUserID(readerID)) {
 			System.out.printf(NOT_REGISTERED);
 		}
 
@@ -244,8 +244,8 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(readerID, kSecrets.getDocSecurityLevel(documentName, managerID))) // && !kSecrets.hasAccess())
-		{
+		else if (!kSecrets.isClearanceHighEnough(readerID, kSecrets.getDocSecurityLevel(documentName, managerID))
+				&& !kSecrets.hasAccess(documentName, managerID, readerID)) {
 			System.out.println(INSUFFICIENT_CLEARANCE);
 		}
 
@@ -262,9 +262,7 @@ public class Main {
 		managerID = in.next().trim();
 		grantedID = in.nextLine().trim();
 
-		String docSecLvl = kSecrets.getDocSecurityLevel(documentName, managerID);
-
-		if ((kSecrets.hasUserID(managerID)) || (!kSecrets.hasUserID(grantedID))) {
+		if (!kSecrets.hasUserID(managerID) || !kSecrets.hasUserID(grantedID)) {
 			System.out.printf(NOT_REGISTERED);
 		}
 
@@ -276,13 +274,13 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (kSecrets.isClearanceHighEnough(grantedID, docSecLvl)
-				|| kSecrets.hasAcess(documentName, managerID, grantedID)) {
+		else if (kSecrets.isClearanceHighEnough(grantedID, kSecrets.getDocSecurityLevel(documentName, managerID))
+				|| kSecrets.hasAccess(documentName, managerID, grantedID)) {
 			System.out.printf(ALREADY_ACCESS, documentName);
 		}
 
 		else {
-			kSecrets.getAcess(documentName, managerID, grantedID);
+			kSecrets.grant(documentName, managerID, grantedID);
 			System.out.printf(GRANT_GRANTED, documentName);
 		}
 	}
@@ -294,7 +292,7 @@ public class Main {
 		managerID = in.next().trim();
 		grantedID = in.nextLine().trim();
 
-		if ((kSecrets.hasUserID(managerID)) || (!kSecrets.hasUserID(grantedID))) {
+		if (!kSecrets.hasUserID(managerID) || !kSecrets.hasUserID(grantedID)) {
 			System.out.printf(NOT_REGISTERED);
 		}
 
@@ -306,8 +304,8 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (!kSecrets.hasAcess(documentName, managerID, grantedID)) {
-			System.out.printf(GRANT_DOESNT_EXIST, documentName);
+		else if (!kSecrets.hasAccess(documentName, managerID, grantedID) && !kSecrets.isRevoked(documentName, managerID, grantedID)) {
+			System.out.printf(GRANT_DOESNT_EXIST, grantedID);
 		}
 
 		else if (kSecrets.isRevoked(documentName, managerID, grantedID)) {
@@ -315,7 +313,7 @@ public class Main {
 		}
 
 		else {
-			kSecrets.getRevoked(documentName, managerID, grantedID);
+			kSecrets.revoke(documentName, managerID, grantedID);
 			System.out.printf(GRANT_BEEN_REVOKED, documentName);
 		}
 	}

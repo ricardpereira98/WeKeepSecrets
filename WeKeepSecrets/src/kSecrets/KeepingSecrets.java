@@ -12,7 +12,7 @@ public interface KeepingSecrets {
 
 	boolean hasDocumentUploaded(String userID, String document);
 
-	public boolean isClearanceHighEnough(String userID, String secLvl);
+	boolean isClearanceHighEnough(String userID, String secLvl);
 
 	void uploadDoc(String documentName, String userID, String secLvl, String description);
 
@@ -26,7 +26,7 @@ public interface KeepingSecrets {
 
 	boolean isRevoked(String documentName, String managerID, String grantedID);
 
-	void getRevoked(String documentName, String managerID, String grantedID);
+	void revoke(String documentName, String managerID, String grantedID);
 
 	boolean isClearanceOfficial(String clearanceLevel);
 

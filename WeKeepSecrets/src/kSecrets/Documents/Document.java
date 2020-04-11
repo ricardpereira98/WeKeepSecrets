@@ -16,5 +16,13 @@ public interface Document {
 
 	boolean hasAccess(User user);
 
-	void grant(String userID);
+	void grant(User userID);
+
+	boolean isRevoked(User userID);
+
+	void removeAccess(User userID);
+
+	int revokedTimes();
+
+	int grantedTimes();
 }
