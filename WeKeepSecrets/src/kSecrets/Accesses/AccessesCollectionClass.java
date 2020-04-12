@@ -2,6 +2,12 @@ package kSecrets.Accesses;
 
 import kSecrets.Users.*;
 
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
+
 public class AccessesCollectionClass implements AccessesCollection {
 
 	private static final int DEFAULT_VALUE = 10;
@@ -15,8 +21,7 @@ public class AccessesCollectionClass implements AccessesCollection {
 
 	@Override
 	public boolean hasAccess(User user) {
-		
-	
+
 	}
 
 	@Override

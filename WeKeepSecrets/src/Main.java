@@ -7,8 +7,7 @@ import kSecrets.Users.*;
 
 /**
  * 
- * @author nuno costa 54620
- * @author ricardo pereira
+ * @author Nuno Costa 54620 && Jose Pereira 55204
  *
  */
 
@@ -166,7 +165,7 @@ public class Main {
 		}
 
 		else {
-			Iterator it = kSecrets.listUsers();
+			Iterator it = kSecrets.usersIterator();
 			while (it.hasNext()) {
 				User user = it.next();
 				System.out.println(user.getKind() + " " + user.getID() + " " + user.getClearanceLevel());
@@ -304,7 +303,8 @@ public class Main {
 			System.out.printf(NO_DOCUMENT, documentName);
 		}
 
-		else if (!kSecrets.hasAccess(documentName, managerID, grantedID) && !kSecrets.isRevoked(documentName, managerID, grantedID)) {
+		else if (!kSecrets.hasAccess(documentName, managerID, grantedID)
+				&& !kSecrets.isRevoked(documentName, managerID, grantedID)) {
 			System.out.printf(GRANT_DOESNT_EXIST, grantedID);
 		}
 

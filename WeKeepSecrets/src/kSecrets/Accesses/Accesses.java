@@ -1,7 +1,11 @@
 package kSecrets.Accesses;
 
-import kSecrets.Documents.*;
-import kSecrets.Users.*;
+
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
 
 public interface Accesses {
 

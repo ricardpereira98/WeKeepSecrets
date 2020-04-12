@@ -3,8 +3,18 @@ package kSecrets.Documents;
 import kSecrets.Accesses.*;
 import kSecrets.Users.*;
 
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
+
 public class DocumentClass implements Document {
+
+	// constant defining the original size of the array
 	private static final int DEFAULT_VALUE = 10;
+
+	// instance variables
 	private String docName;
 	private String manager;
 	private String securityLevel;
@@ -16,6 +26,7 @@ public class DocumentClass implements Document {
 	private int numGrants;
 	private int numRevokes;
 
+	// constructor - initializes the instance variables
 	public DocumentClass(String docName, String manager, String securityLevel, String description) {
 		this.docName = docName;
 		this.manager = manager;
@@ -56,16 +67,14 @@ public class DocumentClass implements Document {
 		this.description = description;
 	}
 
-	// ACESSOS
-
 	@Override
 	public boolean hasAccess(User user) {
 		return searchIndexGrantedUsers(user) >= 0;
 	}
 
 	@Override
-	public boolean isRevoked(User userID) {
-		return searchIndexRevokedUsers(userID) >= 0;
+	public boolean isRevoked(User user) {
+		return searchIndexRevokedUsers(user) >= 0;
 	}
 
 	private int searchIndexGrantedUsers(User user) {
@@ -93,22 +102,22 @@ public class DocumentClass implements Document {
 	}
 
 	@Override
-	public void grant(User grantedUser) {
-		if (isRevoked(grantedUser)) {
-			int pos = searchIndexRevokedUsers(grantedUser);
+	public void grant(User user) {
+		if (isRevoked(user)) {
+			int pos = searchIndexRevokedUsers(user);
 			for (int i = pos; i < counter_revokes - 1; i++) {
 				revokes[i] = revokes[i + 1];
 			}
 		}
-		accesses[counter_accesses++] = new AccessesClass(grantedUser);
+		accesses[counter_accesses++] = new AccessesClass(user);
 		numGrants++;
 	}
 
 	@Override
-	public void removeAccess(User userID) {
-		revokes[counter_revokes++] = new AccessesClass(userID);
+	public void removeAccess(User user) {
+		revokes[counter_revokes++] = new AccessesClass(user);
 
-		int pos = searchIndexGrantedUsers(userID);
+		int pos = searchIndexGrantedUsers(user);
 
 		for (int i = pos; i < counter_accesses - 1; i++) {
 			accesses[i] = accesses[i + 1];

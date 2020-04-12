@@ -2,44 +2,49 @@ package kSecrets.Users;
 
 import kSecrets.Documents.*;
 
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
+
 public abstract class AbstractUserClass implements User {
 
-	// getType
+	// constant
 	private static final int DEFAULT_SIZE = 10;
+
+	// instance variables
 	private String id;
 	private String kind;
 	private String clearanceLevel;
-	private int grantingTimes;
 	private Document[] docs;
 	private int counterDocs;
 
+	// constructor - initializes instance variables
 	protected AbstractUserClass(String kind, String id, String clearanceLevel) {
 		this.kind = kind;
 		this.id = id;
 		this.clearanceLevel = clearanceLevel;
-		grantingTimes = 0;
 		counterDocs = 0;
 		docs = new Document[DEFAULT_SIZE];
 	}
 
-	/**
-	 * @return the user's identifier
-	 */
+	@Override
 	public String getID() {
 		return id;
 	}
 
-	/**
-	 * @return the user's kind
-	 */
+	@Override
 	public String getKind() {
 		return kind.toLowerCase();
 	}
 
+	@Override
 	public String getClearanceLevel() {
 		return clearanceLevel;
 	}
 
+	@Override
 	public void addDoc(String docName, String manager, String securityLevel, String description) {
 		if (isFullDocs()) {
 			resizeDocs();
@@ -48,17 +53,9 @@ public abstract class AbstractUserClass implements User {
 
 	}
 
+	@Override
 	public boolean hasThisDoc(String docName) {
 		return searchIndexDoc(docName) >= 0;
-
-	}
-
-	public void grant() {
-		grantingTimes++;
-	}
-
-	public int grantingTimes() {
-		return this.grantingTimes;
 
 	}
 
@@ -67,8 +64,16 @@ public abstract class AbstractUserClass implements User {
 		return docs[searchIndexDoc(docName)];
 	}
 
-	// private shit
+	@Override
+	public abstract String getType();
 
+	// private methods
+
+	/**
+	 * 
+	 * @param documentName - refers to the name of the Document to be searched for
+	 * @return the index of the document with the name given by the parameter
+	 */
 	private int searchIndexDoc(String documentName) {
 		int result = -1;
 		boolean found = false;
@@ -86,10 +91,18 @@ public abstract class AbstractUserClass implements User {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @return true if the number of documents in the array is equal to the array's
+	 *         length, false otherwise
+	 */
 	private boolean isFullDocs() {
 		return counterDocs == docs.length;
 	}
 
+	/**
+	 * Increases the size of the array of documents
+	 */
 	private void resizeDocs() {
 		Document tmp[] = new Document[2 * docs.length];
 		for (int i = 0; i < counterDocs; i++)

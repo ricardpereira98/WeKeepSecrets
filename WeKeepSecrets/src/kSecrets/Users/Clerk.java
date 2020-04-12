@@ -1,5 +1,10 @@
 package kSecrets.Users;
 
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
 
 public class Clerk extends AbstractUserClass {
 

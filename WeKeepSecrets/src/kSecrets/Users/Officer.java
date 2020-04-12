@@ -1,5 +1,11 @@
 package kSecrets.Users;
 
+/**
+ * 
+ * @author Nuno Costa 54620 && Jose Pereira 55204
+ *
+ */
+
 public class Officer extends AbstractUserClass {
 
 	public static final String OFFICER = "OFFICER";
