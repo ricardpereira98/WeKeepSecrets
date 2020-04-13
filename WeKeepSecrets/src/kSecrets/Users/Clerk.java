@@ -19,4 +19,5 @@ public class Clerk extends AbstractUserClass {
 		return Clerk.CLERK;
 	}
 
+
 }

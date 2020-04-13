@@ -59,4 +59,15 @@ public interface User {
 	 * @return the type of user
 	 */
 	String getType();
+
+	/**
+	 * Increases the number of times this user has granted access to another user
+	 */
+	void grantGiven();
+
+	/**
+	 * 
+	 * @return number of times a user has given a grant
+	 */
+	int getGrantsGiven();
 }

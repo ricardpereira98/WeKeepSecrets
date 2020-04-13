@@ -64,6 +64,9 @@ public interface KeepingSecrets {
 	boolean isClearanceHighEnough(String userID, String secLvl);
 
 	/**
+	 * Uploads the document attached to a specific userID, and also add the document to
+	 * the array of documents in the system
+	 * 
 	 * @Pre searchIndexUser(userID) >= 0
 	 * @param documentName - The document's name
 	 * @param userID       - The user's identifier
@@ -78,7 +81,7 @@ public interface KeepingSecrets {
 	 * @param managerID    - the document's manager's name
 	 * @return true if the document is an official document, false otherwise
 	 */
-	boolean isDocOfficial(String documentName, String managerID);
+	boolean isUserDocOfficial(String documentName, String managerID);
 
 	/**
 	 * @Pre searchIndexUser(userID) >= 0

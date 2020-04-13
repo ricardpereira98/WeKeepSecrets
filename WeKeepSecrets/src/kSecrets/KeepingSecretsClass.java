@@ -2,6 +2,8 @@ package kSecrets;
 
 import kSecrets.Users.*;
 import kSecrets.Iterators.*;
+import kSecrets.Documents.*;
+import kSecrets.Accesses.*;
 
 /**
  * 
@@ -27,10 +29,28 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private User[] users;
 	private int counterUsers;
 
+	private Document[] docs;
+	private int counterDocs;
+
+	private Document[] topLeaked;
+	private int counterLeaked;
+
+	private User[] topGranters;
+	private int counterGranters;
+
 	// Constructor of the top class - initiates the instance variables
 	public KeepingSecretsClass() {
 		counterUsers = 0;
 		users = new User[DEFAULT_SIZE];
+
+		counterGranters = 0;
+		topGranters = new User[DEFAULT_SIZE];
+
+		docs = new Document[DEFAULT_SIZE];
+		counterDocs = 0;
+
+		topLeaked = new Document[DEFAULT_SIZE];
+		counterLeaked = 0;
 	}
 
 	@Override
@@ -79,10 +99,13 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	@Override
 	public void uploadDoc(String documentName, String userID, String secLvl, String description) {
 		users[searchIndexUserID(userID)].addDoc(documentName, userID, secLvl, description);
+		if (isFullDocs())
+			resizeDocs();
+		docs[counterDocs++] = new DocumentClass(documentName, userID, secLvl, description);
 	}
 
 	@Override
-	public boolean isDocOfficial(String documentName, String userID) {
+	public boolean isUserDocOfficial(String documentName, String userID) {
 		return users[searchIndexUserID(userID)].getDocument(documentName).getSecurityLevel().toUpperCase()
 				.equals(OFFICIAL);
 	}
@@ -126,18 +149,47 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	public void grant(String documentName, String managerID, String grantedID) {
-		User aux = users[searchIndexUserID(grantedID)];
-		users[searchIndexUserID(managerID)].getDocument(documentName).grant(aux);
+	public void grant(String documentName, String managerID, String user) {
+		User aux = users[searchIndexUserID(user)];
+		User manager = users[searchIndexUserID(managerID)];
+
+		manager.getDocument(documentName).grant(aux);
+		manager.grantGiven();
 
 	}
 
 	@Override
-	public void revoke(String documentName, String managerID, String grantedID) {
-		User aux = users[searchIndexUserID(grantedID)];
-		users[searchIndexUserID(managerID)].getDocument(documentName).removeAccess(aux);
+	public void revoke(String documentName, String managerID, String user) {
+		User aux = users[searchIndexUserID(user)];
+		User manager = users[searchIndexUserID(managerID)];
+		manager.getDocument(documentName).removeAccess(aux);
 	}
 
+	public void setTopLeakedDocs() {
+		for (int i = 0; i < counterDocs; i++) {
+			if (docs[i].grantedTimes() > 0) {
+				topLeaked[counterLeaked++] = docs[i];
+			}
+		}
+		bubbleSortLeakedDocs();
+		bubbleSortAlphabeticallyLeakedDocs();
+		/**
+		 * if (topLeaked.length < 10) { counter_top10 = topLeaked.length;
+		 * 
+		 * // criar counter_top10 pq nos queremos o topLeaked inteiro na mesma mas so //
+		 * queremos os 10 primeiros }
+		 */
+	}
+
+	public void setTopGranters() {
+		for (int i = 0; i < counterUsers; i++) {
+			if (users[i].getGrantsGiven() > 0) {
+				topGranters[counterGranters++] = users[i];
+			}
+		}
+		bubbleSortOfficerGrants();
+		bubbleSortAlphabeticallyOfficersWhoGranted();
+	}
 	// PRIVATE METHODS BELOW
 
 	/**
@@ -224,6 +276,108 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		return value;
 	}
-	
+
+	/**
+	 * 
+	 * @return true if the number of documents in the array is equal to the array's
+	 *         length, false otherwise
+	 */
+	private boolean isFullDocs() {
+		return counterDocs == docs.length;
+	}
+
+	/**
+	 * Increases the size of the array of documents
+	 */
+	private void resizeDocs() {
+		Document tmp[] = new Document[2 * docs.length];
+		for (int i = 0; i < counterDocs; i++)
+			tmp[i] = docs[i];
+		docs = tmp;
+	}
+
+	/**
+	 * Sorts the documents that have been leaked based on grant times
+	 */
+	private void bubbleSortLeakedDocs() {
+		for (int i = 1; i < counterLeaked; i++) {
+
+			for (int j = counterLeaked - 1; j >= i; j--) {
+
+				if (topLeaked[j - 1].grantedTimes() < topLeaked[j].grantedTimes()) {
+					Document tmp = topLeaked[j - 1];
+					topLeaked[j - 1] = topLeaked[j];
+					topLeaked[j] = tmp;
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Sorts the documents lexicographically
+	 */
+	private void bubbleSortAlphabeticallyLeakedDocs() {
+
+		for (int i = 1; i < counterLeaked; i++) {
+
+			for (int j = counterLeaked - 1; j >= i; j--) {
+				// orders alphabetically in case of tie
+				if (topLeaked[j - 1].grantedTimes() == topLeaked[j].grantedTimes()) {
+					if (topLeaked[j - 1].getDocName().compareToIgnoreCase(topLeaked[j].getDocName()) > 0) {
+						Document aux = topLeaked[j - 1];
+						topLeaked[j - 1] = topLeaked[j];
+						topLeaked[j] = aux;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sorts the officers who have granted access to documents by the number of
+	 * grants given
+	 */
+	private void bubbleSortOfficerGrants() {
+		for (int i = 1; i < counterGranters; i++) {
+
+			for (int j = counterGranters - 1; j >= i; j--) {
+				// orders based on grant times
+				if (topGranters[j - 1].getGrantsGiven() < topLeaked[j].grantedTimes()) {
+					User tmp = topGranters[j - 1];
+					topGranters[j - 1] = topGranters[j];
+					topGranters[j] = tmp;
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Sorts the officers who have granted access to documents lexicographically
+	 */
+	private void bubbleSortAlphabeticallyOfficersWhoGranted() {
+
+		for (int i = 1; i < counterGranters; i++) {
+
+			for (int j = --counterGranters; j >= i; j--) {
+				// orders alphabetically in case of tie
+				if (topGranters[j - 1].getGrantsGiven() == topGranters[j].getGrantsGiven()) {
+					if (topGranters[j - 1].getID().compareTo(topGranters[j].getID()) > 0) {
+						User aux = topGranters[j - 1];
+						topGranters[j - 1] = topGranters[j];
+						topGranters[j] = aux;
+					}
+				}
+			}
+		}
+	}
+
+	// main:
+	// print topLeaked.getDocName(), topLeaked.getManager(),
+	// topLeaked.getSecurityLevel(),
+	// topLeaked.grantedTimes(), topLeaked.revokedTimes();
+	// document name, user id, security level, number of accesses, the number of
+	// grants given and revoked.
 
 }

@@ -19,6 +19,7 @@ public abstract class AbstractUserClass implements User {
 	private String clearanceLevel;
 	private Document[] docs;
 	private int counterDocs;
+	private int timesGranted;
 
 	// constructor - initializes instance variables
 	protected AbstractUserClass(String kind, String id, String clearanceLevel) {
@@ -27,6 +28,7 @@ public abstract class AbstractUserClass implements User {
 		this.clearanceLevel = clearanceLevel;
 		counterDocs = 0;
 		docs = new Document[DEFAULT_SIZE];
+		timesGranted = 0;
 	}
 
 	@Override
@@ -66,6 +68,16 @@ public abstract class AbstractUserClass implements User {
 
 	@Override
 	public abstract String getType();
+
+	@Override
+	public void grantGiven() {
+		timesGranted++;
+	}
+
+	@Override
+	public int getGrantsGiven() {
+		return timesGranted;
+	}
 
 	// private methods
 
@@ -109,5 +121,4 @@ public abstract class AbstractUserClass implements User {
 			tmp[i] = docs[i];
 		docs = tmp;
 	}
-
 }

@@ -208,7 +208,7 @@ public class Main {
 
 		if (kSecrets.hasUserID(managerID) && kSecrets.hasUserID(updaterID)) {
 			if (kSecrets.hasDocumentUploaded(managerID, documentName)) {
-				if (!kSecrets.isDocOfficial(documentName, managerID)) {
+				if (!kSecrets.isUserDocOfficial(documentName, managerID)) {
 					String docSecLvl = kSecrets.getDocSecurityLevel(documentName, managerID);
 					if (kSecrets.isClearanceHighEnough(updaterID, docSecLvl)) {
 						kSecrets.updateDescription(documentName, managerID, newDescription);
