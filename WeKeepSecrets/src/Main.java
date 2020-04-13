@@ -29,6 +29,7 @@ public class Main {
 
 	// Constantes que definem as mensagens para o utilizador
 
+	private static final String NO_LEAKED_DOCS = "There are no leaked documents.";
 	public static final String UNKNOWN_COMMAND = "Unknown command. Type help to see available commands.";
 	public static final String USER_REGISTERED = "User %s was registered.\n";
 	public static final String USER_INVALID = "Identifier %s is already assigned to another user.\n";
@@ -96,7 +97,7 @@ public class Main {
 				break;
 
 			case TOP_GRANTED:
-				listGrantedUserss(kSecrets);
+				listGrantedUsers(kSecrets);
 				break;
 
 			default:
@@ -165,7 +166,7 @@ public class Main {
 		}
 
 		else {
-			Iterator it = kSecrets.usersIterator();
+			UserIterator it = kSecrets.usersIterator();
 			while (it.hasNext()) {
 				User user = it.next();
 				System.out.println(user.getKind() + " " + user.getID() + " " + user.getClearanceLevel());
@@ -351,9 +352,37 @@ public class Main {
 		 * boolean grantpositive(){ return grantedTimes()>0; }
 		 */
 
+		if (kSecrets.isLeakedDocsEmpty()) {
+			System.out.println(NO_LEAKED_DOCS);
+		}
+
+		else {
+
+			int i = 0;
+
+			DocumentIterator it = kSecrets.leakedDocsIterator();
+
+			if (kSecrets.isFewerThan10DocLeaked()) {
+
+				while (it.hasNext()) {
+					Document doc = it.next();
+					if (doc.hasBeenGranted())
+						System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel()
+								+ " " + doc.getNumAccesses + " " + doc.grantedTimes() + " " + doc.revokedTimes());
+
+				}
+			} else {
+				while (it.hasNext() && i < 10) {
+					Document doc = it.next();
+					i++;
+					System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel() + " "
+							+ doc.getNumAccesses + " " + doc.grantedTimes() + " " + doc.revokedTimes());
+				}
+			}
+		}
 	}
 
-	private static void listGrantedUserss(KeepingSecrets kSecrets) {
+	private static void listGrantedUsers(KeepingSecrets kSecrets) {
 
 		/**
 		 * 

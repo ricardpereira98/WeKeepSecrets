@@ -8,7 +8,7 @@ import kSecrets.Users.*;
  *
  */
 
-public class IteratorClass implements Iterator {
+public class UserIteratorClass implements UserIterator {
 
 	// Instance variables
 	private int counter;
@@ -16,7 +16,7 @@ public class IteratorClass implements Iterator {
 	private User[] users;
 
 	// Creates an iterator of users
-	public IteratorClass(User[] allUsers, int counter) {
+	public UserIteratorClass(User[] allUsers, int counter) {
 		this.users = allUsers;
 		this.counter = counter;
 		current = 0;

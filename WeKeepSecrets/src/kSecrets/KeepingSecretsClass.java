@@ -40,11 +40,11 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	// Constructor of the top class - initiates the instance variables
 	public KeepingSecretsClass() {
-		counterUsers = 0;
 		users = new User[DEFAULT_SIZE];
+		counterUsers = 0;
 
-		counterGranters = 0;
 		topGranters = new User[DEFAULT_SIZE];
+		counterGranters = 0;
 
 		docs = new Document[DEFAULT_SIZE];
 		counterDocs = 0;
@@ -82,8 +82,25 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	public Iterator usersIterator() {
-		return new IteratorClass(users, counterUsers);
+	public boolean isLeakedDocsEmpty() {
+		return counterLeaked == 0;
+	}
+
+	@Override
+	public UserIterator usersIterator() {
+		return new UserIteratorClass(users, counterUsers);
+	}
+
+	@Override
+	public DocumentIterator leakedDocsIterator() {
+		setTopLeakedDocs();
+		return new DocumentIteratorClass(topLeaked, counterLeaked);
+	}
+
+	@Override
+	public UserIterator topGrantersIterator() {
+		setTopGranters();
+		return new UserIteratorClass(topGranters, counterGranters);
 	}
 
 	@Override
@@ -165,7 +182,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		manager.getDocument(documentName).removeAccess(aux);
 	}
 
-	public void setTopLeakedDocs() {
+	@Override
+	public boolean isFewerThan10DocLeaked() {
+		return counterLeaked < 10;
+	}
+
+	private void setTopLeakedDocs() {
 		for (int i = 0; i < counterDocs; i++) {
 			if (docs[i].grantedTimes() > 0) {
 				topLeaked[counterLeaked++] = docs[i];
@@ -181,7 +203,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		 */
 	}
 
-	public void setTopGranters() {
+	private void setTopGranters() {
 		for (int i = 0; i < counterUsers; i++) {
 			if (users[i].getGrantsGiven() > 0) {
 				topGranters[counterGranters++] = users[i];

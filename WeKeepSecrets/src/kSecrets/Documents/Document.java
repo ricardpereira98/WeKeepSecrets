@@ -61,4 +61,6 @@ public interface Document {
 	int revokedTimes();
 
 	int grantedTimes();
+
+	boolean hasBeenGranted();
 }

@@ -8,7 +8,7 @@ import kSecrets.Users.*;
  *
  */
 
-public interface Iterator {
+public interface UserIterator {
 	/**
 	 * 
 	 * @return true if there still are users to be iterated in the array of users

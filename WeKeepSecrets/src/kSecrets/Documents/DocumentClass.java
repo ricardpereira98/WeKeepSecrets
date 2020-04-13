@@ -135,5 +135,9 @@ public class DocumentClass implements Document {
 	public int grantedTimes() {
 		return numGrants;
 	}
-
+	
+	@Override
+	public boolean hasBeenGranted() {
+		return grantedTimes() > 0;
+	}
 }

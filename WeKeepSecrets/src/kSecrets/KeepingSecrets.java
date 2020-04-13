@@ -44,7 +44,7 @@ public interface KeepingSecrets {
 	 * 
 	 * @return an iterator of users
 	 */
-	Iterator usersIterator();
+	UserIterator usersIterator();
 
 	/**
 	 * @Pre searchIndexUser(userID) >= 0
@@ -64,8 +64,8 @@ public interface KeepingSecrets {
 	boolean isClearanceHighEnough(String userID, String secLvl);
 
 	/**
-	 * Uploads the document attached to a specific userID, and also add the document to
-	 * the array of documents in the system
+	 * Uploads the document attached to a specific userID, and also add the document
+	 * to the array of documents in the system
 	 * 
 	 * @Pre searchIndexUser(userID) >= 0
 	 * @param documentName - The document's name
@@ -166,5 +166,28 @@ public interface KeepingSecrets {
 	 * @param otherUserID  - The identifier of another user
 	 */
 	void revoke(String documentName, String managerID, String otherUserID);
+
+	/**
+	 * 
+	 * @return an iterator of documents that have been leaked
+	 */
+	DocumentIterator leakedDocsIterator();
+
+	/**
+	 * 
+	 * @return an iterator of users that have granted access to documents to others
+	 */
+	UserIterator topGrantersIterator();
+
+	/**
+	 * 
+	 * @return true if no documents have been leaked, false otherwise
+	 */
+	boolean isLeakedDocsEmpty();
+	/**
+	 * 
+	 * @return true if there are fewer than 10 documents leaked, false otherwise
+	 */
+	boolean isFewerThan10DocLeaked();
 
 }
