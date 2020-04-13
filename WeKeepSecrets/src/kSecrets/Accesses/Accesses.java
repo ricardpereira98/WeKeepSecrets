@@ -1,6 +1,5 @@
 package kSecrets.Accesses;
 
-
 /**
  * 
  * @author Nuno Costa 54620 && Jose Pereira 55204
@@ -10,5 +9,17 @@ package kSecrets.Accesses;
 public interface Accesses {
 
 	String getUserID();
+
+	String getDocName();
+
+	int getAccessesNum();
+
+	String getReaderID();
+
+	String getDocSecLvl();
+
+	String getReaderClearanceLvl();
+
+	String getAccessType();
 
 }

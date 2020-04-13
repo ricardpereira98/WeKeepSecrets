@@ -98,16 +98,18 @@ public interface KeepingSecrets {
 	 * @param documentName   - The document's name
 	 * @param managerID      - The manager's identifier
 	 * @param newDescription - The document's new description
+	 * @param updaterID      - The user who updates the document's description
 	 */
-	void updateDescription(String documentName, String managerID, String newDescription);
+	void updateDescription(String documentName, String managerID, String newDescription, String updaterID);
 
 	/**
 	 * @Pre searchIndexUser(userID) >= 0
 	 * @param documentName - The document's name
 	 * @param managerID    - The manager's ID
+	 * @param readerID     - The reader's ID
 	 * @return the description of the manager's document
 	 */
-	String getDescription(String documentName, String managerID);
+	String getDescription(String documentName, String managerID, String readerID);
 
 	/**
 	 * 
@@ -184,6 +186,7 @@ public interface KeepingSecrets {
 	 * @return true if no documents have been leaked, false otherwise
 	 */
 	boolean isLeakedDocsEmpty();
+
 	/**
 	 * 
 	 * @return true if there are fewer than 10 documents leaked, false otherwise

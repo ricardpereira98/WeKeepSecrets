@@ -212,7 +212,7 @@ public class Main {
 				if (!kSecrets.isUserDocOfficial(documentName, managerID)) {
 					String docSecLvl = kSecrets.getDocSecurityLevel(documentName, managerID);
 					if (kSecrets.isClearanceHighEnough(updaterID, docSecLvl)) {
-						kSecrets.updateDescription(documentName, managerID, newDescription);
+						kSecrets.updateDescription(documentName, managerID, newDescription, updaterID);
 						System.out.printf(DOC_UPDATED, documentName);
 					} else {
 						System.out.println(INSUFFICIENT_CLEARANCE);
@@ -250,7 +250,7 @@ public class Main {
 		}
 
 		else {
-			System.out.println("Document: " + kSecrets.getDescription(documentName, managerID));
+			System.out.println("Document: " + kSecrets.getDescription(documentName, managerID, readerID));
 		}
 
 	}
@@ -368,7 +368,7 @@ public class Main {
 					Document doc = it.next();
 					if (doc.hasBeenGranted())
 						System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel()
-								+ " " + doc.getNumAccesses + " " + doc.grantedTimes() + " " + doc.revokedTimes());
+								+ " " + doc.getNumAccesses() + " " + doc.grantedTimes() + " " + doc.revokedTimes());
 
 				}
 			} else {
@@ -376,7 +376,7 @@ public class Main {
 					Document doc = it.next();
 					i++;
 					System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel() + " "
-							+ doc.getNumAccesses + " " + doc.grantedTimes() + " " + doc.revokedTimes());
+							+ doc.getNumAccesses() + " " + doc.grantedTimes() + " " + doc.revokedTimes());
 				}
 			}
 		}

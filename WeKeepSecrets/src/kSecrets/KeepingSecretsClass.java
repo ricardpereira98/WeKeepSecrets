@@ -13,6 +13,9 @@ import kSecrets.Accesses.*;
 
 public class KeepingSecretsClass implements KeepingSecrets {
 
+	private static final String REVOKE = "revoke";
+	private static final String GRANT = "grant";
+	private static final String WRITE = "write";
 	// Constants
 	private static final String TOPSECRET = "TOPSECRET";
 	private static final String SECRET = "SECRET";
@@ -38,6 +41,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private User[] topGranters;
 	private int counterGranters;
 
+	private Accesses[] officialAccesses;
+	private int counterOfficialDocs;
+
+	private Accesses[] classifiedAccesses;
+	private int counterClassifiedDocs;
+
 	// Constructor of the top class - initiates the instance variables
 	public KeepingSecretsClass() {
 		users = new User[DEFAULT_SIZE];
@@ -51,6 +60,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		topLeaked = new Document[DEFAULT_SIZE];
 		counterLeaked = 0;
+
+		officialAccesses = new Accesses[DEFAULT_SIZE];
+		counterOfficialDocs = 0;
+
+		classifiedAccesses = new Accesses[DEFAULT_SIZE];
+		counterClassifiedDocs = 0;
 	}
 
 	@Override
@@ -133,13 +148,58 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	@Override
-	public void updateDescription(String documentName, String managerID, String newDescription) {
-		users[searchIndexUserID(managerID)].getDocument(documentName).setNewDescription(newDescription);
+	public void updateDescription(String documentName, String managerID, String newDescription, String updaterID) {
+		Document doc = users[searchIndexUserID(managerID)].getDocument(documentName);
+		User user = users[searchIndexUserID(updaterID)];
+
+		doc.setNewDescription(newDescription);
+		doc.increaseNumAccesses();
+
+		classifiedAccesses[counterClassifiedDocs] = new AccessesClass(doc.getDocName(), doc.getSecurityLevel(),
+				doc.getNumAccesses(), updaterID, user.getClearanceLevel(), WRITE); // FALTA
+		// String docName, String docSecLvl, int accessesNum,
+		// String readerID, String readerSecLvl, String readerAccessType
+
 	}
 
 	@Override
-	public String getDescription(String documentName, String managerID) {
-		return users[searchIndexUserID(managerID)].getDocument(documentName).getDescription();
+	public String getDescription(String documentName, String managerID, String readerID) {
+		Document doc = users[searchIndexUserID(managerID)].getDocument(documentName);
+		User user = users[searchIndexUserID(readerID)];
+
+		doc.increaseNumAccesses();
+
+		if (isUserDocOfficial(documentName, managerID)) {
+
+			for (int i = countOfficialDocs(); i > 0; i--) {
+				officialAccesses[i + 1] = officialAccesses[i];
+			}
+
+			officialAccesses[0] = new AccessesClass(doc.getDocName(), doc.getNumAccesses(), readerID,
+					user.getClearanceLevel()); // what?
+		}
+
+		if (isUserDocOfficial(documentName, readerID)) {
+
+			for (int i = countOfficialDocs(); i > 0; i--) {
+				officialAccesses[i + 1] = officialAccesses[i];
+			}
+
+			officialAccesses[0] = new AccessesClass(doc.getDocName(), doc.getNumAccesses(), readerID,
+					user.getClearanceLevel());
+			// String docName, int accessesNum, String userID, String secLvl
+		}
+
+		else {
+
+			classifiedAccesses[counterClassifiedDocs] = new AccessesClass(doc.getDocName(), doc.getSecurityLevel(),
+					doc.getNumAccesses(), readerID, user.getClearanceLevel(), "read"); // FALTA
+			// String docName, String docSecLvl, int accessesNum,
+			// String readerID, String readerSecLvl, String readerAccessType
+		}
+
+		return doc.getDescription();
+
 	}
 
 	@Override
@@ -169,17 +229,32 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	public void grant(String documentName, String managerID, String user) {
 		User aux = users[searchIndexUserID(user)];
 		User manager = users[searchIndexUserID(managerID)];
+		Document doc = users[searchIndexUserID(managerID)].getDocument(documentName);
 
 		manager.getDocument(documentName).grant(aux);
 		manager.grantGiven();
+		doc.increaseNumAccesses();
+
+		classifiedAccesses[counterClassifiedDocs] = new AccessesClass(doc.getDocName(), doc.getSecurityLevel(),
+				doc.getNumAccesses(), user, aux.getClearanceLevel(), GRANT); // FALTA
+		// String docName, String docSecLvl, int accessesNum,
+		// String readerID, String readerSecLvl, String readerAccessType
 
 	}
 
 	@Override
 	public void revoke(String documentName, String managerID, String user) {
 		User aux = users[searchIndexUserID(user)];
-		User manager = users[searchIndexUserID(managerID)];
-		manager.getDocument(documentName).removeAccess(aux);
+		Document doc = users[searchIndexUserID(managerID)].getDocument(documentName);
+
+		doc.removeAccess(aux);
+		doc.increaseNumAccesses();
+
+		classifiedAccesses[counterClassifiedDocs] = new AccessesClass(doc.getDocName(), doc.getSecurityLevel(),
+				doc.getNumAccesses(), user, aux.getClearanceLevel(), REVOKE); // FALTA
+		// String docName, String docSecLvl, int accessesNum,
+		// String readerID, String readerSecLvl, String readerAccessType
+
 	}
 
 	@Override
@@ -395,11 +470,21 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		}
 	}
 
-	// main:
-	// print topLeaked.getDocName(), topLeaked.getManager(),
-	// topLeaked.getSecurityLevel(),
-	// topLeaked.grantedTimes(), topLeaked.revokedTimes();
-	// document name, user id, security level, number of accesses, the number of
-	// grants given and revoked.
+	private int countClassifiedDocs() {
+		for (int i = 0; i < counterDocs; i++) {
+			if (!docs[i].getSecurityLevel().equals(OFFICIAL)) {
+				counterClassifiedDocs++;
+			}
+		}
+		return counterClassifiedDocs;
+	}
 
+	private int countOfficialDocs() {
+		for (int i = 0; i < counterDocs; i++) {
+			if (docs[i].getSecurityLevel().equals(OFFICIAL)) {
+				counterOfficialDocs++;
+			}
+		}
+		return counterOfficialDocs;
+	}
 }

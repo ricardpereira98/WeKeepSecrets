@@ -63,4 +63,9 @@ public interface Document {
 	int grantedTimes();
 
 	boolean hasBeenGranted();
+
+	int getNumAccesses();
+
+	void increaseNumAccesses();
+
 }

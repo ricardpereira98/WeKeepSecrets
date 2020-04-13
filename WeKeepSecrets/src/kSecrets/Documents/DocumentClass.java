@@ -25,6 +25,7 @@ public class DocumentClass implements Document {
 	private int counter_revokes;
 	private int numGrants;
 	private int numRevokes;
+	private int numAccesses;
 
 	// constructor - initializes the instance variables
 	public DocumentClass(String docName, String manager, String securityLevel, String description) {
@@ -39,6 +40,7 @@ public class DocumentClass implements Document {
 		counter_revokes = 0;
 		numGrants = 0;
 		numRevokes = 0;
+		numAccesses = 0;
 
 	}
 
@@ -139,5 +141,13 @@ public class DocumentClass implements Document {
 	@Override
 	public boolean hasBeenGranted() {
 		return grantedTimes() > 0;
+	}
+	@Override
+	public int getNumAccesses() {
+		return numAccesses;
+	}
+	@Override
+	public void increaseNumAccesses() {
+		numAccesses++;
 	}
 }
