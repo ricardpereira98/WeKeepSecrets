@@ -185,12 +185,14 @@ public interface KeepingSecrets {
 	 * 
 	 * @return true if no documents have been leaked, false otherwise
 	 */
-	boolean isLeakedDocsEmpty();
+	boolean isGrantedDocsEmpty();
 
 	/**
 	 * 
 	 * @return true if there are fewer than 10 documents leaked, false otherwise
 	 */
 	boolean isFewerThan10DocLeaked();
+
+
 
 }

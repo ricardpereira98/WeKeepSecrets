@@ -1,6 +1,7 @@
 package kSecrets.Users;
 
 import kSecrets.Documents.*;
+import kSecrets.Iterators.DocumentIterator;
 
 /**
  * 
@@ -70,4 +71,9 @@ public interface User {
 	 * @return number of times a user has given a grant
 	 */
 	int getGrantsGiven();
+	/**
+	 * 
+	 * @return an iterator of a user's documents
+	 */
+	DocumentIterator docsIterator();
 }

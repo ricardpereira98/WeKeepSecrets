@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import kSecrets.*;
-import kSecrets.Accesses.*;
 import kSecrets.Documents.*;
 import kSecrets.Iterators.*;
 import kSecrets.Users.*;
@@ -342,17 +341,7 @@ public class Main {
 
 	private static void listLeakedDocs(KeepingSecrets kSecrets) {
 
-		/**
-		 * - percorrer todas os docs - percorrer todos os acessos
-		 * 
-		 * ordenar vetor
-		 * 
-		 * int i = 0 (while has next && i<10 && grantpositive(doc)) { print; i++ }
-		 * 
-		 * boolean grantpositive(){ return grantedTimes()>0; }
-		 */
-
-		if (kSecrets.isLeakedDocsEmpty()) {
+		if (kSecrets.isGrantedDocsEmpty()) {
 			System.out.println(NO_LEAKED_DOCS);
 		}
 
@@ -366,11 +355,11 @@ public class Main {
 
 				while (it.hasNext()) {
 					Document doc = it.next();
-					if (doc.hasBeenGranted())
-						System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel()
-								+ " " + doc.getNumAccesses() + " " + doc.grantedTimes() + " " + doc.revokedTimes());
-
+					System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel() + " "
+							+ kSecrets.getNumAccesses(doc.getDocName(), doc.getManager()) + " " + doc.grantedTimes()
+							+ " " + doc.revokedTimes());
 				}
+
 			} else {
 				while (it.hasNext() && i < 10) {
 					Document doc = it.next();

@@ -137,17 +137,23 @@ public class DocumentClass implements Document {
 	public int grantedTimes() {
 		return numGrants;
 	}
-	
+
 	@Override
-	public boolean hasBeenGranted() {
-		return grantedTimes() > 0;
+	public void increaseGrantedTimes() {
+		numGrants++;
 	}
+
 	@Override
 	public int getNumAccesses() {
 		return numAccesses;
 	}
+
 	@Override
 	public void increaseNumAccesses() {
 		numAccesses++;
+	}
+	@Override
+	public void increaseRevokedTimes() {
+		numRevokes++;
 	}
 }

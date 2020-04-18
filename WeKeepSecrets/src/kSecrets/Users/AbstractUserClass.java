@@ -1,6 +1,8 @@
 package kSecrets.Users;
 
 import kSecrets.Documents.*;
+import kSecrets.Iterators.DocumentIterator;
+import kSecrets.Iterators.DocumentIteratorClass;
 
 /**
  * 
@@ -64,6 +66,11 @@ public abstract class AbstractUserClass implements User {
 	@Override
 	public Document getDocument(String docName) {
 		return docs[searchIndexDoc(docName)];
+	}
+	
+	@Override
+	public DocumentIterator docsIterator() {
+		return new DocumentIteratorClass(docs, counterDocs);
 	}
 
 	@Override
