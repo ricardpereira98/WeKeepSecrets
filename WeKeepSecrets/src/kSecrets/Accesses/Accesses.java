@@ -16,10 +16,11 @@ public interface Accesses {
 
 	String getReaderID();
 
-	String getDocSecLvl();
 
 	String getReaderClearanceLvl();
 
 	String getAccessType();
+	
+	boolean isReadWriteAccess(Accesses access);
 
 }

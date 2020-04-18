@@ -13,6 +13,8 @@ public class DocumentClass implements Document {
 
 	// constant defining the original size of the array
 	private static final int DEFAULT_VALUE = 10;
+	private static final String OFFICIAL = "OFFICIAL";
+
 
 	// instance variables
 	private String docName;
@@ -26,6 +28,12 @@ public class DocumentClass implements Document {
 	private int numGrants;
 	private int numRevokes;
 	private int numAccesses;
+	
+	private Accesses[] history;
+	private int historyCounter;
+	
+	private Accesses[] grantHistory;
+	private int grantHistoryCounter;
 
 	// constructor - initializes the instance variables
 	public DocumentClass(String docName, String manager, String securityLevel, String description) {
@@ -35,12 +43,16 @@ public class DocumentClass implements Document {
 		this.description = description;
 		accesses = new AccessesClass[DEFAULT_VALUE];
 		revokes = new AccessesClass[DEFAULT_VALUE];
+		history = new AccessesClass[DEFAULT_VALUE];
+		grantHistory = new AccessesClass[DEFAULT_VALUE];
 
 		counter_accesses = 0;
 		counter_revokes = 0;
 		numGrants = 0;
 		numRevokes = 0;
 		numAccesses = 0;
+		historyCounter = 0;
+		grantHistoryCounter = 0;
 
 	}
 
@@ -114,7 +126,34 @@ public class DocumentClass implements Document {
 		accesses[counter_accesses++] = new AccessesClass(user);
 		numGrants++;
 	}
-
+	
+	@Override
+	public void history(String readerID, String readerClearanceLvl, String accessType) {
+		if (isFullHistory()) {
+			resizeHistory();
+		}
+		
+		history[historyCounter++] = new AccessesClass(readerID, readerClearanceLvl, accessType);
+	}
+	
+	//@Override
+	public Accesses getAccess(int index) {
+		return history[index];
+	}	
+	
+	/**public boolean isReadWriteAccess(int index) {
+		boolean type;
+		
+		if(history[index].getAccessType().equals(READ) || history[index].getAccessType().equals(WRITE)) {
+			type = true;
+		}
+		else {
+			type = false;
+		}
+		return type;
+	}
+	*/
+	
 	@Override
 	public void removeAccess(User user) {
 		revokes[counter_revokes++] = new AccessesClass(user);
@@ -155,5 +194,25 @@ public class DocumentClass implements Document {
 	@Override
 	public void increaseRevokedTimes() {
 		numRevokes++;
+	}
+
+	@Override
+	public boolean isOfficial() {
+		return securityLevel.toUpperCase().equals(OFFICIAL);
+	}
+	
+	
+	private boolean isFullHistory() {
+		return historyCounter == history.length;
+	}
+
+	/**
+	 * Increases the size of the array of history
+	 */
+	private void resizeHistory() {
+		Accesses tmp[] = new Accesses[2 * history.length];
+		for (int i = 0; i < historyCounter; i++)
+			tmp[i] = history[i];
+		history = tmp;
 	}
 }

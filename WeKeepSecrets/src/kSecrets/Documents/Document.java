@@ -1,5 +1,6 @@
 package kSecrets.Documents;
 
+import kSecrets.Accesses.Accesses;
 import kSecrets.Users.*;
 
 /**
@@ -70,5 +71,11 @@ public interface Document {
 	void increaseGrantedTimes();
 
 	void increaseRevokedTimes();
+
+	boolean isOfficial();
+
+	void history(String readerID, String readerClearanceLvl, String accessType);
+
+	Accesses getAccess(int i);
 
 }

@@ -17,22 +17,13 @@ public interface KeepingSecrets {
 	boolean hasUserID(String userId);
 
 	/**
-	 * Creates a new user of the kind clerk
+	 * Creates a new user
 	 * 
 	 * @param kind           - the user's kind
 	 * @param userID         - the user's identifier
 	 * @param clearanceLevel - the user's clearance level
 	 */
-	void addClerk(String kind, String userID, String clearanceLevel);
-
-	/**
-	 * Creates a new user of the kind officer
-	 * 
-	 * @param kind           - the user's kind
-	 * @param userID         - the user's identifier
-	 * @param clearanceLevel - the user's clearance level
-	 */
-	void addOfficer(String kind, String userID, String clearanceLevel);
+	void addUser(String kind, String userID, String clearanceLevel);
 
 	/**
 	 * 
@@ -81,7 +72,7 @@ public interface KeepingSecrets {
 	 * @param managerID    - the document's manager's name
 	 * @return true if the document is an official document, false otherwise
 	 */
-	boolean isUserDocOfficial(String documentName, String managerID);
+	boolean isDocOfficial(String documentName, String managerID);
 
 	/**
 	 * @Pre searchIndexUser(userID) >= 0
@@ -192,6 +183,27 @@ public interface KeepingSecrets {
 	 * @return true if there are fewer than 10 documents leaked, false otherwise
 	 */
 	boolean isFewerThan10DocLeaked();
+
+	void setTopLeakedDocs();
+
+	boolean isCounterGrantersEmpty();
+
+	boolean isFewerThan10topGranters();
+
+	boolean userHasOfficialDocs(String userID);
+
+	boolean userHasClassifiedDocs(String userID);
+
+	void uploadOfficialDoc(String documentName, String userID, String secLvl, String description);
+
+	void uploadClassifiedDoc(String documentName, String userID, String secLvl, String description);
+
+	boolean hasGrants();
+
+	DocumentIterator listOfficialDocsIterator(String userID);
+
+	DocumentIterator listClassifiedDocsIterator(String userID);
+
 
 
 

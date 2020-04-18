@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import kSecrets.*;
+import kSecrets.Accesses.*;
 import kSecrets.Documents.*;
 import kSecrets.Iterators.*;
 import kSecrets.Users.*;
@@ -19,12 +20,13 @@ public class Main {
 	private static final String LIST_USERS = "LISTUSERS";
 	private static final String UPLOAD = "UPLOAD";
 	private static final String TOP_LEAKED = "TOPLEAKED";
-	private static final String TOP_GRANTED = "TOPGRANTED";
+	private static final String TOP_GRANTED = "TOPGRANTERS";
 	private static final String USER_DOCS = "USERDOCS";
 	private static final String REVOKE = "REVOKE";
 	private static final String GRANT = "GRANT";
 	private static final String READ = "READ";
 	private static final String WRITE = "WRITE";
+	private static final String OFFICIAL = "OFFICIAL";
 
 	// Constantes que definem as mensagens para o utilizador
 
@@ -46,6 +48,11 @@ public class Main {
 	public static final String GRANT_REVOKED = "Grant for officer %s was already revoked.\n";
 	public static final String GRANT_GRANTED = "Access to document %s has been granted.\n";
 	public static final String GRANT_BEEN_REVOKED = "Access to document %s has been revoked.\n";
+	public static final String NO_GRANTS_GIVEN =  "No officer has given grants.";
+	public static final String NO_OFFICIAL_DOCS = "There are no official documents.";
+	public static final String NO_CLASSIFIED_DOCS = "There are no classified documents.";
+	public static final String NO_ACCESSES = "There are no accesses.";
+	public static final String NO_GRANTS = "There are no grants.";
 	public static final String QUIT_MSG = "Bye!";
 
 	public static void main(String[] args) {
@@ -139,23 +146,13 @@ public class Main {
 		clearanceLevel = in.nextLine().trim();
 
 		if (kSecrets.hasUserID(userID)) {
-
 			System.out.printf(USER_INVALID, userID);
 
 		} else {
 
-			if (kSecrets.isClearanceOfficial(clearanceLevel)) {
-
-				kSecrets.addClerk(kind, userID, clearanceLevel);
-
-			} else {
-
-				kSecrets.addOfficer(kind, userID, clearanceLevel);
-			}
-
+			kSecrets.addUser(kind, userID, clearanceLevel);
 			System.out.printf(USER_REGISTERED, userID);
 		}
-
 	}
 
 	private static void listusers(KeepingSecrets kSecrets) {
@@ -184,6 +181,16 @@ public class Main {
 		if (kSecrets.hasUserID(userID)) {
 			if (!kSecrets.hasDocumentUploaded(userID, documentName)) {
 				if (kSecrets.isClearanceHighEnough(userID, secLvl)) {
+					
+					if(secLvl.toUpperCase().equals(OFFICIAL)) {
+					//if(kSecrets.isDocOfficial(documentName, userID)) { //erro
+						kSecrets.uploadOfficialDoc(documentName, userID, secLvl, description);
+					}
+					
+					else {
+						kSecrets.uploadClassifiedDoc(documentName, userID, secLvl, description);
+					}
+					
 					kSecrets.uploadDoc(documentName, userID, secLvl, description);
 					System.out.printf(DOC_UPLOADED, documentName);
 				} else {
@@ -208,11 +215,13 @@ public class Main {
 
 		if (kSecrets.hasUserID(managerID) && kSecrets.hasUserID(updaterID)) {
 			if (kSecrets.hasDocumentUploaded(managerID, documentName)) {
-				if (!kSecrets.isUserDocOfficial(documentName, managerID)) {
+				if (!kSecrets.isDocOfficial(documentName, managerID)) {
 					String docSecLvl = kSecrets.getDocSecurityLevel(documentName, managerID);
 					if (kSecrets.isClearanceHighEnough(updaterID, docSecLvl)) {
+						
 						kSecrets.updateDescription(documentName, managerID, newDescription, updaterID);
 						System.out.printf(DOC_UPDATED, documentName);
+						
 					} else {
 						System.out.println(INSUFFICIENT_CLEARANCE);
 					}
@@ -319,23 +328,88 @@ public class Main {
 	}
 
 	private static void listUserDocs(Scanner in, KeepingSecrets kSecrets) {
-		String userId, docType;
+		String userID, docType;
 
-		userId = in.next().trim();
+		userID = in.next().trim();
 		docType = in.nextLine().trim();
 
-		if (!kSecrets.hasUserID(userId)) {
+		if (!kSecrets.hasUserID(userID)) {
 			System.out.printf(NOT_REGISTERED);
 		}
 
-		/**
-		 * if (only read){ print( doc name: user id, security level) }
-		 * 
-		 * else { line 1: doc name, security level, number of accesses line 2: user id,
-		 * security level, type of access (read or write), more recent accesses shown
-		 * last. line 3: grants given and revoked - user id, security level, more recent
-		 * actions shown last. }
-		 */
+		else {
+			
+			if(docType.toUpperCase().equals(OFFICIAL) ) {
+				
+				if(!kSecrets.userHasOfficialDocs(userID)) {
+					System.out.println(NO_OFFICIAL_DOCS);
+				}
+				
+				else {
+					//lista os documentos official
+					DocumentIterator it = kSecrets.listOfficialDocsIterator(userID);
+					
+					while (it.hasNext()) {
+						Document doc = it.next();
+						System.out.printf("%s: %s %s\n", doc.getDocName(), doc.getManager(), doc.getSecurityLevel());
+					
+					//doc name: user id, security level
+					}
+				}
+			}
+			
+			else {
+				
+				if(!kSecrets.userHasClassifiedDocs(userID)) {
+					System.out.println(NO_CLASSIFIED_DOCS);
+				}
+				
+				else {
+					//lista os documentos classified
+					DocumentIterator it = kSecrets.listClassifiedDocsIterator(userID);
+					
+					while (it.hasNext()) {
+						Document doc = it.next();
+						System.out.printf("%s %s %s\n", doc.getDocName(), doc.getSecurityLevel(), doc.getNumAccesses());
+						
+						if(doc.getNumAccesses()==0) {
+							System.out.println(NO_ACCESSES);
+						}
+						
+						else {
+							for (int i = 0; i < doc.getNumAccesses(); i++) {
+								Accesses a = doc.getAccess(i);
+								if (a.isReadWriteAccess(a)) {
+									System.out.printf("%s [%s, %s]", a.getReaderID(), a.getReaderClearanceLvl(), a.getAccessType());
+								}
+								//talvez iterator? 
+								//while hasNext {print ", ");} 
+								//no ultimo dar \n
+							}
+						}
+						
+						if(kSecrets.hasGrants()) {
+							System.out.println(NO_GRANTS);
+						}
+						
+						else {
+							for (int i = 0; i < doc.getNumAccesses(); i++) {
+								Accesses b = doc.getAccess(i);
+								if (!b.isReadWriteAccess(b)) {
+									System.out.printf("%s [%s, %s]", b.getReaderID(), b.getReaderClearanceLvl(), b.getAccessType());						
+								}
+								//talvez iterator? 
+								//while hasNext {print ", ");} 
+								//no ultimo dar \n
+							}
+						}
+
+					}
+					
+				}
+			}
+			
+		}
 
 	}
 
@@ -348,7 +422,7 @@ public class Main {
 		else {
 
 			int i = 0;
-
+			
 			DocumentIterator it = kSecrets.leakedDocsIterator();
 
 			if (kSecrets.isFewerThan10DocLeaked()) {
@@ -356,8 +430,7 @@ public class Main {
 				while (it.hasNext()) {
 					Document doc = it.next();
 					System.out.println(doc.getDocName() + " " + doc.getManager() + " " + doc.getSecurityLevel() + " "
-							+ kSecrets.getNumAccesses(doc.getDocName(), doc.getManager()) + " " + doc.grantedTimes()
-							+ " " + doc.revokedTimes());
+							+ doc.getNumAccesses() + " " + doc.grantedTimes() + " " + doc.revokedTimes());
 				}
 
 			} else {
@@ -373,18 +446,34 @@ public class Main {
 
 	private static void listGrantedUsers(KeepingSecrets kSecrets) {
 
-		/**
-		 * 
-		 * not sure
-		 * 
-		 * - percorrer todas os users - get granted times
-		 * 
-		 * ordenar vetor
-		 * 
-		 * int i = 0 (while has next && i<10 && grantpositive(doc)) { print; i++ }
-		 * 
-		 * boolean grantpositive(){ return grantedTimes()>0; }
-		 */
+		
+		if (kSecrets.isCounterGrantersEmpty()) {
+			System.out.println(NO_GRANTS_GIVEN);
+		}
+		
+		else {
+
+			int i = 0;
+			
+			UserIterator it = kSecrets.topGrantersIterator();
+
+			if (kSecrets.isFewerThan10topGranters()) {
+
+				while (it.hasNext()) {
+					User user = it.next();
+					System.out.println(user.getID() + " " + user.getClearanceLevel() + " " + user.getDocsNum() + " "
+							+ user.getGrantsGiven() + " " + user.getRevokesGiven());
+				}
+
+			} else {
+				while (it.hasNext() && i < 10) {
+					User user = it.next();
+					i++;
+					System.out.println(user.getID() + " " + user.getClearanceLevel() + " " + user.getDocsNum() + " "
+							+ user.getGrantsGiven() + " " + user.getRevokesGiven());
+				}
+			}
+		}
 
 	}
 

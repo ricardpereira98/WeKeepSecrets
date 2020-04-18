@@ -10,6 +10,9 @@ import kSecrets.Users.*;
 
 public class AccessesClass implements Accesses {
 
+	private static final String READ = "read";
+	private static final String WRITE = "write";
+
 	private User user;
 
 	private String docName;
@@ -17,11 +20,9 @@ public class AccessesClass implements Accesses {
 	private String readerID;
 	private String readerClearanceLvl;
 	private String accessType;
-	private String docSecLvl;
 
 	public AccessesClass(User user) {
 		this.user = user;
-
 	}
 
 	@Override
@@ -29,48 +30,18 @@ public class AccessesClass implements Accesses {
 		return user.getID();
 	}
 
-	// NEW
-
-	public AccessesClass(String docName, int accessesNum, String readerID, String clearanceLvl) {
-		this.docName = docName;
-		this.accessesNum = accessesNum;
+	public AccessesClass(String readerID, String readerClearanceLvl, String accessType) {
 		this.readerID = readerID;
-		this.readerClearanceLvl = clearanceLvl;
-		// String docName, int accessesNum, String userID, String user clearanceLvl
-	}
-
-	public AccessesClass(String docName, String docSecLvl, int accessesNum, String readerID, String readerClearanceLvl,
-			String accessType) {
-
-		this.docName = docName;
-		this.docSecLvl = docSecLvl;
-		this.accessesNum = accessesNum;
-		this.readerID = readerID;
-		this.readerClearanceLvl = readerClearanceLvl;
 		this.accessType = accessType;
-
-		// String docName, String docSecLvl, int accessesNum,
-		// String readerID, String readerSecLvl, String readerAccessType
+		this.readerClearanceLvl = readerClearanceLvl;
 	}
-
-	// doc.name, doc.securityLvl, doc.numAccesses
-	// reader.id, reader. secLvl, reader.accessType
-	// grants -
-	// revokes -
-
-	// doc.grantedTimes, doc. revokedTimes
-
-	/**
-	 * The third line presents the grants given and revoked. For each grant, it
-	 * should be shown the user id and its security level, with the more recent
-	 * actions shown last. Again, the documents should be presented in the order
-	 * they where uploaded.
-	 * 
-	 * 1. secretDoc secret 3 2. alice [secret, read], alice [secret, write], bob
-	 * [confidential, read] 3. bob [confidential, grant], john [confidential,
-	 * grant], bob [confidential, revoked]
-	 */
-
+	
+	public AccessesClass(String docName, int accessesNum, String readerClearanceLvl) {
+		this.docName = docName;
+		this.accessesNum = accessesNum;
+		this.readerClearanceLvl = readerClearanceLvl;
+	}
+	
 	@Override
 	public String getDocName() {
 		return docName;
@@ -87,11 +58,6 @@ public class AccessesClass implements Accesses {
 	}
 
 	@Override
-	public String getDocSecLvl() {
-		return docSecLvl;
-	}
-
-	@Override
 	public String getReaderClearanceLvl() {
 		return readerClearanceLvl;
 	}
@@ -99,6 +65,19 @@ public class AccessesClass implements Accesses {
 	@Override
 	public String getAccessType() {
 		return accessType;
+	}
+
+	@Override
+	public boolean isReadWriteAccess(Accesses access) {
+		boolean type;
+		
+		if(access.getAccessType().equals(READ) || access.getAccessType().equals(WRITE)) {
+			type = true;
+		}
+		else {
+			type = false;
+		}
+		return type;
 	}
 
 }

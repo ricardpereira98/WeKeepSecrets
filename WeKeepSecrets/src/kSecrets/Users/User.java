@@ -64,7 +64,7 @@ public interface User {
 	/**
 	 * Increases the number of times this user has granted access to another user
 	 */
-	void grantGiven();
+	void increaseGrantGiven();
 
 	/**
 	 * 
@@ -76,4 +76,30 @@ public interface User {
 	 * @return an iterator of a user's documents
 	 */
 	DocumentIterator docsIterator();
+
+	int getDocsNum();
+
+	void increaseRevokesGiven();
+
+	int getRevokesGiven();
+
+	boolean hasOfficialDocs();
+
+	boolean hasClassifiedDocs();
+
+	void addOfficialDoc(String documentName, String userID, String secLvl, String description);
+
+	void addClassifiedDoc(String docName, String manager, String securityLevel, String description);
+
+	Document getOfficialDocument(String docName);
+
+	Document getClassifiedDocument(String docName);
+
+	Document getDocument(int index);
+
+	DocumentIterator listOfficialDocsIterator();
+
+	DocumentIterator listClassifiedDocsIterator();
+
+	
 }
