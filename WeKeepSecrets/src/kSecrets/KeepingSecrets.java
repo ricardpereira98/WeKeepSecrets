@@ -178,17 +178,7 @@ public interface KeepingSecrets {
 	 */
 	boolean isGrantedDocsEmpty();
 
-	/**
-	 * 
-	 * @return true if there are fewer than 10 documents leaked, false otherwise
-	 */
-	boolean isFewerThan10DocLeaked();
-
-	void setTopLeakedDocs();
-
-	boolean isCounterGrantersEmpty();
-
-	boolean isFewerThan10topGranters();
+	boolean isNumGrantersEmpty();
 
 	boolean userHasOfficialDocs(String userID);
 
@@ -203,8 +193,5 @@ public interface KeepingSecrets {
 	DocumentIterator listOfficialDocsIterator(String userID);
 
 	DocumentIterator listClassifiedDocsIterator(String userID);
-
-
-
 
 }

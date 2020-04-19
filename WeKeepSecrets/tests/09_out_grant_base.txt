@@ -1,0 +1,37 @@
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+Document topSecretDoc1 was uploaded.
+Document topSecretDoc2 was uploaded.
+Document topSecretDoc3 was uploaded.
+Insufficient security clearance.
+Insufficient security clearance.
+Insufficient security clearance.
+Access to document topSecretDoc3 has been granted.
+Access to document topSecretDoc2 has been granted.
+Access to document topSecretDoc1 has been granted.
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document: This document is a topsecret document of user knowsTopSecrets!
+Insufficient security clearance.
+Insufficient security clearance.
+Insufficient security clearance.
+Access to document topSecretDoc2 has been granted.
+Access to document topSecretDoc3 has been granted.
+Access to document topSecretDoc1 has been granted.
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document secretDoc1 was uploaded.
+Document secretDoc2 was uploaded.
+Document secretDoc3 was uploaded.
+Access to document secretDoc2 has been granted.
+Access to document secretDoc3 has been granted.
+Access to document secretDoc1 has been granted.
+Document: This document is a secret document of user knowsTopSecrets!
+Document: This document is a secret document of user knowsTopSecrets!
+Document: This document is a secret document of user knowsSecrets!
+Bye!

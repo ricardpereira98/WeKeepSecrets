@@ -1,0 +1,123 @@
+register
+clerk knowsNothing official
+register
+officer knowsSomeStuff confidential
+register
+officer knowsSecrets secret
+register
+officer knowsTopSecrets topsecret
+register
+clerk MoneyPenny official
+register
+officer Q topsecret
+listusers
+upload
+officialDoc1 knowsNothing official
+This document is an official document of user knowsNothing!
+upload
+officialDoc2 knowsNothing official
+This document is an official document of user knowsNothing!
+upload
+officialDoc3 knowsNothing official
+This document is an official document of user knowsNothing!
+read
+officialDoc3 knowsNothing MoneyPenny
+read
+officialDoc1 knowsNothing knowsSecrets
+read
+officialDoc2 knowsNothing knowsSomeStuff
+upload
+confidentialDoc1 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+upload
+confidentialDoc2 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+upload
+confidentialDoc3 knowsSecrets confidential
+This document is a confidential document of user knowsSecrets!
+read
+confidentialDoc3 knowsSecrets knowsSomeStuff
+write
+confidentialDoc3 knowsSecrets knowsSomeStuff
+This document is a confidential document that was updated!
+read
+confidentialDoc3 knowsSecrets knowsSomeStuff
+write
+confidentialDoc3 knowsSecrets knowsTopSecrets
+This document is a confidential document that was updated twice!
+read
+confidentialDoc3 knowsSecrets knowsSomeStuff
+upload
+topSecretDoc1 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+read
+topSecretDoc1 knowsTopSecrets knowsTopSecrets
+write
+topSecretDoc1 knowsTopSecrets Q
+This document is a topsecret document that was updated!
+read
+topSecretDoc1 knowsTopSecrets Q
+upload
+topSecretDoc2 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+upload
+topSecretDoc3 knowsTopSecrets topsecret
+This document is a topsecret document of user knowsTopSecrets!
+read
+topSecretDoc2 knowsTopSecrets Q
+write
+topSecretDoc2 knowsTopSecrets knowsTopSecrets
+This document is a topsecret document that was updated!
+read
+topSecretDoc2 knowsTopSecrets Q
+write
+topSecretDoc3 knowsTopSecrets Q
+This document is a topsecret document that was updated!
+read
+topSecretDoc2 knowsTopSecrets Q
+upload
+secretDoc1 knowsTopSecrets secret
+This document is a secret document of user knowsTopSecrets!
+upload
+secretDoc2 knowsTopSecrets secret
+This document is a secret document of user knowsTopSecrets!
+upload
+secretDoc3 knowsSecrets secret
+This document is a secret document of user knowsSecrets!
+upload
+confidentialDoc1 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc2 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc3 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+upload
+confidentialDoc4 knowsSomeStuff confidential
+This document is a confidential document of user knowsSomeStuff!
+write
+confidentialDoc3 knowsSomeStuff knowsSecrets
+This document is a confidential document that was updated!
+write
+confidentialDoc1 knowsSomeStuff knowsTopSecrets
+This document is a confidential document that was updated!
+write
+confidentialDoc2 knowsSomeStuff knowsSecrets
+This document is a confidential document that was updated!
+write
+confidentialDoc3 knowsSomeStuff Q
+This document is a confidential document that was twice!
+read
+confidentialDoc3 knowsSomeStuff knowsTopSecrets
+write
+confidentialDoc1 knowsSomeStuff knowsSecrets
+This document is a confidential document that was twice!
+write
+confidentialDoc1 knowsSomeStuff knowsTopSecrets
+This document is a confidential document that was thrice!
+read
+confidentialDoc1 knowsSomeStuff knowsSecrets
+read
+confidentialDoc1 knowsSomeStuff Q
+exit

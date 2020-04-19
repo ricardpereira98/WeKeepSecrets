@@ -1,0 +1,54 @@
+User knowsNothing was registered.
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+User MoneyPenny was registered.
+User Q was registered.
+clerk knowsNothing official
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+clerk MoneyPenny official
+officer Q topsecret
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Document: This document is an official document of user knowsNothing!
+Document: This document is an official document of user knowsNothing!
+Document: This document is an official document of user knowsNothing!
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Document: This document is a confidential document of user knowsSecrets!
+Document confidentialDoc3 was updated.
+Document: This document is a confidential document that was updated!
+Document confidentialDoc3 was updated.
+Document: This document is a confidential document that was updated twice!
+Document topSecretDoc1 was uploaded.
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document topSecretDoc1 was updated.
+Document: This document is a topsecret document that was updated!
+Document topSecretDoc2 was uploaded.
+Document topSecretDoc3 was uploaded.
+Document: This document is a topsecret document of user knowsTopSecrets!
+Document topSecretDoc2 was updated.
+Document: This document is a topsecret document that was updated!
+Document topSecretDoc3 was updated.
+Document: This document is a topsecret document that was updated!
+Document secretDoc1 was uploaded.
+Document secretDoc2 was uploaded.
+Document secretDoc3 was uploaded.
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Document confidentialDoc4 was uploaded.
+Document confidentialDoc3 was updated.
+Document confidentialDoc1 was updated.
+Document confidentialDoc2 was updated.
+Document confidentialDoc3 was updated.
+Document: This document is a confidential document that was twice!
+Document confidentialDoc1 was updated.
+Document confidentialDoc1 was updated.
+Document: This document is a confidential document that was thrice!
+Document: This document is a confidential document that was thrice!
+Bye!

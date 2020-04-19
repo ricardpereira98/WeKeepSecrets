@@ -1,0 +1,41 @@
+User knowsNothing was registered.
+User knowsSomeStuff was registered.
+User knowsSecrets was registered.
+User knowsTopSecrets was registered.
+clerk knowsNothing official
+officer knowsSomeStuff confidential
+officer knowsSecrets secret
+officer knowsTopSecrets topsecret
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Document officialDoc2 already exists in the user account.
+Document officialDoc1 already exists in the user account.
+Document officialDoc3 already exists in the user account.
+Document officialDoc1 was uploaded.
+Document officialDoc2 was uploaded.
+Document officialDoc3 was uploaded.
+Document officialDoc1 already exists in the user account.
+Document officialDoc2 already exists in the user account.
+Document officialDoc3 already exists in the user account.
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Document confidentialDoc3 already exists in the user account.
+Document confidentialDoc2 already exists in the user account.
+Document confidentialDoc1 already exists in the user account.
+Document topSecretDoc1 was uploaded.
+Document topSecretDoc2 was uploaded.
+Document topSecretDoc3 was uploaded.
+Document secretDoc2 was uploaded.
+Document secretDoc1 was uploaded.
+Document secretDoc3 was uploaded.
+Document confidentialDoc1 was uploaded.
+Document confidentialDoc2 was uploaded.
+Document confidentialDoc3 was uploaded.
+Document confidentialDoc2 already exists in the user account.
+Not a registered user.
+Insufficient security clearance.
+Insufficient security clearance.
+Insufficient security clearance.
+Bye!
