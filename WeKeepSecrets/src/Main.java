@@ -49,6 +49,7 @@ public class Main {
 	public static final String GRANT_GRANTED = "Access to document %s has been granted.\n";
 	public static final String GRANT_BEEN_REVOKED = "Access to document %s has been revoked.\n";
 	public static final String NO_GRANTS_GIVEN = "No officer has given grants.";
+	public static final String INAPPROPRIATE_SLVL = "Inappropriate security level.";
 	public static final String NO_OFFICIAL_DOCS = "There are no official documents.";
 	public static final String NO_CLASSIFIED_DOCS = "There are no classified documents.";
 	public static final String NO_ACCESSES = "There are no accesses.";
@@ -351,61 +352,80 @@ public class Main {
 
 					while (it.hasNext()) {
 						Document doc = it.next();
-						System.out.printf("%s: %s %s\n", doc.getDocName(), doc.getManager(), doc.getSecurityLevel());
+
+						if (doc.getNumAccesses() == 0) {
+							System.out.printf("%s %d: %s\n", doc.getDocName(), doc.getNumAccesses(), NO_ACCESSES);
+						}
+
+						else {
+							System.out.printf("%s %d: %s %s\n", doc.getDocName(), doc.getNumAccesses(),
+									doc.getManager(), doc.getSecurityLevel());
+						}
 					}
 				}
 			}
 
 			else {
 
-				if (!kSecrets.userHasClassifiedDocs(userID)) {
-					System.out.println(NO_CLASSIFIED_DOCS);
+				if (!kSecrets.isClearanceAppropriated(userID)) {
+					System.out.println(INAPPROPRIATE_SLVL);
 				}
 
 				else {
-					// lista os documentos classified
-					DocumentIterator it = kSecrets.listClassifiedDocsIterator(userID);
 
-					while (it.hasNext()) {
-						Document doc = it.next();
-						System.out.printf("%s %s %s\n", doc.getDocName(), doc.getSecurityLevel(), doc.getNumAccesses());
-
-						if (doc.getNumAccesses() == 0) {
-							System.out.println(NO_ACCESSES);
-						}
-
-						else {
-							for (int i = 0; i < doc.getNumAccesses(); i++) {
-								Accesses a = doc.getAccess(i);
-								if (a.isReadWriteAccess(a)) {
-									System.out.printf("%s [%s, %s]", a.getReaderID(), a.getReaderClearanceLvl(),
-											a.getAccessType());
-								}
-								// talvez iterator?
-								// while hasNext {print ", ");}
-								// no ultimo dar \n
-							}
-						}
-
-						if (kSecrets.hasGrants()) {
-							System.out.println(NO_GRANTS);
-						}
-
-						else {
-							for (int i = 0; i < doc.getNumAccesses(); i++) {
-								Accesses b = doc.getAccess(i);
-								if (!b.isReadWriteAccess(b)) {
-									System.out.printf("%s [%s, %s]", b.getReaderID(), b.getReaderClearanceLvl(),
-											b.getAccessType());
-								}
-								// talvez iterator?
-								// while hasNext {print ", ");}
-								// no ultimo dar \n
-							}
-						}
-
+					if (!kSecrets.userHasClassifiedDocs(userID)) {
+						System.out.println(NO_CLASSIFIED_DOCS);
 					}
 
+					else {
+
+						// lista os documentos classified
+						DocumentIterator it = kSecrets.listClassifiedDocsIterator(userID);
+
+						while (it.hasNext()) {
+							Document doc = it.next();
+							System.out.printf("%s %s %s\n", doc.getDocName(), doc.getSecurityLevel(),
+									doc.getNumAccesses());
+
+							if (doc.getNumAccesses() == 0) {
+								System.out.println(NO_ACCESSES);
+							}
+
+							else {
+								for (int i = 0; i < doc.getTotalNumAccesses(); i++) {
+									Accesses reader = doc.getAccess(i);
+									if (kSecrets.isReadWriteAccess(reader)) {
+										System.out.printf("%s [%s, %s]", reader.getReaderID(),
+												reader.getReaderClearanceLvl(), reader.getAccessType());
+										if (i < doc.getTotalNumAccesses() - 1) {
+											System.out.print(", ");
+										}
+									}
+								}
+								System.out.printf("\n");
+
+							}
+
+							if (doc.getActualAccesses() == 0) {
+								System.out.println(NO_GRANTS);
+							}
+
+							else {
+								for (int i = 0; i < doc.getTotalNumAccesses(); i++) {
+									Accesses reader = doc.getAccess(i);
+									if (!kSecrets.isReadWriteAccess(reader)) {
+										System.out.printf("%s [%s, %s]", reader.getReaderID(),
+												reader.getReaderClearanceLvl(), reader.getAccessType());
+										if (i < doc.getTotalNumAccesses() - 1) {
+											System.out.print(", ");
+										}
+									}
+								}
+								System.out.printf("\n");
+
+							}
+						}
+					}
 				}
 			}
 

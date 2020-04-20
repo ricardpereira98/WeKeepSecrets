@@ -1,5 +1,0 @@
-not really a command
-help
-HELP
-hElP
-exit

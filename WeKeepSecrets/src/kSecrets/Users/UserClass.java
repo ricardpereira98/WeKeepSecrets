@@ -243,7 +243,7 @@ public class UserClass implements User {
 
 	@Override
 	public DocumentIterator listClassifiedDocsIterator() {
-		return new DocumentIteratorClass(classifiedDocs, counterDocs);
+		return new DocumentIteratorClass(classifiedDocs, counterClassifiedDocs);
 	}
 	
 }

@@ -28,6 +28,7 @@ public class DocumentClass implements Document {
 	private int numGrants;
 	private int numRevokes;
 	private int numAccesses;
+	private int	totalAccesses;
 	
 	private Accesses[] history;
 	private int historyCounter;
@@ -53,6 +54,7 @@ public class DocumentClass implements Document {
 		numAccesses = 0;
 		historyCounter = 0;
 		grantHistoryCounter = 0;
+		totalAccesses = 0;
 
 	}
 
@@ -171,6 +173,11 @@ public class DocumentClass implements Document {
 	public int revokedTimes() {
 		return numRevokes;
 	}
+	
+	@Override
+	public int getActualAccesses() {
+		return counter_accesses;
+	}
 
 	@Override
 	public int grantedTimes() {
@@ -186,10 +193,16 @@ public class DocumentClass implements Document {
 	public int getNumAccesses() {
 		return numAccesses;
 	}
+	
+	@Override
+	public int getTotalNumAccesses() {
+		return totalAccesses;
+	}
 
 	@Override
 	public void increaseNumAccesses() {
 		numAccesses++;
+		totalAccesses++;
 	}
 	@Override
 	public void increaseRevokedTimes() {
@@ -214,5 +227,10 @@ public class DocumentClass implements Document {
 		for (int i = 0; i < historyCounter; i++)
 			tmp[i] = history[i];
 		history = tmp;
+	}
+
+	@Override
+	public void increaseTotalNumAccesses() {
+		totalAccesses++;		
 	}
 }

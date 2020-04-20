@@ -41,7 +41,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private User[] topGranters;
 	private int counterGranters;
 	private int numGranters;
-	
 
 	private Accesses[] officialAccesses;
 	private int counterOfficialDocs;
@@ -57,7 +56,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		topGranters = new User[DEFAULT_SIZE];
 		counterGranters = 0;
 		numGranters = 0;
-		
+
 		topLeaked = new Document[DEFAULT_SIZE];
 		counterGrantedDocs = 0;
 		counterLeakedDocs = 0;
@@ -176,17 +175,21 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		doc.setNewDescription(newDescription);
 		doc.increaseNumAccesses();
+		doc.history(updaterID, aux.getClearanceLevel(), WRITE);
 
 		if (doc.isOfficial()) {
 			Document official = manager.getOfficialDocument(documentName);
 			official.setNewDescription(newDescription);
 			official.increaseNumAccesses();
+			official.history(updaterID, aux.getClearanceLevel(), WRITE);
+
 		}
 
 		else {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.setNewDescription(newDescription);
 			classified.increaseNumAccesses();
+			classified.history(updaterID, aux.getClearanceLevel(), WRITE);
 		}
 
 		if (isFullClassifiedAccesses()) {
@@ -203,15 +206,20 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User aux = users[searchIndexUserID(readerID)];
 
 		doc.increaseNumAccesses();
+		doc.history(readerID, aux.getClearanceLevel(), READ);
 
 		if (doc.isOfficial()) {
 			Document official = manager.getOfficialDocument(documentName);
 			official.increaseNumAccesses();
+			official.history(readerID, aux.getClearanceLevel(), READ);
+
 		}
 
 		else {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.increaseNumAccesses();
+			classified.history(readerID, aux.getClearanceLevel(), READ);
+
 		}
 
 		if (isDocOfficial(documentName, managerID)) {
@@ -224,7 +232,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 				officialAccesses[i + 1] = officialAccesses[i];
 			}
 			// doc name: user id, security level
-			officialAccesses[0] = new AccessesClass(documentName, doc.getNumAccesses(), aux.getClearanceLevel());
+			officialAccesses[0] = new AccessesClass(documentName, doc.getNumAccesses(), aux.getClearanceLevel(), READ);
 		}
 
 		else {
@@ -268,6 +276,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		doc.grant(aux);
 		doc.history(readerID, aux.getClearanceLevel(), GRANT);
+		doc.increaseTotalNumAccesses();
 		manager.increaseGrantGiven();
 
 		if (doc.isOfficial()) {
@@ -280,6 +289,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.grant(aux);
 			classified.history(readerID, aux.getClearanceLevel(), GRANT);
+			classified.increaseTotalNumAccesses();
 		}
 
 		if (isFullClassifiedAccesses()) {
@@ -299,6 +309,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		doc.removeAccess(aux);
 		manager.increaseRevokesGiven();
+		doc.increaseTotalNumAccesses();
 		doc.history(readerID, aux.getClearanceLevel(), REVOKE);
 
 		if (doc.isOfficial()) {
@@ -311,6 +322,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.removeAccess(aux);
 			classified.history(readerID, aux.getClearanceLevel(), REVOKE);
+			classified.increaseTotalNumAccesses();
 		}
 
 		if (isFullClassifiedAccesses()) {
@@ -627,6 +639,23 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	@Override
 	public DocumentIterator listClassifiedDocsIterator(String userID) {
 		return users[searchIndexUserID(userID)].listClassifiedDocsIterator();
+	}
+
+	@Override
+	public boolean isClearanceAppropriated(String userID) {
+		String clearence = users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase();
+
+		return !clearence.equals(OFFICIAL);
+	}
+
+	@Override
+	public boolean isReadWriteAccess(Accesses access) {
+		boolean type = false;
+
+		if (access.getAccessType().toUpperCase().equals(READ) || access.getAccessType().toUpperCase().equals(WRITE)) {
+			type = true;
+		}
+		return type;
 	}
 
 }

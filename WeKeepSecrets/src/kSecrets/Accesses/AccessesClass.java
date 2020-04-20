@@ -10,9 +10,6 @@ import kSecrets.Users.*;
 
 public class AccessesClass implements Accesses {
 
-	private static final String READ = "read";
-	private static final String WRITE = "write";
-
 	private User user;
 
 	private String docName;
@@ -36,10 +33,12 @@ public class AccessesClass implements Accesses {
 		this.readerClearanceLvl = readerClearanceLvl;
 	}
 	
-	public AccessesClass(String docName, int accessesNum, String readerClearanceLvl) {
+	public AccessesClass(String docName, int accessesNum, String readerClearanceLvl, String accessType) {
 		this.docName = docName;
 		this.accessesNum = accessesNum;
 		this.readerClearanceLvl = readerClearanceLvl;
+		this.accessType = accessType;
+
 	}
 	
 	@Override
@@ -65,19 +64,6 @@ public class AccessesClass implements Accesses {
 	@Override
 	public String getAccessType() {
 		return accessType;
-	}
-
-	@Override
-	public boolean isReadWriteAccess(Accesses access) {
-		boolean type;
-		
-		if(access.getAccessType().equals(READ) || access.getAccessType().equals(WRITE)) {
-			type = true;
-		}
-		else {
-			type = false;
-		}
-		return type;
 	}
 
 }

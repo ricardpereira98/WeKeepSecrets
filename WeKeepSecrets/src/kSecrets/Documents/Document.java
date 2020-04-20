@@ -78,4 +78,10 @@ public interface Document {
 
 	Accesses getAccess(int i);
 
+	int getTotalNumAccesses();
+
+	void increaseTotalNumAccesses();
+
+	int getActualAccesses();
+
 }

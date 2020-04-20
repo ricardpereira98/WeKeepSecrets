@@ -16,11 +16,8 @@ public interface Accesses {
 
 	String getReaderID();
 
-
 	String getReaderClearanceLvl();
 
 	String getAccessType();
 	
-	boolean isReadWriteAccess(Accesses access);
-
 }

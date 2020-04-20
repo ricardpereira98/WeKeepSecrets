@@ -1,5 +1,6 @@
 package kSecrets;
 
+import kSecrets.Accesses.Accesses;
 import kSecrets.Iterators.*;
 
 /**
@@ -193,5 +194,9 @@ public interface KeepingSecrets {
 	DocumentIterator listOfficialDocsIterator(String userID);
 
 	DocumentIterator listClassifiedDocsIterator(String userID);
+
+	boolean isClearanceAppropriated(String userID);
+
+	boolean isReadWriteAccess(Accesses reader);
 
 }
