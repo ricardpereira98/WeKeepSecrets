@@ -13,11 +13,11 @@ public class DocumentIteratorClass implements DocumentIterator {
 	// Instance variables
 	private int counter;
 	private int current;
-	private Document[] docs;
+	private ClassifiedDocument[] docs;
 
 	// Creates an iterator of documents
-	public DocumentIteratorClass(Document[] docs, int counter) {
-		this.docs = docs;
+	public DocumentIteratorClass(ClassifiedDocument[] topLeaked, int counter) {
+		this.docs = topLeaked;
 		this.counter = counter;
 		current = 0;
 	}
@@ -28,7 +28,7 @@ public class DocumentIteratorClass implements DocumentIterator {
 	}
 
 	@Override
-	public Document next() {
+	public ClassifiedDocument next() {
 		return docs[current++];
 	}
 

@@ -34,24 +34,24 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private User[] users;
 	private int counterUsers;
 
-	private Document[] topLeaked;
+	private ClassifiedDocument[] topLeaked;
 	private int counterGrantedDocs;
 	private int counterLeakedDocs;
 
-	private User[] topGranters;
+	private Officer[] topGranters;
 	private int counterGranters;
 	private int numGranters;
 
 	// Constructor of the top class - initiates the instance variables
 	public KeepingSecretsClass() {
-		users = new User[DEFAULT_SIZE];
+		users = new UserClass[DEFAULT_SIZE];
 		counterUsers = 0;
 
-		topGranters = new User[DEFAULT_SIZE];
+		topGranters = new OfficerClass[DEFAULT_SIZE];
 		counterGranters = 0;
 		numGranters = 0;
 
-		topLeaked = new Document[DEFAULT_SIZE];
+		topLeaked = new ClassifiedDocumentsClass[DEFAULT_SIZE];
 		counterGrantedDocs = 0;
 		counterLeakedDocs = 0;
 
@@ -164,12 +164,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		doc.setNewDescription(newDescription);
 		doc.increaseNumAccesses();
-		doc.history(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
+		doc.docHistory(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
 
 		Document classified = manager.getClassifiedDocument(documentName);
 		classified.setNewDescription(newDescription);
 		classified.increaseNumAccesses();
-		classified.history(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
+		classified.docHistory(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
 
 	}
 
@@ -181,19 +181,18 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User aux = users[searchIndexUserID(readerID)];
 
 		doc.increaseNumAccesses();
-		doc.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
+		doc.docHistory(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
 
 		if (doc.isOfficial()) {
 			Document official = manager.getOfficialDocument(documentName);
 			official.increaseNumAccesses();
-			official.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
-			official.officialHistory(readerID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
+			official.docHistory(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
 		}
 
 		else {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.increaseNumAccesses();
-			classified.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
+			classified.docHistory(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
 
 		}
 		return doc.getDescription();
@@ -229,13 +228,13 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User aux = users[searchIndexUserID(readerID)];
 
 		doc.grant(aux);
-		doc.history(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
+		doc.docHistory(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
 		doc.increaseTotalNumAccesses();
 		manager.increaseGrantGiven();
 
 		Document classified = manager.getClassifiedDocument(documentName);
 		classified.grant(aux);
-		classified.history(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
+		classified.docHistory(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
 		classified.increaseTotalNumAccesses();
 
 		counterGrantedDocs++;
@@ -252,11 +251,11 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		doc.removeAccess(aux);
 		manager.increaseRevokesGiven();
 		doc.increaseTotalNumAccesses();
-		doc.history(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
+		doc.docHistory(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
 
 		Document classified = manager.getClassifiedDocument(documentName);
 		classified.removeAccess(aux);
-		classified.history(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
+		classified.docHistory(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
 		classified.increaseTotalNumAccesses();
 	}
 
@@ -274,6 +273,38 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			}
 		}
 		return found;
+	}
+
+	@Override
+	public boolean userHasOfficialDocs(String userID) {
+		return users[searchIndexUserID(userID)].hasOfficialDocs();
+	}
+
+	@Override
+	public boolean userHasClassifiedDocs(String userID) {
+		return users[searchIndexUserID(userID)].hasClassifiedDocs();
+	}
+
+	@Override
+	public DocumentIterator listClassifiedDocsIterator(String userID) {
+		return users[searchIndexUserID(userID)].listClassifiedDocsIterator();
+	}
+
+	@Override
+	public boolean isClearanceAppropriated(String userID) {
+		String clearence = users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase();
+
+		return !clearence.equals(OFFICIAL);
+	}
+
+	@Override
+	public boolean isReadWriteAccess(Accesses access) {
+		boolean isRW = false;
+
+		if (access.getAccessType().equalsIgnoreCase(READ) || access.getAccessType().equalsIgnoreCase(WRITE)) {
+			isRW = true;
+		}
+		return isRW;
 	}
 
 	// PRIVATE METHODS BELOW
@@ -338,7 +369,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	 * Increases the size of the array of top leaked documents
 	 */
 	private void resizeTopLeaked() {
-		Document tmp[] = new Document[2 * topLeaked.length];
+		ClassifiedDocument tmp[] = new ClassifiedDocumentsClass[2 * topLeaked.length];
 		for (int i = 0; i < counterLeakedDocs; i++)
 			tmp[i] = topLeaked[i];
 		topLeaked = tmp;
@@ -357,7 +388,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	 * Increases the size of the array of top leaked documents
 	 */
 	private void resizeTopGranters() {
-		User tmp[] = new User[2 * topGranters.length];
+		Officer tmp[] = new OfficerClass[2 * topGranters.length];
 		for (int i = 0; i < counterGranters; i++)
 			tmp[i] = topGranters[i];
 		topGranters = tmp;
@@ -411,7 +442,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 					if (isFullTopLeaked()) {
 						resizeTopLeaked();
 					}
-					topLeaked[counterLeakedDocs++] = doc;
+					topLeaked[counterLeakedDocs++] = (ClassifiedDocument) doc;
 				}
 			}
 		}
@@ -425,7 +456,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			if (users[i].getGrantsGiven() > 0) {
 				if (isFullTopGranters())
 					resizeTopGranters();
-				topGranters[counterGranters++] = users[i];
+				topGranters[counterGranters++] = (Officer) users[i];
 			}
 		}
 		bubbleSortOfficerGrants();
@@ -433,12 +464,14 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	}
 
 	private void resetTopLeaked() {
-		topLeaked = new DocumentClass[DEFAULT_SIZE];
+//		topLeaked = new DocumentClass[DEFAULT_SIZE];
+		topLeaked = new ClassifiedDocumentsClass[DEFAULT_SIZE];
 		counterLeakedDocs = 0;
 	}
 
 	private void resetTopGranters() {
-		topGranters = new UserClass[DEFAULT_SIZE];
+//		topGranters = new UserClass[DEFAULT_SIZE];
+		topGranters = new OfficerClass[DEFAULT_SIZE];
 		counterGranters = 0;
 	}
 
@@ -451,10 +484,11 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			for (int j = counterLeakedDocs - 1; j >= i; j--) {
 
 				if (topLeaked[j - 1].grantedTimes() < topLeaked[j].grantedTimes()) {
-					Document tmp = topLeaked[j - 1];
+					ClassifiedDocument tmp = topLeaked[j - 1];
 					topLeaked[j - 1] = topLeaked[j];
 					topLeaked[j] = tmp;
 				}
+
 			}
 		}
 	}
@@ -470,7 +504,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 				// orders alphabetically in case of tie
 				if (topLeaked[j - 1].grantedTimes() == topLeaked[j].grantedTimes()) {
 					if (topLeaked[j - 1].getDocName().compareToIgnoreCase(topLeaked[j].getDocName()) > 0) {
-						Document aux = topLeaked[j - 1];
+						ClassifiedDocument aux = topLeaked[j - 1];
 						topLeaked[j - 1] = topLeaked[j];
 						topLeaked[j] = aux;
 					}
@@ -489,7 +523,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 			for (int j = counterGranters - 1; j >= i; j--) {
 				// orders based on grant times
 				if (topGranters[j - 1].getGrantsGiven() < topGranters[j].getGrantsGiven()) {
-					User tmp = topGranters[j - 1];
+					Officer tmp = topGranters[j - 1];
 					topGranters[j - 1] = topGranters[j];
 					topGranters[j] = tmp;
 				}
@@ -508,45 +542,13 @@ public class KeepingSecretsClass implements KeepingSecrets {
 				// orders alphabetically in case of tie
 				if (topGranters[j - 1].getGrantsGiven() == topGranters[j].getGrantsGiven()) {
 					if (topGranters[j - 1].getID().compareTo(topGranters[j].getID()) > 0) {
-						User aux = topGranters[j - 1];
+						Officer aux = topGranters[j - 1];
 						topGranters[j - 1] = topGranters[j];
 						topGranters[j] = aux;
 					}
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean userHasOfficialDocs(String userID) {
-		return users[searchIndexUserID(userID)].hasOfficialDocs();
-	}
-
-	@Override
-	public boolean userHasClassifiedDocs(String userID) {
-		return users[searchIndexUserID(userID)].hasClassifiedDocs();
-	}
-
-	@Override
-	public DocumentIterator listClassifiedDocsIterator(String userID) {
-		return users[searchIndexUserID(userID)].listClassifiedDocsIterator();
-	}
-
-	@Override
-	public boolean isClearanceAppropriated(String userID) {
-		String clearence = users[searchIndexUserID(userID)].getClearanceLevel().toUpperCase();
-
-		return !clearence.equals(OFFICIAL);
-	}
-
-	@Override
-	public boolean isReadWriteAccess(Accesses access) {
-		boolean isRW = false;
-
-		if (access.getAccessType().equalsIgnoreCase(READ) || access.getAccessType().equalsIgnoreCase(WRITE)) {
-			isRW = true;
-		}
-		return isRW;
 	}
 
 }

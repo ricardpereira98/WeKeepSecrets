@@ -14,7 +14,6 @@ import kSecrets.Users.*;
 public class Main {
 
 	private static final String JUMP_LINE = "\n";
-	private static final int COMMA_LENGHT = 2;
 	private static final String COMMA = ", ";
 	private static final String BRACKET_END = "]";
 	private static final String BRACKET_START = " [";

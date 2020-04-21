@@ -24,10 +24,10 @@ public class UserClass implements User {
 	private Document[] docs;
 	private int counterDocs;
 
-	private Document[] officialDocs;
+	private OfficialDocument[] officialDocs;
 	private int counterOfficialDocs;
 
-	private Document[] classifiedDocs;
+	private ClassifiedDocument[] classifiedDocs;
 	private int counterClassifiedDocs;
 
 	// constructor - initializes instance variables

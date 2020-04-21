@@ -20,6 +20,6 @@ public interface DocumentIterator {
 	 * 
 	 * @return the next document in the array of documents
 	 */
-	public Document next();
+	public ClassifiedDocument next();
 
 }
