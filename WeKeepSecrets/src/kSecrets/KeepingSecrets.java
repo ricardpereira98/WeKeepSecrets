@@ -1,7 +1,6 @@
 package kSecrets;
 
 import kSecrets.Accesses.Accesses;
-import kSecrets.Documents.Document;
 import kSecrets.Iterators.*;
 
 /**

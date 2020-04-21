@@ -541,12 +541,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 	@Override
 	public boolean isReadWriteAccess(Accesses access) {
-		boolean type = false;
+		boolean isRW = false;
 
 		if (access.getAccessType().equalsIgnoreCase(READ) || access.getAccessType().equalsIgnoreCase(WRITE)) {
-			type = true;
+			isRW = true;
 		}
-		return type;
+		return isRW;
 	}
 
 }

@@ -13,6 +13,8 @@ import kSecrets.Users.*;
 
 public class Main {
 
+	private static final String JUMP_LINE = "\n";
+	private static final int COMMA_LENGHT = 2;
 	private static final String COMMA = ", ";
 	private static final String BRACKET_END = "]";
 	private static final String BRACKET_START = " [";
@@ -407,18 +409,24 @@ public class Main {
 
 							else {
 								AccessesIterator ai = doc.listClassifiedAccessesIterator();
-
+								/**
+								 * basically we add everything to an auxiliary String variable and then remove
+								 * the annoying comma and whiteSpace that I couldn't get rid of for some ungodly
+								 * reason
+								 */
+								String getString = "";
 								while (ai.hasNext()) {
 									Accesses acc = ai.next();
 									if (kSecrets.isReadWriteAccess(acc)) {
-										System.out.print(acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
-												+ ", " + acc.getAccessType() + BRACKET_END);
-										if (ai.hasNext())
-											System.out.print(COMMA);
-										else {
-											System.out.println();
-										}
+										getString += acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
+												+ ", " + acc.getAccessType() + BRACKET_END + COMMA;
+
 									}
+								}
+								if (getString.length() > 0) {
+									String s = getString.substring(0, getString.length() - COMMA.length());
+									s += JUMP_LINE;
+									System.out.print(s);
 								}
 
 							}
@@ -429,18 +437,24 @@ public class Main {
 
 							else {
 								AccessesIterator ai = doc.listClassifiedAccessesIterator();
-
+								/**
+								 * basically we add everything to an auxiliary String variable and then remove
+								 * the annoying comma and whiteSpace that I couldn't get rid of for some ungodly
+								 * reason
+								 */
+								String getString = "";
 								while (ai.hasNext()) {
 									Accesses acc = ai.next();
 									if (!kSecrets.isReadWriteAccess(acc)) {
-										System.out.print(acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
-												+ ", " + acc.getAccessType() + BRACKET_END);
-										if (ai.hasNext())
-											System.out.print(COMMA);
-										else {
-											System.out.println();
-										}
+										getString += acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
+												+ ", " + acc.getAccessType() + BRACKET_END + COMMA;
+
 									}
+								}
+								if (getString.length() > 0) {
+									String s = getString.substring(0, getString.length() - COMMA.length());
+									s += JUMP_LINE;
+									System.out.print(s);
 								}
 							}
 						}

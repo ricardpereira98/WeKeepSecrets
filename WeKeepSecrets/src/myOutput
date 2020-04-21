@@ -60,10 +60,7 @@ topSecretDoc1 topsecret 1
 knowsTopSecrets [topsecret, read]
 There are no grants.
 topSecretDoc2 topsecret 3
-
-knowsSomeStuff [confidential, read], 
-knowsSecrets [secret, read], knowsTopSecrets [topsecret, write], 
-
+knowsSomeStuff [confidential, read], knowsSecrets [secret, read], knowsTopSecrets [topsecret, write]
 knowsSomeStuff [confidential, grant], knowsSecrets [secret, grant], knowsSecrets [secret, revoked], knowsSecrets [secret, grant]
 topSecretDoc3 topsecret 0
 There are no accesses.
@@ -96,6 +93,6 @@ confidentialDoc confidential 2
 knowsSomeStuff [confidential, write], knowsTopSecrets [topsecret, read]
 There are no grants.
 secretDoc secret 3
-knowsTopSecrets [topsecret, write], knowsTopSecrets [topsecret, read], 
-knowsSomeStuff [confidential, read]
-knowsSomeStuff [confidential, grant], Bye!
+knowsTopSecrets [topsecret, write], knowsTopSecrets [topsecret, read], knowsSomeStuff [confidential, read]
+knowsSomeStuff [confidential, grant]
+Bye!
