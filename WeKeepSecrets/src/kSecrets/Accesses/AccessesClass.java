@@ -27,12 +27,13 @@ public class AccessesClass implements Accesses {
 		return user.getID();
 	}
 
-	public AccessesClass(String readerID, String readerClearanceLvl, String accessType) {
+	public AccessesClass(String readerID, String readerClearanceLvl, String accessType, int numAccesses) {
 		this.readerID = readerID;
 		this.accessType = accessType;
 		this.readerClearanceLvl = readerClearanceLvl;
+		accessesNum = numAccesses;
 	}
-	
+
 	public AccessesClass(String docName, int accessesNum, String readerClearanceLvl, String accessType) {
 		this.docName = docName;
 		this.accessesNum = accessesNum;
@@ -40,7 +41,7 @@ public class AccessesClass implements Accesses {
 		this.accessType = accessType;
 
 	}
-	
+
 	@Override
 	public String getDocName() {
 		return docName;

@@ -2,6 +2,7 @@ package kSecrets.Documents;
 
 import kSecrets.Accesses.*;
 import kSecrets.Users.*;
+import kSecrets.Iterators.*;
 
 /**
  * 
@@ -12,9 +13,9 @@ import kSecrets.Users.*;
 public class DocumentClass implements Document {
 
 	// constant defining the original size of the array
-	private static final int DEFAULT_VALUE = 10;
+	private static final int DEFAULT_VALUE = 20;
 	private static final String OFFICIAL = "OFFICIAL";
-
+	private static final String READ = "READ";
 
 	// instance variables
 	private String docName;
@@ -28,13 +29,13 @@ public class DocumentClass implements Document {
 	private int numGrants;
 	private int numRevokes;
 	private int numAccesses;
-	private int	totalAccesses;
-	
-	private Accesses[] history;
-	private int historyCounter;
-	
-	private Accesses[] grantHistory;
-	private int grantHistoryCounter;
+	private int totalAccesses;
+
+	private Accesses[] classifiedHistory;
+	private int classifiedHistoryCounter;
+
+	private Accesses[] officialHistory;
+	private int officialHistoryCounter;
 
 	// constructor - initializes the instance variables
 	public DocumentClass(String docName, String manager, String securityLevel, String description) {
@@ -44,17 +45,17 @@ public class DocumentClass implements Document {
 		this.description = description;
 		accesses = new AccessesClass[DEFAULT_VALUE];
 		revokes = new AccessesClass[DEFAULT_VALUE];
-		history = new AccessesClass[DEFAULT_VALUE];
-		grantHistory = new AccessesClass[DEFAULT_VALUE];
+		classifiedHistory = new AccessesClass[DEFAULT_VALUE];
+		officialHistory = new AccessesClass[DEFAULT_VALUE];
 
 		counter_accesses = 0;
 		counter_revokes = 0;
 		numGrants = 0;
 		numRevokes = 0;
 		numAccesses = 0;
-		historyCounter = 0;
-		grantHistoryCounter = 0;
+		classifiedHistoryCounter = 0;
 		totalAccesses = 0;
+		officialHistoryCounter = 0;
 
 	}
 
@@ -128,34 +129,21 @@ public class DocumentClass implements Document {
 		accesses[counter_accesses++] = new AccessesClass(user);
 		numGrants++;
 	}
-	
+
 	@Override
-	public void history(String readerID, String readerClearanceLvl, String accessType) {
+	public void history(String readerID, String readerClearanceLvl, String accessType, int numAccesses) {
 		if (isFullHistory()) {
 			resizeHistory();
 		}
-		
-		history[historyCounter++] = new AccessesClass(readerID, readerClearanceLvl, accessType);
+
+		classifiedHistory[classifiedHistoryCounter++] = new AccessesClass(readerID, readerClearanceLvl, accessType, numAccesses);
 	}
-	
-	//@Override
+
+	// @Override
 	public Accesses getAccess(int index) {
-		return history[index];
-	}	
-	
-	/**public boolean isReadWriteAccess(int index) {
-		boolean type;
-		
-		if(history[index].getAccessType().equals(READ) || history[index].getAccessType().equals(WRITE)) {
-			type = true;
-		}
-		else {
-			type = false;
-		}
-		return type;
+		return classifiedHistory[index];
 	}
-	*/
-	
+
 	@Override
 	public void removeAccess(User user) {
 		revokes[counter_revokes++] = new AccessesClass(user);
@@ -173,7 +161,7 @@ public class DocumentClass implements Document {
 	public int revokedTimes() {
 		return numRevokes;
 	}
-	
+
 	@Override
 	public int getActualAccesses() {
 		return counter_accesses;
@@ -193,7 +181,7 @@ public class DocumentClass implements Document {
 	public int getNumAccesses() {
 		return numAccesses;
 	}
-	
+
 	@Override
 	public int getTotalNumAccesses() {
 		return totalAccesses;
@@ -204,6 +192,7 @@ public class DocumentClass implements Document {
 		numAccesses++;
 		totalAccesses++;
 	}
+
 	@Override
 	public void increaseRevokedTimes() {
 		numRevokes++;
@@ -213,24 +202,55 @@ public class DocumentClass implements Document {
 	public boolean isOfficial() {
 		return securityLevel.toUpperCase().equals(OFFICIAL);
 	}
-	
-	
+
 	private boolean isFullHistory() {
-		return historyCounter == history.length;
+		return classifiedHistoryCounter == classifiedHistory.length;
 	}
 
 	/**
 	 * Increases the size of the array of history
 	 */
 	private void resizeHistory() {
-		Accesses tmp[] = new Accesses[2 * history.length];
-		for (int i = 0; i < historyCounter; i++)
-			tmp[i] = history[i];
-		history = tmp;
+		Accesses tmp[] = new Accesses[2 * classifiedHistory.length];
+		for (int i = 0; i < classifiedHistoryCounter; i++)
+			tmp[i] = classifiedHistory[i];
+		classifiedHistory = tmp;
 	}
 
 	@Override
 	public void increaseTotalNumAccesses() {
-		totalAccesses++;		
+		totalAccesses++;
 	}
+
+	@Override
+	public AccessesIterator listOfficialAccessesIterator() {
+		if (officialHistoryCounter > 10)
+			officialHistoryCounter = 10;
+		return new AccessesIteratorClass(officialHistory, officialHistoryCounter);
+	}
+
+	@Override
+	public void officialHistory(String updaterID, String clearanceLevel, String read, int numAccesses) {
+		for (int i = officialHistoryCounter; i > 0; i--) {
+			officialHistory[i] = officialHistory[i - 1];
+		}
+		if (officialHistoryCounter > 10) {
+			officialHistoryCounter = 10;
+		}
+		officialHistory[0] = new AccessesClass(updaterID, clearanceLevel, READ, numAccesses);
+		officialHistoryCounter++;
+	}
+
+	@Override
+	public AccessesIterator listClassifiedAccessesIterator() {
+		
+		return new AccessesIteratorClass(classifiedHistory, classifiedHistoryCounter);
+	}
+
+	/**
+	 * extends
+	 * 
+	 * classe official - officialHistory classe classified - history - que podemos
+	 * mudar pra classifiedHistory
+	 */
 }

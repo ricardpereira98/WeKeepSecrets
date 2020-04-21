@@ -43,7 +43,7 @@ confidentialDoc2 confidential 0
 There are no accesses.
 There are no grants.
 confidentialDoc3 confidential 3
-
+knowsSecrets [secret, read], knowsTopSecrets [topsecret, write], knowsSomeStuff [confidential, read]
 There are no grants.
 Access to document topSecretDoc2 has been granted.
 Document: This document is a topsecret document of user knowsTopSecrets!
@@ -57,11 +57,14 @@ Document: This document is a topsecret document of user knowsTopSecrets!
 Access to document topSecretDoc3 has been granted.
 Access to document topSecretDoc3 has been granted.
 topSecretDoc1 topsecret 1
-
+knowsTopSecrets [topsecret, read]
 There are no grants.
 topSecretDoc2 topsecret 3
 
-knowsSomeStuff [confidential, grant], knowsSomeStuff [confidential, read], knowsSecrets [secret, grant], knowsSecrets [secret, read], knowsTopSecrets [topsecret, write], knowsSecrets [secret, revoke], knowsSecrets [secret, grant]
+knowsSomeStuff [confidential, read], 
+knowsSecrets [secret, read], knowsTopSecrets [topsecret, write], 
+
+knowsSomeStuff [confidential, grant], knowsSecrets [secret, grant], knowsSecrets [secret, revoked], knowsSecrets [secret, grant]
 topSecretDoc3 topsecret 0
 There are no accesses.
 knowsSomeStuff [confidential, grant], knowsSecrets [secret, grant]
@@ -80,8 +83,8 @@ Document: This document is an official document of user knowsNothing!
 Document: This document is an official document of user knowsNothing!
 Document: This document is an official document of user knowsNothing!
 Document: This document is an official document of user knowsNothing!
-officialDoc1 12: knowsNothing official
-officialDoc2 3: knowsNothing official
+officialDoc1 12: knowsSomeStuff [confidential], knowsTopSecrets [topsecret], knowsSecrets [secret], knowsSecrets [secret], knowsSecrets [secret], knowsSecrets [secret], knowsSecrets [secret], knowsSecrets [secret], knowsSecrets [secret], knowsTopSecrets [topsecret]
+officialDoc2 3: knowsSecrets [secret], knowsTopSecrets [topsecret], knowsSomeStuff [confidential]
 officialDoc3 0: There are no accesses.
 Document secretDoc was updated.
 Document: This document is a secret document of user knowsSecrets and was updated!
@@ -90,9 +93,9 @@ Document: This document is a secret document of user knowsSecrets and was update
 Document confidentialDoc was updated.
 Document: This document is a confidential document of user knowsSecrets and was updated!
 confidentialDoc confidential 2
-
+knowsSomeStuff [confidential, write], knowsTopSecrets [topsecret, read]
 There are no grants.
 secretDoc secret 3
-
-knowsTopSecrets [topsecret, write], knowsTopSecrets [topsecret, read], knowsSomeStuff [confidential, grant], knowsSomeStuff [confidential, read]
-Bye!
+knowsTopSecrets [topsecret, write], knowsTopSecrets [topsecret, read], 
+knowsSomeStuff [confidential, read]
+knowsSomeStuff [confidential, grant], Bye!

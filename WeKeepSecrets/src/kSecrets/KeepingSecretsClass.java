@@ -16,7 +16,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private static final String READ = "read";
 	private static final String WRITE = "write";
 	private static final String GRANT = "grant";
-	private static final String REVOKE = "revoke";
+	private static final String REVOKE = "revoked";
 
 	// Constants
 	private static final String TOPSECRET = "TOPSECRET";
@@ -42,12 +42,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	private int counterGranters;
 	private int numGranters;
 
-	private Accesses[] officialAccesses;
-	private int counterOfficialDocs;
-
-	private Accesses[] classifiedAccesses;
-	private int counterClassifiedDocs;
-
 	// Constructor of the top class - initiates the instance variables
 	public KeepingSecretsClass() {
 		users = new User[DEFAULT_SIZE];
@@ -61,11 +55,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		counterGrantedDocs = 0;
 		counterLeakedDocs = 0;
 
-		officialAccesses = new Accesses[DEFAULT_SIZE];
-		counterOfficialDocs = 0;
-
-		classifiedAccesses = new Accesses[DEFAULT_SIZE];
-		counterClassifiedDocs = 0;
 	}
 
 	@Override
@@ -175,27 +164,13 @@ public class KeepingSecretsClass implements KeepingSecrets {
 
 		doc.setNewDescription(newDescription);
 		doc.increaseNumAccesses();
-		doc.history(updaterID, aux.getClearanceLevel(), WRITE);
+		doc.history(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
 
-		if (doc.isOfficial()) {
-			Document official = manager.getOfficialDocument(documentName);
-			official.setNewDescription(newDescription);
-			official.increaseNumAccesses();
-			official.history(updaterID, aux.getClearanceLevel(), WRITE);
+		Document classified = manager.getClassifiedDocument(documentName);
+		classified.setNewDescription(newDescription);
+		classified.increaseNumAccesses();
+		classified.history(updaterID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
 
-		}
-
-		else {
-			Document classified = manager.getClassifiedDocument(documentName);
-			classified.setNewDescription(newDescription);
-			classified.increaseNumAccesses();
-			classified.history(updaterID, aux.getClearanceLevel(), WRITE);
-		}
-
-		if (isFullClassifiedAccesses()) {
-			resizeClassifiedAccesses();
-		}
-		classifiedAccesses[counterClassifiedDocs++] = new AccessesClass(updaterID, aux.getClearanceLevel(), WRITE);
 	}
 
 	@Override
@@ -206,43 +181,22 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User aux = users[searchIndexUserID(readerID)];
 
 		doc.increaseNumAccesses();
-		doc.history(readerID, aux.getClearanceLevel(), READ);
+		doc.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
 
 		if (doc.isOfficial()) {
 			Document official = manager.getOfficialDocument(documentName);
 			official.increaseNumAccesses();
-			official.history(readerID, aux.getClearanceLevel(), READ);
-
+			official.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
+			official.officialHistory(readerID, aux.getClearanceLevel(), WRITE, doc.getNumAccesses());
 		}
 
 		else {
 			Document classified = manager.getClassifiedDocument(documentName);
 			classified.increaseNumAccesses();
-			classified.history(readerID, aux.getClearanceLevel(), READ);
+			classified.history(readerID, aux.getClearanceLevel(), READ, doc.getNumAccesses());
 
 		}
-
-		if (isDocOfficial(documentName, managerID)) {
-
-			if (isFullOfficialAccesses()) {
-				resizeOfficialAccesses();
-			}
-
-			for (int i = counterOfficialDocs; i > 0; i--) {
-				officialAccesses[i + 1] = officialAccesses[i];
-			}
-			// doc name: user id, security level
-			officialAccesses[0] = new AccessesClass(documentName, doc.getNumAccesses(), aux.getClearanceLevel(), READ);
-		}
-
-		else {
-			if (isFullClassifiedAccesses())
-				resizeClassifiedAccesses();
-			classifiedAccesses[counterClassifiedDocs++] = new AccessesClass(readerID, aux.getClearanceLevel(), READ);
-		}
-
 		return doc.getDescription();
-
 	}
 
 	@Override
@@ -275,27 +229,15 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		User aux = users[searchIndexUserID(readerID)];
 
 		doc.grant(aux);
-		doc.history(readerID, aux.getClearanceLevel(), GRANT);
+		doc.history(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
 		doc.increaseTotalNumAccesses();
 		manager.increaseGrantGiven();
 
-		if (doc.isOfficial()) {
-			Document official = manager.getOfficialDocument(documentName);
-			official.grant(aux);
-			official.history(readerID, aux.getClearanceLevel(), GRANT);
-		}
+		Document classified = manager.getClassifiedDocument(documentName);
+		classified.grant(aux);
+		classified.history(readerID, aux.getClearanceLevel(), GRANT, doc.getNumAccesses());
+		classified.increaseTotalNumAccesses();
 
-		else {
-			Document classified = manager.getClassifiedDocument(documentName);
-			classified.grant(aux);
-			classified.history(readerID, aux.getClearanceLevel(), GRANT);
-			classified.increaseTotalNumAccesses();
-		}
-
-		if (isFullClassifiedAccesses()) {
-			resizeClassifiedAccesses();
-		}
-		classifiedAccesses[counterClassifiedDocs] = new AccessesClass(readerID, aux.getClearanceLevel(), GRANT);
 		counterGrantedDocs++;
 		numGranters++;
 	}
@@ -310,25 +252,12 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		doc.removeAccess(aux);
 		manager.increaseRevokesGiven();
 		doc.increaseTotalNumAccesses();
-		doc.history(readerID, aux.getClearanceLevel(), REVOKE);
+		doc.history(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
 
-		if (doc.isOfficial()) {
-			Document official = manager.getOfficialDocument(documentName);
-			official.removeAccess(aux);
-			official.history(readerID, aux.getClearanceLevel(), REVOKE);
-		}
-
-		else {
-			Document classified = manager.getClassifiedDocument(documentName);
-			classified.removeAccess(aux);
-			classified.history(readerID, aux.getClearanceLevel(), REVOKE);
-			classified.increaseTotalNumAccesses();
-		}
-
-		if (isFullClassifiedAccesses()) {
-			resizeClassifiedAccesses();
-		}
-		classifiedAccesses[counterClassifiedDocs++] = new AccessesClass(readerID, aux.getClearanceLevel(), REVOKE);
+		Document classified = manager.getClassifiedDocument(documentName);
+		classified.removeAccess(aux);
+		classified.history(readerID, aux.getClearanceLevel(), REVOKE, doc.getNumAccesses());
+		classified.increaseTotalNumAccesses();
 	}
 
 	@Override
@@ -470,44 +399,6 @@ public class KeepingSecretsClass implements KeepingSecrets {
 		}
 
 		return value;
-	}
-
-	/**
-	 * 
-	 * @return true if the number of official accesses in the array is equal to the
-	 *         array's length, false otherwise
-	 */
-	private boolean isFullOfficialAccesses() {
-		return counterOfficialDocs == officialAccesses.length;
-	}
-
-	/**
-	 * Increases the size of the array of official accesses
-	 */
-	private void resizeOfficialAccesses() {
-		Accesses tmp[] = new AccessesClass[2 * officialAccesses.length];
-		for (int i = 0; i < counterOfficialDocs; i++)
-			tmp[i] = officialAccesses[i];
-		officialAccesses = tmp;
-	}
-
-	/**
-	 * 
-	 * @return true if the number of classified accesses in the array is equal to
-	 *         the array's length, false otherwise
-	 */
-	private boolean isFullClassifiedAccesses() {
-		return counterClassifiedDocs == classifiedAccesses.length;
-	}
-
-	/**
-	 * Increases the size of the array of classified accesses
-	 */
-	private void resizeClassifiedAccesses() {
-		Accesses tmp[] = new AccessesClass[2 * classifiedAccesses.length];
-		for (int i = 0; i < counterClassifiedDocs; i++)
-			tmp[i] = classifiedAccesses[i];
-		classifiedAccesses = tmp;
 	}
 
 	private void setTopLeakedDocs() {
@@ -652,7 +543,7 @@ public class KeepingSecretsClass implements KeepingSecrets {
 	public boolean isReadWriteAccess(Accesses access) {
 		boolean type = false;
 
-		if (access.getAccessType().toUpperCase().equals(READ) || access.getAccessType().toUpperCase().equals(WRITE)) {
+		if (access.getAccessType().equalsIgnoreCase(READ) || access.getAccessType().equalsIgnoreCase(WRITE)) {
 			type = true;
 		}
 		return type;

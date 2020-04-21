@@ -1,6 +1,7 @@
 package kSecrets.Documents;
 
 import kSecrets.Accesses.Accesses;
+import kSecrets.Iterators.AccessesIterator;
 import kSecrets.Users.*;
 
 /**
@@ -63,7 +64,6 @@ public interface Document {
 
 	int grantedTimes();
 
-
 	int getNumAccesses();
 
 	void increaseNumAccesses();
@@ -74,7 +74,7 @@ public interface Document {
 
 	boolean isOfficial();
 
-	void history(String readerID, String readerClearanceLvl, String accessType);
+	void history(String readerID, String readerClearanceLvl, String accessType, int numAccesses);
 
 	Accesses getAccess(int i);
 
@@ -83,5 +83,10 @@ public interface Document {
 	void increaseTotalNumAccesses();
 
 	int getActualAccesses();
+
+	AccessesIterator listOfficialAccessesIterator();
+	AccessesIterator listClassifiedAccessesIterator();
+
+	void officialHistory(String updaterID, String clearanceLevel, String read, int numAccesses);
 
 }

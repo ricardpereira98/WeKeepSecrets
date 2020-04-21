@@ -1,6 +1,7 @@
 package kSecrets;
 
 import kSecrets.Accesses.Accesses;
+import kSecrets.Documents.Document;
 import kSecrets.Iterators.*;
 
 /**
@@ -198,5 +199,4 @@ public interface KeepingSecrets {
 	boolean isClearanceAppropriated(String userID);
 
 	boolean isReadWriteAccess(Accesses reader);
-
 }

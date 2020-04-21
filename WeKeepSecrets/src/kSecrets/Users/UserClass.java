@@ -14,20 +14,19 @@ public class UserClass implements User {
 	// constant
 	private static final int DEFAULT_SIZE = 10;
 
-
 	// instance variables
 	private String id;
 	private String kind;
 	private String clearanceLevel;
 	private int timesGranted;
 	private int timesRevoked;
-	
+
 	private Document[] docs;
 	private int counterDocs;
-	
+
 	private Document[] officialDocs;
 	private int counterOfficialDocs;
-	
+
 	private Document[] classifiedDocs;
 	private int counterClassifiedDocs;
 
@@ -37,13 +36,13 @@ public class UserClass implements User {
 		this.id = id;
 		this.clearanceLevel = clearanceLevel;
 		timesGranted = 0;
-		
+
 		counterDocs = 0;
 		docs = new Document[DEFAULT_SIZE];
-		
+
 		officialDocs = new Document[DEFAULT_SIZE];
 		counterOfficialDocs = 0;
-		
+
 		classifiedDocs = new Document[DEFAULT_SIZE];
 		counterClassifiedDocs = 0;
 	}
@@ -70,23 +69,22 @@ public class UserClass implements User {
 		}
 		docs[counterDocs++] = new DocumentClass(docName, manager, securityLevel, description);
 	}
-	
+
 	@Override
 	public void addOfficialDoc(String docName, String manager, String securityLevel, String description) {
-		if (isFullDocs()) { //criar um novo
+		if (isFullDocs()) { // criar um novo
 			resizeDocs();
 		}
 		officialDocs[counterOfficialDocs++] = new DocumentClass(docName, manager, securityLevel, description);
 	}
-	
+
 	@Override
 	public void addClassifiedDoc(String docName, String manager, String securityLevel, String description) {
-		if (isFullDocs()) { //criar um novo
+		if (isFullDocs()) { // criar um novo
 			resizeDocs();
 		}
 		classifiedDocs[counterClassifiedDocs++] = new DocumentClass(docName, manager, securityLevel, description);
 	}
-	
 
 	@Override
 	public boolean hasThisDoc(String docName) {
@@ -97,28 +95,27 @@ public class UserClass implements User {
 	public Document getDocument(String docName) {
 		return docs[searchIndexDoc(docName)];
 	}
-	
+
 	@Override
 	public Document getDocument(int index) {
 		return docs[index];
 	}
-	
+
 	@Override
 	public Document getOfficialDocument(String docName) {
 		return officialDocs[searchIndexOfficialDoc(docName)];
 	}
-	
+
 	@Override
 	public Document getClassifiedDocument(String docName) {
 		return classifiedDocs[searchIndexClassifiedDoc(docName)];
 	}
-	
+
 	@Override
 	public int getDocsNum() {
 		return counterDocs;
 	}
-	
-	
+
 	@Override
 	public DocumentIterator docsIterator() {
 		return new DocumentIteratorClass(docs, counterDocs);
@@ -138,27 +135,27 @@ public class UserClass implements User {
 	public int getGrantsGiven() {
 		return timesGranted;
 	}
-	
+
 	@Override
 	public int getRevokesGiven() {
 		return timesRevoked;
 	}
-	
+
 	@Override
 	public DocumentIterator listOfficialDocsIterator() {
-		return new DocumentIteratorClass(officialDocs, counterDocs);
+		return new DocumentIteratorClass(officialDocs, counterOfficialDocs);
 	}
-	
+
 	@Override
 	public boolean hasOfficialDocs() {
-		return counterOfficialDocs>0;
+		return counterOfficialDocs > 0;
 	}
-	
+
 	@Override
 	public boolean hasClassifiedDocs() {
-		return counterClassifiedDocs>0;
+		return counterClassifiedDocs > 0;
 	}
-	
+
 	// private methods
 
 	/**
@@ -182,7 +179,7 @@ public class UserClass implements User {
 		}
 		return result;
 	}
-	
+
 	private int searchIndexOfficialDoc(String documentName) {
 		int result = -1;
 		boolean found = false;
@@ -199,7 +196,7 @@ public class UserClass implements User {
 		}
 		return result;
 	}
-	
+
 	private int searchIndexClassifiedDoc(String documentName) {
 		int result = -1;
 		boolean found = false;
@@ -238,12 +235,12 @@ public class UserClass implements User {
 
 	@Override
 	public void increaseRevokesGiven() {
-		timesRevoked++;		
+		timesRevoked++;
 	}
 
 	@Override
 	public DocumentIterator listClassifiedDocsIterator() {
 		return new DocumentIteratorClass(classifiedDocs, counterClassifiedDocs);
 	}
-	
+
 }

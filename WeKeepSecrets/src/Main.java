@@ -13,6 +13,9 @@ import kSecrets.Users.*;
 
 public class Main {
 
+	private static final String COMMA = ", ";
+	private static final String BRACKET_END = "]";
+	private static final String BRACKET_START = " [";
 	// Constantes que definem os comandos
 	private static final String EXIT = "EXIT";
 	private static final String HELP = "HELP";
@@ -358,8 +361,19 @@ public class Main {
 						}
 
 						else {
-							System.out.printf("%s %d: %s %s\n", doc.getDocName(), doc.getNumAccesses(),
-									doc.getManager(), doc.getSecurityLevel());
+							System.out.printf("%s %d: ", doc.getDocName(), doc.getNumAccesses());
+
+							AccessesIterator ai = doc.listOfficialAccessesIterator(); // kSecrets.listOfficialDocsAccessesIterator(doc);
+
+							while (ai.hasNext()) {
+								Accesses access = ai.next();
+								System.out.print(access.getReaderID() + BRACKET_START + access.getReaderClearanceLvl()
+										+ BRACKET_END);
+								if (ai.hasNext())
+									System.out.print(COMMA);
+								else
+									System.out.println();
+							}
 						}
 					}
 				}
@@ -392,17 +406,20 @@ public class Main {
 							}
 
 							else {
-								for (int i = 0; i < doc.getTotalNumAccesses(); i++) {
-									Accesses reader = doc.getAccess(i);
-									if (kSecrets.isReadWriteAccess(reader)) {
-										System.out.printf("%s [%s, %s]", reader.getReaderID(),
-												reader.getReaderClearanceLvl(), reader.getAccessType());
-										if (i < doc.getTotalNumAccesses() - 1) {
-											System.out.print(", ");
+								AccessesIterator ai = doc.listClassifiedAccessesIterator();
+
+								while (ai.hasNext()) {
+									Accesses acc = ai.next();
+									if (kSecrets.isReadWriteAccess(acc)) {
+										System.out.print(acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
+												+ ", " + acc.getAccessType() + BRACKET_END);
+										if (ai.hasNext())
+											System.out.print(COMMA);
+										else {
+											System.out.println();
 										}
 									}
 								}
-								System.out.printf("\n");
 
 							}
 
@@ -411,18 +428,20 @@ public class Main {
 							}
 
 							else {
-								for (int i = 0; i < doc.getTotalNumAccesses(); i++) {
-									Accesses reader = doc.getAccess(i);
-									if (!kSecrets.isReadWriteAccess(reader)) {
-										System.out.printf("%s [%s, %s]", reader.getReaderID(),
-												reader.getReaderClearanceLvl(), reader.getAccessType());
-										if (i < doc.getTotalNumAccesses() - 1) {
-											System.out.print(", ");
+								AccessesIterator ai = doc.listClassifiedAccessesIterator();
+
+								while (ai.hasNext()) {
+									Accesses acc = ai.next();
+									if (!kSecrets.isReadWriteAccess(acc)) {
+										System.out.print(acc.getReaderID() + BRACKET_START + acc.getReaderClearanceLvl()
+												+ ", " + acc.getAccessType() + BRACKET_END);
+										if (ai.hasNext())
+											System.out.print(COMMA);
+										else {
+											System.out.println();
 										}
 									}
 								}
-								System.out.printf("\n");
-
 							}
 						}
 					}
